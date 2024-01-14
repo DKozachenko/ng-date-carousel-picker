@@ -1,0 +1,31 @@
+@import '../../styles/variables';
+
+:host {
+  // Ограничение по ширине для обрезания с правой стороны
+  /* stylelint-disable-next-line */
+  width: calc(100% - $control-button-width);
+}
+
+.month-names-track {
+  padding: 0 5px;
+
+  .viewport {
+    height: $month-name-height;
+    overflow: hidden;
+    position: relative;
+
+    .scroller {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      z-index: 5;
+      /* stylelint-disable-next-line */
+      transition: left $scroll-transition ease-in-out;
+
+      width: 100%;
+      display: flex;
+      flex-wrap: nowrap;
+    }
+  }
+}

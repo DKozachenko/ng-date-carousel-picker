@@ -1,0 +1,33 @@
+@import '../../styles/index';
+
+.selection {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  top: 0;
+  width: 100%;
+  max-width: 0;
+  z-index: 5;
+
+  .left__half,
+  .right__half {
+    display: block;
+    position: absolute;
+    z-index: 6;
+    width: 100%;
+    max-width: 0;
+    height: $day-height;
+    /* stylelint-disable-next-line */
+    transition: opacity calc($color-transition / 2) ease-in-out, max-width calc($color-transition / 2) ease-in-out;
+    transition-delay: $color-transition;
+    background-color: var(--ion-color-medium);
+    opacity: 0;
+  }
+
+  .right__half {
+    &-wrapper {
+      left: 0;
+      direction: rtl;
+    }
+  }
+}

@@ -1,0 +1,11 @@
+<div class="month-names-track">
+  <div class="viewport">
+    <div #scroller class="scroller">
+      <dcp-month-name
+        *ngFor="let month of months; let i = index; trackBy:trackByMonthId"
+        [month]="month"
+        [isActive]="i === activeNameIndex"
+      ></dcp-month-name>
+    </div>
+  </div>
+</div>

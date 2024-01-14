@@ -1,0 +1,12 @@
+<div class="month-track">
+  <div class="viewport">
+    <div #scroller class="scroller">
+      <ng-container *ngFor="let year of years; trackBy: trackById">
+        <dcp-calendar-month 
+          *ngFor="let month of year.months; trackBy: trackById"
+          [month]="month"
+        ></dcp-calendar-month>
+      </ng-container>
+    </div>
+  </div>
+</div>

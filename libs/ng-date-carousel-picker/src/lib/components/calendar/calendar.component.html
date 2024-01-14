@@ -1,0 +1,50 @@
+<div class="calendar">
+  <div class="calendar__header">
+    <button
+      class="control"
+      type="button"
+      [disabled]="isLeftControlDisabled"
+      (click)="setPrevMonth()"
+    >
+      <ion-icon name="chevron-back-outline" size="large"></ion-icon>
+    </button>
+
+    <div class="calendar__date">
+      <span class="month">{{ currentMonthRuName }}</span>
+      <span class="year">{{ currentYearNum }}</span>
+    </div>
+
+    <button
+      class="control"
+      type="button"
+      [disabled]="isRightControlDisabled"
+      (click)="setNextMonth()"
+    >
+      <ion-icon name="chevron-forward-outline" size="large"></ion-icon>
+    </button>
+  </div>
+
+  <div class="calendar__content">
+    <div class="weekdays">
+      <div 
+        *ngFor="let weekdayRuName of weekdays; let i = index; trackBy:trackByIndex" 
+        class="weekday" 
+        [class.weekend]="i === 5 || i === 6"
+      >{{ weekdayRuName }}</div>
+    </div>
+
+    <dcp-calendar-months-track 
+      [years]="years"
+    ></dcp-calendar-months-track>
+  </div>
+
+  <ion-button *ngIf="!!dateInfo; else close_button" expand="block" color="primary" (click)="select()">
+    Выбрать {{ dateInfo | rdpDayRangeFormat }}
+  </ion-button>
+
+  <ng-template #close_button>
+    <ion-button expand="block" color="medium" (click)="close()">
+      Закрыть
+    </ion-button>
+  </ng-template>
+</div>

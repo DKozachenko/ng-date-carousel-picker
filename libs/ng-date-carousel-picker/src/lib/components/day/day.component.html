@@ -1,0 +1,4 @@
+<div class="day" (click)="select()">
+  <p class="day__order">{{ day.order }}</p>
+  <span class="day__weekday" [class.weekend]="engName === 'Saturday' || engName === 'Sunday'">{{ ruName }}</span>
+</div>

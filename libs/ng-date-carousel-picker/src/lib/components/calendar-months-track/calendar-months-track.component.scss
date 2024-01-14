@@ -1,0 +1,25 @@
+@import '../../styles/index';
+
+.month-track {
+  .viewport {
+    // 8 - расстояние между строками
+    /* stylelint-disable-next-line */
+    height: calc(6 * $calendar-cell-size + 5 * 8px);
+    overflow: hidden;
+    position: relative;
+
+    .scroller {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      z-index: 5;
+      /* stylelint-disable-next-line */
+      transition: left $scroll-transition ease-in-out;
+
+      width: 100%;
+      display: flex;
+      flex-wrap: nowrap;
+    }
+  }
+}

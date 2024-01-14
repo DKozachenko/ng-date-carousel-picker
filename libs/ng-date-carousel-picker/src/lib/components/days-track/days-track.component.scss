@@ -1,0 +1,90 @@
+@import '../../styles/variables';
+
+:host {
+  flex-grow: 1;
+}
+
+// Неважно, какой цвет будет в свойстве mask-image в color-stop
+.days-track {
+  .viewport {
+    height: $day-height;
+    overflow: hidden;
+    position: relative;
+
+    // Отображение маски только слева
+    &.viewport_left {
+      --webkit-mask-image: -webkit-gradient(
+        linear,
+        left center,
+        right center,
+        color-stop(0.8, var(--ion-color-light)),
+        color-stop(1, transparent)
+      );
+
+      mask-image: -webkit-gradient(
+        linear,
+        left center,
+        right center,
+        color-stop(0.8, var(--ion-color-light)),
+        color-stop(1, transparent)
+      );
+    }
+
+    // Отображение маски слева и справа
+    &.viewport_middle {
+      --webkit-mask-image: -webkit-gradient(
+        linear,
+        left center,
+        right center,
+        color-stop(0, transparent),
+        color-stop(0.2, var(--ion-color-light)),
+        color-stop(0.8, var(--ion-color-light)),
+        color-stop(1, transparent)
+      );
+
+      mask-image: -webkit-gradient(
+        linear,
+        left center,
+        right center,
+        color-stop(0, transparent),
+        color-stop(0.2, var(--ion-color-light)),
+        color-stop(0.8, var(--ion-color-light)),
+        color-stop(1, transparent)
+      );
+    }
+
+    // Отображение маски справа
+    &.viewport_right {
+      --webkit-mask-image: -webkit-gradient(
+        linear,
+        left center,
+        right center,
+        color-stop(0, transparent),
+        color-stop(0.2, var(--ion-color-light))
+      );
+
+      mask-image: -webkit-gradient(
+        linear,
+        left center,
+        right center,
+        color-stop(0, transparent),
+        color-stop(0.2, var(--ion-color-light))
+      );
+    }
+
+    .scroller {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      z-index: 5;
+      /* stylelint-disable-next-line */
+      transition: left $scroll-transition ease-in-out;
+
+      width: 100%;
+      display: flex;
+      gap: $months-gap;
+      flex-wrap: nowrap;
+    }
+  }
+}

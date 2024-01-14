@@ -1,0 +1,16 @@
+$control-button-width: 62px;
+
+$month-name-height: 20px;
+$day-width: 42px;
+$day-height: 62px;
+$days-gap: 10px;
+$months-gap: 30px;
+
+$scroll-transition: 500ms;
+$color-transition: 300ms;
+
+$calendar-control-size: 25px;
+$calendar-month-width: 272px;
+$calendar-day-substrates-padding: 4px;
+$calendar-cell-size: 32px;
+$calendar-day-with-substrates-width: $calendar-cell-size + 2 * $calendar-day-substrates-padding;

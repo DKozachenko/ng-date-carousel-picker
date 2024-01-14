@@ -1,0 +1,111 @@
+@import '../../styles/index';
+
+:host {
+  // Состояние недоступности
+  &.disabled {
+    .day {
+      pointer-events: none;
+      color: var(--ion-color-medium);
+    }
+  }
+
+  // Состояние выбран / не выбран
+  &.selected {
+    .day {
+      background-color: var(--ion-color-medium);
+    }
+  }
+
+  &.in_week_start,
+  &.in_week_end {
+    .substrates {
+      width: 36px;
+    }
+  }
+
+  // Нахождение в начале недели
+  &.in_week_start {
+    .substrates {
+      /* stylelint-disable-next-line */
+      padding: 0 $calendar-day-substrates-padding 0 0;
+    }
+  }
+
+  // Нахождение в конце недели
+  &.in_week_end {
+    .substrates {
+      /* stylelint-disable-next-line */
+      padding: 0 0 0 $calendar-day-substrates-padding;
+    }
+  }
+
+  // Нахождение в начале диапазона
+  &.in_range_start {
+    .substrates__right {
+      background-color:  var(--ion-color-step-150);
+    }
+  }
+
+  // Нахождение в середине диапазона
+  &.in_range_middle {
+    .substrates__left,
+    .substrates__right {
+      background-color: var(--ion-color-step-150);
+    }
+  }
+
+  // Нахождение в конце диапазона
+  &.in_range_end {
+    .substrates__left {
+      background-color: var(--ion-color-step-150);
+    }
+  }
+}
+
+.substrates {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  /* stylelint-disable-next-line */
+  width: $calendar-day-with-substrates-width;
+  /* stylelint-disable-next-line */
+  padding: 0 $calendar-day-substrates-padding;
+
+  position: relative;
+
+  &__left,
+  &__right {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 5;
+    background-color: transparent;
+    width: 50%;
+    /* stylelint-disable-next-line */
+    transition: background-color $color-transition ease-in-out;
+  }
+
+  &__left {
+    left: 0;
+  }
+
+  &__right {
+    right: 0;
+  }
+}
+
+.day {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  border-radius: 5px;
+
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  cursor: pointer;
+
+  /* stylelint-disable-next-line */
+  transition: background-color $color-transition ease-in-out;
+}

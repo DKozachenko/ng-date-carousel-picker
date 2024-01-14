@@ -1,0 +1,20 @@
+<div class="days-track">
+  <div
+    #viewport
+    class="viewport"
+    [ngClass]="{
+      viewport_left: inStart && !inEnd,
+      viewport_right: !inStart && inEnd,
+      viewport_middle: !inStart && !inEnd
+    }"
+  >
+    <div #scroller class="scroller">
+      <dcp-month 
+        *ngFor="let month of months; let i = index; trackBy:trackByMonthId" 
+        [month]="month"
+      ></dcp-month>
+
+      <dcp-selection></dcp-selection>
+    </div>
+  </div>
+</div>

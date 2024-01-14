@@ -1,0 +1,45 @@
+{
+  "name": "ng-date-carousel-picker",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/ng-date-carousel-picker/src",
+  "prefix": "ng-date-carousel-picker",
+  "tags": [],
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:ng-packagr-lite",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "libs/ng-date-carousel-picker/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/ng-date-carousel-picker/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/ng-date-carousel-picker/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/ng-date-carousel-picker/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/ng-date-carousel-picker/**/*.ts",
+          "libs/ng-date-carousel-picker/**/*.html",
+          "libs/ng-date-carousel-picker/**/*.mdx",
+          "libs/ng-date-carousel-picker/**/*.json"
+        ]
+      }
+    }
+  }
+}

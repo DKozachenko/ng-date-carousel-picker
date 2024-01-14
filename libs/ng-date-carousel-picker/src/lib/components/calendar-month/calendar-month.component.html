@@ -1,0 +1,6 @@
+<div class="month">
+  <dcp-calendar-day 
+    *ngFor="let day of month.days; trackBy:trackByDayId" 
+    [day]="day"
+  ></dcp-calendar-day>
+</div>

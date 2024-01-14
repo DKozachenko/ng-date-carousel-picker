@@ -1,0 +1,36 @@
+@import '../../styles/index';
+
+.range-date-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  user-select: none;
+
+  position: relative;
+
+  .picker {
+    display: flex;
+    align-items: center;
+
+    .control {
+      background-color: transparent;
+      padding: 0 15px;
+
+      &.control_disabled {
+        /* stylelint-disable-next-line */
+        ion-icon {
+          color: var(--ion-text-medium);
+        }
+      }
+    }
+  }
+
+  /* stylelint-disable */
+  dcp-calendar {
+    position: absolute;
+    // ширина кнопки / 2
+    right: calc($control-button-width / 2);
+    top: 0;
+    z-index: 15;
+  }
+}

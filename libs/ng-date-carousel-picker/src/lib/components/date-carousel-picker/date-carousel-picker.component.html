@@ -1,0 +1,44 @@
+<div class="range-date-picker">
+  <dcp-month-names-track [months]="months"></dcp-month-names-track>
+
+  <div class="picker">
+    <button
+      class="control"
+      type="button"
+      [disabled]="isLeftControlDisabled"
+      [class.control_disabled]="isLeftControlDisabled"
+      (click)="scrollLeft()"
+    >
+      <ion-icon name="chevron-back-outline" size="large"></ion-icon>
+    </button>
+
+    <dcp-days-track
+      [months]="months"
+      [inStart]="isLeftControlDisabled"
+      [inEnd]="rightControlType === 'calendar-button'"
+    ></dcp-days-track>
+
+    <button
+      *ngIf="rightControlType === 'scroll-button'; else calendar_button"
+      class="control"
+      type="button"
+      (click)="scrollRight()"
+    >
+      <ion-icon size="large" name="chevron-forward-outline"></ion-icon>
+    </button>
+
+    <ng-template #calendar_button>
+      <button
+        class="control"
+        type="button"
+        (click)="showCalendar()"
+      >
+        <ion-icon size="large" name="calendar-outline"></ion-icon>
+      </button>
+    </ng-template>
+  </div>
+
+  <dcp-calendar *ngIf="isShowCalendar" (closed)="isShowCalendar = false"></dcp-calendar>
+</div>
+
+

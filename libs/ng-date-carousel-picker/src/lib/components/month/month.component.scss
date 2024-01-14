@@ -1,0 +1,11 @@
+@import '../../styles/index';
+
+.month {
+  display: flex;
+  flex-direction: column;
+
+  &__days {
+    display: flex;
+    gap: $days-gap;
+  } 
+}

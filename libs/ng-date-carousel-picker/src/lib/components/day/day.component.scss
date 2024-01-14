@@ -1,0 +1,47 @@
+@import '../../styles/index';
+
+:host {
+  // Состояние выбран / не выбран
+  &.selected {
+    .day {
+      background-color: var(--ion-color-light);
+    }
+  }
+}
+
+.day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  position: relative;
+  z-index: 10;
+  width: $day-width;
+  
+  border-radius: 25px;
+
+  background-color: transparent;
+
+  /* stylelint-disable-next-line */
+  transition: background-color $color-transition ease-in-out,
+    border-radius $color-transition ease-in-out;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &__order {
+    margin: 0;
+    @include font(24px, var(--ion-color-dark), 700);
+
+    margin-bottom: 6px;
+  }
+
+  &__weekday {
+    @include font(12px, var(--ion-color-dark-tint));
+
+    &.weekend {
+      color: var(--ion-color-danger);
+    }
+  }
+}
