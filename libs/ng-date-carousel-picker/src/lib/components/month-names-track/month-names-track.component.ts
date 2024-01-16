@@ -15,13 +15,14 @@ import {
 import { IConfig, IMonth } from '../../models/interfaces';
 import { MonthNameComponent } from '../month-name/month-name.component';
 import { PICKER_CONFIG, dayWidth, daysGap, monthsGap } from '../../models/constants';
+import { NgFor, NgForOf } from '@angular/common';
 
 /** Компонент трека с названиями месяцев */
 @Component({
   selector: 'dcp-month-names-track',
   templateUrl: './month-names-track.component.html',
   styleUrls: ['./month-names-track.component.scss'],
-  imports: [MonthNameComponent],
+  imports: [NgFor, NgForOf, MonthNameComponent],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -49,10 +50,10 @@ export class MonthNamesTrackComponent implements OnInit, AfterViewInit {
 
   private readonly renderer: Renderer2 = inject(Renderer2);
   private readonly cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
-  private readonly config: IConfig = inject(PICKER_CONFIG);
+  // private readonly config: IConfig = inject(PICKER_CONFIG);
 
   public ngOnInit(): void {
-    this.scrollShift = this.config.scrollShift;
+    this.scrollShift = 340;
   }
 
   public ngAfterViewInit(): void {

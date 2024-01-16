@@ -5,6 +5,7 @@ import { formatDate, isRange } from '../utils';
 /** Пайп для форматирования одной даты или диапазона дат */
 @Pipe({
   name: 'rdpDayRangeFormat',
+  standalone: true,
 })
 export class DayRangeFormatPipe implements PipeTransform {
   transform(value: IRange | IRangeItem): string {

@@ -1,3 +1,4 @@
+// Numeric variables
 $control-button-width: 62px;
 
 $month-name-height: 20px;
@@ -14,3 +15,12 @@ $calendar-month-width: 272px;
 $calendar-day-substrates-padding: 4px;
 $calendar-cell-size: 32px;
 $calendar-day-with-substrates-width: $calendar-cell-size + 2 * $calendar-day-substrates-padding;
+
+// Color variables
+// https://ionicframework.com/docs/theming/colors
+$dcp-color-light: #f4f5f8;
+$dcp-color-dark: #222428;
+$dcp-color-dark-tint: #383a3e;
+$dcp-color-medium: #92949c;
+$dcp-color-danger: #eb445a;
+$dcp-color-step-150: #818181;

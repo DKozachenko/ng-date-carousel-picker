@@ -4,7 +4,7 @@
   // Состояние выбран / не выбран
   &.selected {
     .day {
-      background-color: var(--ion-color-light);
+      background-color: $dcp-color-light;
     }
   }
 }
@@ -22,7 +22,6 @@
 
   background-color: transparent;
 
-  /* stylelint-disable-next-line */
   transition: background-color $color-transition ease-in-out,
     border-radius $color-transition ease-in-out;
 
@@ -32,16 +31,16 @@
 
   &__order {
     margin: 0;
-    @include font(24px, var(--ion-color-dark), 700);
+    @include font(24px, $dcp-color-dark, 700);
 
     margin-bottom: 6px;
   }
 
   &__weekday {
-    @include font(12px, var(--ion-color-dark-tint));
+    @include font(12px, $dcp-color-dark-tint);
 
     &.weekend {
-      color: var(--ion-color-danger);
+      color: $dcp-color-danger;
     }
   }
 }

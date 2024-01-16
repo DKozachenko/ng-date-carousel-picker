@@ -2,7 +2,6 @@
 
 :host {
   // Ограничение по ширине для обрезания с правой стороны
-  /* stylelint-disable-next-line */
   width: calc(100% - $control-button-width);
 }
 
@@ -20,7 +19,6 @@
       top: 0;
       bottom: 0;
       z-index: 5;
-      /* stylelint-disable-next-line */
       transition: left $scroll-transition ease-in-out;
 
       width: 100%;

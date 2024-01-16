@@ -40,6 +40,47 @@
           "libs/ng-date-carousel-picker/**/*.json"
         ]
       }
+    },
+    "storybook": {
+      "executor": "@storybook/angular:start-storybook",
+      "options": {
+        "port": 4400,
+        "configDir": "libs/ng-date-carousel-picker/.storybook",
+        "browserTarget": "ng-date-carousel-picker:build-storybook",
+        "compodoc": false
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "build-storybook": {
+      "executor": "@storybook/angular:build-storybook",
+      "outputs": ["{options.outputDir}"],
+      "options": {
+        "outputDir": "dist/storybook/ng-date-carousel-picker",
+        "configDir": "libs/ng-date-carousel-picker/.storybook",
+        "browserTarget": "ng-date-carousel-picker:build-storybook",
+        "compodoc": false
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "static-storybook": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "ng-date-carousel-picker:build-storybook",
+        "staticFilePath": "dist/storybook/ng-date-carousel-picker"
+      },
+      "configurations": {
+        "ci": {
+          "buildTarget": "ng-date-carousel-picker:build-storybook:ci"
+        }
+      }
     }
   }
 }

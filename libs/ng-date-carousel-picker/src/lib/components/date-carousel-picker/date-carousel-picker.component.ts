@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, inject, ViewChild, Output, EventEmitter } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, ViewChild, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { CalendarService, PickerService } from '../../services';
 import { IConfig, IMonth, IRange, IRangeItem } from '../../models/interfaces';
 import { MonthNamesTrackComponent } from '../month-names-track/month-names-track.component';
@@ -7,6 +7,7 @@ import { CalendarComponent } from '../calendar/calendar.component';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { PICKER_CONFIG } from '../../models/constants';
 import { RightControl } from '../../models/types';
+import { NgIf } from '@angular/common';
 
 /** Компонент дата пикера */
 @UntilDestroy()
@@ -14,9 +15,11 @@ import { RightControl } from '../../models/types';
   selector: 'ng-date-carousel-picker',
   templateUrl: './date-carousel-picker.component.html',
   styleUrls: ['./date-carousel-picker.component.scss'],
-  imports: [MonthNamesTrackComponent, DaysTrackComponent, CalendarComponent],
+  imports: [NgIf, MonthNamesTrackComponent, DaysTrackComponent, CalendarComponent],
+  providers: [PickerService, CalendarService],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  // encapsulation: ViewEncapsulation.None,
 })
 export class DateCarouselPickerComponent implements OnInit {
   /** Расстояние, которое скроллиться */
@@ -47,11 +50,11 @@ export class DateCarouselPickerComponent implements OnInit {
 
   private readonly pickerService: PickerService = inject(PickerService);
   private readonly calendarService: CalendarService = inject(CalendarService);
-  private readonly config: IConfig = inject(PICKER_CONFIG);
+  // private readonly config: IConfig = inject(PICKER_CONFIG);
 
   public ngOnInit(): void {
-    this.scrollShift = this.config.scrollShift;
-    this.months = this.pickerService.getMonths(this.config.monthLimit);
+    this.scrollShift = 340;
+    this.months = this.pickerService.getMonths(3);
 
     this.pickerService.changedObs$
       .pipe(untilDestroyed(this))

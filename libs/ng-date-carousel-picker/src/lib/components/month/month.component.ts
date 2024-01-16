@@ -10,13 +10,14 @@ import {
 } from '@angular/core';
 import { IDay, IMonth } from '../../models/interfaces';
 import { DayComponent } from '../day/day.component';
+import { NgFor, NgForOf } from '@angular/common';
 
 /** Компонент месяца */
 @Component({
   selector: 'dcp-month',
   templateUrl: './month.component.html',
   styleUrls: ['./month.component.scss'],
-  imports: [DayComponent],
+  imports: [NgForOf, DayComponent],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

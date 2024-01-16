@@ -9,7 +9,7 @@
       [class.control_disabled]="isLeftControlDisabled"
       (click)="scrollLeft()"
     >
-      <ion-icon name="chevron-back-outline" size="large"></ion-icon>
+      <img src="icons/chevron-back-outline.svg" alt="chevron-back-outline">
     </button>
 
     <dcp-days-track
@@ -24,7 +24,7 @@
       type="button"
       (click)="scrollRight()"
     >
-      <ion-icon size="large" name="chevron-forward-outline"></ion-icon>
+      <img src="icons/chevron-forward-outline.svg" alt="chevron-forward-outline">
     </button>
 
     <ng-template #calendar_button>
@@ -32,8 +32,8 @@
         class="control"
         type="button"
         (click)="showCalendar()"
-      >
-        <ion-icon size="large" name="calendar-outline"></ion-icon>
+      > 
+        <img src="icons/calendar-outline.svg" alt="calendar-outline">
       </button>
     </ng-template>
   </div>

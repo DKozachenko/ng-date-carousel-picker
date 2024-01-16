@@ -13,6 +13,8 @@ import { IConfig, IDateIndexes, ILocalization, IMonth, IRange, IRangeItem, IYear
 import { MonthEng, MonthOrder, MonthRu, WeekdayEng, WeekdayOrder, WeekdayRu, YearLimit } from '../../models/types';
 import { PICKER_CONFIG, dayOrderWeekdayNames, monthOrderNames } from '../../models/constants';
 import { CalendarMonthsTrackComponent } from '../calendar-months-track/calendar-months-track.component';
+import { NgForOf, NgIf } from '@angular/common';
+import { DayRangeFormatPipe } from '../../pipes';
 
 /** Компонент календаря */
 @UntilDestroy()
@@ -20,7 +22,7 @@ import { CalendarMonthsTrackComponent } from '../calendar-months-track/calendar-
   selector: 'dcp-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],
-  imports: [CalendarMonthsTrackComponent],
+  imports: [NgIf, NgForOf, DayRangeFormatPipe, CalendarMonthsTrackComponent],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -59,11 +61,11 @@ export class CalendarComponent implements OnInit {
   public isRightControlDisabled: boolean = false;
 
   private readonly calendarService: CalendarService = inject(CalendarService);
-  private readonly config: IConfig = inject(PICKER_CONFIG);
+  // private readonly config: IConfig = inject(PICKER_CONFIG);
   private readonly cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
 
   public ngOnInit(): void {
-    this.years = this.calendarService.getYears(this.config.yearLimit);
+    this.years = this.calendarService.getYears(1);
     this.initWeekdays();
 
     this.calendarService.dateIndexesObs$.pipe(untilDestroyed(this)).subscribe((indexes: IDateIndexes) => {

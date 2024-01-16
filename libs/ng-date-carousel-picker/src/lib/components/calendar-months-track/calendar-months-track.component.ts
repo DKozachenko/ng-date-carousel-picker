@@ -16,6 +16,7 @@ import { MonthOrder } from '../../models/types';
 import { CalendarService } from '../../services';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { CalendarMonthComponent } from '../calendar-month/calendar-month.component';
+import { NgForOf } from '@angular/common';
 
 /** Компонент трека месяцев календаря */
 @UntilDestroy()
@@ -23,7 +24,7 @@ import { CalendarMonthComponent } from '../calendar-month/calendar-month.compone
   selector: 'dcp-calendar-months-track',
   templateUrl: './calendar-months-track.component.html',
   styleUrls: ['./calendar-months-track.component.scss'],
-  imports: [CalendarMonthComponent],
+  imports: [NgForOf, CalendarMonthComponent],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

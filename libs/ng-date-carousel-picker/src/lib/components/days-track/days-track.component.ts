@@ -17,6 +17,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { DayComponent } from '../day/day.component';
 import { SelectionComponent } from '../selection/selection.component';
 import { dayWidth, daysGap, monthsGap } from '../../models/constants';
+import { NgClass, NgForOf } from '@angular/common';
 
 /** Компонент трека дней */
 @UntilDestroy()
@@ -24,7 +25,7 @@ import { dayWidth, daysGap, monthsGap } from '../../models/constants';
   selector: 'dcp-days-track',
   templateUrl: './days-track.component.html',
   styleUrls: ['./days-track.component.scss'],
-  imports: [MonthComponent, SelectionComponent],
+  imports: [NgClass, NgForOf, MonthComponent, SelectionComponent],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

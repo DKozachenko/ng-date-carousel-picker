@@ -3,7 +3,6 @@
 .month-track {
   .viewport {
     // 8 - расстояние между строками
-    /* stylelint-disable-next-line */
     height: calc(6 * $calendar-cell-size + 5 * 8px);
     overflow: hidden;
     position: relative;
@@ -14,7 +13,6 @@
       top: 0;
       bottom: 0;
       z-index: 5;
-      /* stylelint-disable-next-line */
       transition: left $scroll-transition ease-in-out;
 
       width: 100%;

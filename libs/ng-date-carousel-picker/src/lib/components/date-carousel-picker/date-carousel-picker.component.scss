@@ -15,17 +15,22 @@
     .control {
       background-color: transparent;
       padding: 0 15px;
+      cursor: pointer;
+
+      img {
+        width: 32px;
+        height: 32px;
+        color: black;
+      }
 
       &.control_disabled {
-        /* stylelint-disable-next-line */
-        ion-icon {
+        img {
           color: var(--ion-text-medium);
         }
       }
     }
   }
 
-  /* stylelint-disable */
   dcp-calendar {
     position: absolute;
     // ширина кнопки / 2

@@ -17,7 +17,7 @@
         linear,
         left center,
         right center,
-        color-stop(0.8, var(--ion-color-light)),
+        color-stop(0.8, $dcp-color-light),
         color-stop(1, transparent)
       );
 
@@ -25,7 +25,7 @@
         linear,
         left center,
         right center,
-        color-stop(0.8, var(--ion-color-light)),
+        color-stop(0.8, $dcp-color-light),
         color-stop(1, transparent)
       );
     }
@@ -37,8 +37,8 @@
         left center,
         right center,
         color-stop(0, transparent),
-        color-stop(0.2, var(--ion-color-light)),
-        color-stop(0.8, var(--ion-color-light)),
+        color-stop(0.2, $dcp-color-light),
+        color-stop(0.8, $dcp-color-light),
         color-stop(1, transparent)
       );
 
@@ -47,8 +47,8 @@
         left center,
         right center,
         color-stop(0, transparent),
-        color-stop(0.2, var(--ion-color-light)),
-        color-stop(0.8, var(--ion-color-light)),
+        color-stop(0.2, $dcp-color-light),
+        color-stop(0.8, $dcp-color-light),
         color-stop(1, transparent)
       );
     }
@@ -60,7 +60,7 @@
         left center,
         right center,
         color-stop(0, transparent),
-        color-stop(0.2, var(--ion-color-light))
+        color-stop(0.2, $dcp-color-light)
       );
 
       mask-image: -webkit-gradient(
@@ -68,7 +68,7 @@
         left center,
         right center,
         color-stop(0, transparent),
-        color-stop(0.2, var(--ion-color-light))
+        color-stop(0.2, $dcp-color-light)
       );
     }
 
@@ -78,7 +78,6 @@
       top: 0;
       bottom: 0;
       z-index: 5;
-      /* stylelint-disable-next-line */
       transition: left $scroll-transition ease-in-out;
 
       width: 100%;

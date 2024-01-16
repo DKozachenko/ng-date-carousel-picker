@@ -11,13 +11,14 @@ import {
 } from '@angular/core';
 import { IDay, IMonth, IRangeDayIds } from '../../models/interfaces';
 import { CalendarDayComponent } from '../calendar-day/calendar-day.component';
+import { NgForOf } from '@angular/common';
 
 /** Компонент месяца календаря */
 @Component({
   selector: 'dcp-calendar-month',
   templateUrl: './calendar-month.component.html',
   styleUrls: ['./calendar-month.component.scss'],
-  imports: [CalendarDayComponent],
+  imports: [NgForOf, CalendarDayComponent],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

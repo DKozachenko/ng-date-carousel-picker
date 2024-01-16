@@ -2,11 +2,9 @@
 
 .month {
   display: grid;
-  /* stylelint-disable-next-line */
   grid-template-columns: $calendar-cell-size + $calendar-day-substrates-padding 
     repeat(5, $calendar-day-with-substrates-width) 
     $calendar-cell-size + $calendar-day-substrates-padding;
-  /* stylelint-disable-next-line */
   grid-template-rows: repeat(6, $calendar-cell-size);
   grid-row-gap: 8px;
 }

@@ -1,4 +1,5 @@
 @mixin font($font-size, $color, $fw: 400, $lh: 1) {
+  font-family: monospace;
   font-size: $font-size;
   color: $color;
   font-weight: $fw;

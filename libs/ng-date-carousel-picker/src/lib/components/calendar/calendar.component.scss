@@ -5,7 +5,7 @@
   display: inline-block;
   border-radius: 15px;
   border: 1px solid white;
-  background-color: var(--ion-color-light);
+  background-color: $dcp-color-light;
   user-select: none;
 
   &__header {
@@ -17,8 +17,7 @@
     .control {
       background-color: transparent;
 
-      /* stylelint-disable-next-line */
-      ion-icon {
+      img {
         width: $calendar-control-size;
         height: $calendar-control-size;
       }
@@ -27,7 +26,7 @@
     .calendar__date {
       display: flex;
       gap: 5px;
-      @include font(20px, var(--ion-color-dark), 700);
+      @include font(20px, $dcp-color-dark, 700);
     }
   }
 
@@ -36,9 +35,7 @@
 
     .weekdays {
       display: grid;
-      /* stylelint-disable-next-line */
       grid-template-columns: repeat(7, $calendar-cell-size);
-      /* stylelint-disable-next-line */
       grid-template-rows: $calendar-cell-size;
       grid-column-gap: 8px;
 
@@ -46,19 +43,17 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        @include font(16px, var(--ion-color-dark));
+        @include font(16px, $dcp-color-dark);
 
         &.weekend {
-          color: var(--ion-color-danger);
+          color: $dcp-color-danger;
         }
       }
     }
   }
 
-  /* stylelint-disable-next-line */
   ion-button {
     // 4 - отступы кнопки
-    /* stylelint-disable-next-line */
     max-width: calc($calendar-month-width - 4px);
   }
 }
