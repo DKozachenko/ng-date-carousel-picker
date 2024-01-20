@@ -10,7 +10,7 @@
     </button>
 
     <div class="calendar__date">
-      <span class="month">{{ currentMonthRuName }}</span>
+      <span class="month">{{ currentMonthName }}</span>
       <span class="year">{{ currentYearNum }}</span>
     </div>
 
@@ -27,10 +27,10 @@
   <div class="calendar__content">
     <div class="weekdays">
       <div 
-        *ngFor="let weekdayRuName of weekdays; let i = index; trackBy:trackByIndex" 
+        *ngFor="let weekday of weekdays; let i = index; trackBy:trackByIndex" 
         class="weekday" 
         [class.weekend]="i === 5 || i === 6"
-      >{{ weekdayRuName }}</div>
+      >{{ weekday }}</div>
     </div>
 
     <dcp-calendar-months-track 
@@ -38,12 +38,12 @@
     ></dcp-calendar-months-track>
   </div>
 
-  <button *ngIf="!!dateInfo; else close_button" (click)="select()">
-    Выбрать {{ dateInfo | rdpDayRangeFormat }}
+  <button *ngIf="!!dateInfo; else close_button" type="button" (click)="select()">
+    Выбрать {{ dateInfo | dcpDayRangeFormat }}
   </button>
 
   <ng-template #close_button>
-    <button expand="block" color="medium" (click)="close()">
+    <button type="button" expand="block" color="medium" (click)="close()">
       Закрыть
     </button>
   </ng-template>

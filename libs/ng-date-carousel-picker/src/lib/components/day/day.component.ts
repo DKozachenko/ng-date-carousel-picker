@@ -1,8 +1,6 @@
 import { ChangeDetectionStrategy, Component, HostBinding, Input, OnInit, inject } from '@angular/core';
-import { IDay, ILocalization } from '../../models/interfaces';
-import { WeekdayEng, WeekdayRu } from '../../models/types';
-import { PickerService } from '../../services';
-import { dayOrderWeekdayNames } from '../../models/constants';
+import { IDay } from '../../models/interfaces';
+import { InternalizationService, PickerService } from '../../services';
 
 /** Компонент дня */
 @Component({
@@ -10,27 +8,21 @@ import { dayOrderWeekdayNames } from '../../models/constants';
   templateUrl: './day.component.html',
   styleUrls: ['./day.component.scss'],
   standalone: true,
+  providers: [InternalizationService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DayComponent implements OnInit {
+  /** День */
+  @Input({ required: true }) public readonly day!: IDay;
+
+  public weekday: string = '';
+
   /** Сервис для дат */
   private readonly pickerService: PickerService = inject(PickerService);
-
-  /** День */
-  @Input({ required: true }) public day!: IDay;
-
-  /** Английское название */
-  public engName!: WeekdayEng;
-
-  /** Русское название (сокращенное) */
-  public ruName!: WeekdayRu;
+  private readonly internalizationService: InternalizationService = inject(InternalizationService);
 
   public ngOnInit(): void {
-    const localization: ILocalization<WeekdayEng, WeekdayRu> = <ILocalization<WeekdayEng, WeekdayRu>>(
-      dayOrderWeekdayNames.get(this.day.weekdayOrder)
-    );
-    this.engName = localization.eng;
-    this.ruName = localization.ru;
+    this.weekday = this.internalizationService.capitalizedWeekdays[this.day.weekdayOrder];
   }
 
   /** Выбран ли день */

@@ -23,10 +23,10 @@ import { NgFor, NgForOf } from '@angular/common';
 })
 export class MonthComponent {
   /** Компоненты дней */
-  @ViewChildren(DayComponent) readonly dayComponents!: QueryList<DayComponent>;
+  @ViewChildren(DayComponent) public readonly dayComponents!: QueryList<DayComponent>;
 
   /** Месяц */
-  @Input({ required: true }) public month!: IMonth;
+  @Input({ required: true }) public readonly month!: IMonth;
 
   // Для обновления состояний дней используется именно родительский ChangeDetectorRef
   // из-за специфики работы HostBinding, описанной тут https://github.com/angular/angular/issues/22560

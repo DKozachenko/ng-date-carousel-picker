@@ -3,7 +3,6 @@ export { IMonth } from './month.interface';
 export { IRangeItem } from './range-item.interface';
 export { IRange } from './range.interface';
 export { IRangeDayIds } from './range-day-ids.interface';
-export { ILocalization } from './localization.interface';
 export { IDayDate } from './day-date.interface';
 export { IConfig } from './config.interface';
 export { IYear } from './year.interface';

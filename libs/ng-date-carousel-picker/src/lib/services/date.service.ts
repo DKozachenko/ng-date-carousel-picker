@@ -4,9 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import { MonthOrder } from '../models/types';
 
 /** Базовый сервис для дат */
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export abstract class DateService {
   /** Даты дней (линейная структура, каждому дню соответствует его объект Date) */
   protected readonly dayDates: IDayDate[] = [];

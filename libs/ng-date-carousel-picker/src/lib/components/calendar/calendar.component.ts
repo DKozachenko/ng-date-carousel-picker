@@ -8,10 +8,10 @@ import {
   inject,
 } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { CalendarService } from '../../services';
-import { IConfig, IDateIndexes, ILocalization, IMonth, IRange, IRangeItem, IYear } from '../../models/interfaces';
-import { MonthEng, MonthOrder, MonthRu, WeekdayEng, WeekdayOrder, WeekdayRu, YearLimit } from '../../models/types';
-import { PICKER_CONFIG, dayOrderWeekdayNames, monthOrderNames } from '../../models/constants';
+import { CalendarService, InternalizationService } from '../../services';
+import { IConfig, IDateIndexes, IMonth, IRange, IRangeItem, IYear } from '../../models/interfaces';
+import { MonthOrder, YearLimit } from '../../models/types';
+import { PICKER_CONFIG } from '../../models/constants';
 import { CalendarMonthsTrackComponent } from '../calendar-months-track/calendar-months-track.component';
 import { NgForOf, NgIf } from '@angular/common';
 import { DayRangeFormatPipe } from '../../pipes';
@@ -24,6 +24,7 @@ import { DayRangeFormatPipe } from '../../pipes';
   styleUrls: ['./calendar.component.scss'],
   imports: [NgIf, NgForOf, DayRangeFormatPipe, CalendarMonthsTrackComponent],
   standalone: true,
+  providers: [InternalizationService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalendarComponent implements OnInit {
@@ -34,7 +35,7 @@ export class CalendarComponent implements OnInit {
   public years: IYear[] = [];
 
   /** Дни недели (русские названия) */
-  public weekdays: WeekdayRu[] = [];
+  public weekdays: string[] = [];
 
   /** Текущий месяц */
   public currentMonth!: IMonth;
@@ -42,14 +43,13 @@ export class CalendarComponent implements OnInit {
   /** Текущий индекс месяца */
   public currentMonthIndex: MonthOrder = 0;
 
-  /** Текущее название месяца (русское) */
-  public currentMonthRuName!: MonthRu;
+  public currentMonthName: string = '';
 
   /** Текущий индекс года */
   public currentYearIndex: YearLimit | 4 = 0;
 
   /** Текущий номер года */
-  public currentYearNum!: number;
+  public currentYearNum: number = 0;
 
   /** Информация о выбранной дате или диапазоне дат */
   public dateInfo: IRange | IRangeItem | null = null;
@@ -61,6 +61,7 @@ export class CalendarComponent implements OnInit {
   public isRightControlDisabled: boolean = false;
 
   private readonly calendarService: CalendarService = inject(CalendarService);
+  private readonly internalizationService: InternalizationService = inject(InternalizationService);
   // private readonly config: IConfig = inject(PICKER_CONFIG);
   private readonly cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
 
@@ -89,26 +90,20 @@ export class CalendarComponent implements OnInit {
   /** Инициализация дней недели */
   private initWeekdays(): void {
     for (let i = 1; i < 7; ++i) {
-      const weekdayLocalization: ILocalization<WeekdayEng, WeekdayRu> = <ILocalization<WeekdayEng, WeekdayRu>>(
-        dayOrderWeekdayNames.get(<WeekdayOrder>i)
-      );
-      this.weekdays.push(weekdayLocalization.ru);
+      const weekday: string = this.internalizationService.capitalizedWeekdays[i];
+      this.weekdays.push(weekday);
     }
 
-    const firstWeekdayLocalization: ILocalization<WeekdayEng, WeekdayRu> = <ILocalization<WeekdayEng, WeekdayRu>>(
-      dayOrderWeekdayNames.get(0)
-    );
-    this.weekdays.push(firstWeekdayLocalization.ru);
+    const firstWeekday: string = this.internalizationService.capitalizedWeekdays[0];
+    this.weekdays.push(firstWeekday);
   }
 
   /** Установка текущего месяца, его названия и номера года */
   private setCurrentMonthYear(): void {
     this.currentMonth = this.years[this.currentYearIndex].months[this.currentMonthIndex];
 
-    const monthLocalization: ILocalization<MonthEng, MonthRu> = <ILocalization<MonthEng, MonthRu>>(
-      monthOrderNames.get(this.currentMonth.order)
-    );
-    this.currentMonthRuName = monthLocalization.ru;
+    const monthName: string = this.internalizationService.capitalizedMonthNames[this.currentMonth.order];
+    this.currentMonthName = monthName;
 
     this.currentYearNum = this.years[this.currentYearIndex].num;
   }

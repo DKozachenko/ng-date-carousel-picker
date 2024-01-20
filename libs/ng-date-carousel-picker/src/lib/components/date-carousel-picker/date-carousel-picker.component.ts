@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, inject, ViewChild, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, ViewChild, Output, EventEmitter } from '@angular/core';
 import { CalendarService, PickerService } from '../../services';
 import { IConfig, IMonth, IRange, IRangeItem } from '../../models/interfaces';
 import { MonthNamesTrackComponent } from '../month-names-track/month-names-track.component';

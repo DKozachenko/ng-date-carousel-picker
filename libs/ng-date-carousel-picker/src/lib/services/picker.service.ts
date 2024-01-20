@@ -5,9 +5,7 @@ import { generateRandomString } from '../utils';
 import { DateService } from './date.service';
 
 /** Сервис для пикера */
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class PickerService extends DateService {
   /** Месяцы (вложенная структура, каждый месяц содержит свои дни) */
   private readonly months: IMonth[] = [];

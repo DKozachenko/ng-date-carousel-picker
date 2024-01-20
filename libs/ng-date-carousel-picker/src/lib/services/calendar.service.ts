@@ -6,9 +6,7 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { DateService } from './date.service';
 
 /** Сервис для календаря */
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class CalendarService extends DateService {
   /** Годы */
   private readonly years: IYear[] = [];
