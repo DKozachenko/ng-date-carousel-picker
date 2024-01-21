@@ -52,8 +52,31 @@
     }
   }
 
-  ion-button {
+  .close-button,
+  .select-button {
     // 4 - отступы кнопки
-    max-width: calc($calendar-month-width - 4px);
+    // max-width: calc($calendar-month-width - 4px);
+    width: 100%;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    border: 1px solid black;
+    border-radius: 15px;
+    cursor: pointer;
   }
+
+  .select-button {
+    padding: 8px 0;
+    @include font(16px, $dcp-color-dark);
+  }
+
+  .close-button {
+    img {
+      width: 32px;
+      height: 32px;
+      color: black;
+    }
+  }
+
+
 }

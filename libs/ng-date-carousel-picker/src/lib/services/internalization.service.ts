@@ -51,4 +51,8 @@ export class InternalizationService {
       this.formatIntlDateTime(dateTime, new Date(this.yearForGeneration, this.monthForGeneration, day + 1));
     this.weekdays = this.range(7, valueFunction);
   }
+
+  public format(date: Date): string {
+    return Intl.DateTimeFormat(this.locale).format(date);
+  }
 }
