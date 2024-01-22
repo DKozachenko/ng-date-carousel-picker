@@ -28,17 +28,19 @@
     </button>
 
     <ng-template #calendar_button>
-      <button
-        class="control"
-        type="button"
-        (click)="showCalendar()"
-      > 
-        <img src="icons/calendar-outline.svg" alt="calendar-outline">
-      </button>
+      <ngx-popover>
+        <button
+          class="control"
+          type="button"
+        > 
+          <img src="icons/calendar-outline.svg" alt="calendar-outline">
+        </button>
+
+        <ng-template ngx-popover-template>
+          <dcp-calendar></dcp-calendar>
+        </ng-template>
+      </ngx-popover>
     </ng-template>
   </div>
-
-  <dcp-calendar *ngIf="isShowCalendar" (closed)="isShowCalendar = false"></dcp-calendar>
 </div>
-
 

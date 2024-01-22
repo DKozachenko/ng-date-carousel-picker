@@ -1,19 +1,12 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  OnInit,
-  Output,
-  inject,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
+import { NgForOf, NgIf } from '@angular/common';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { PopoverClose } from '@ngx-popovers/popover';
 import { CalendarService, InternalizationService } from '../../services';
 import { IConfig, IDateIndexes, IMonth, IRange, IRangeItem, IYear } from '../../models/interfaces';
 import { MonthOrder, YearLimit } from '../../models/types';
 import { PICKER_CONFIG } from '../../models/constants';
 import { CalendarMonthsTrackComponent } from '../calendar-months-track/calendar-months-track.component';
-import { NgForOf, NgIf } from '@angular/common';
 import { DayRangeFormatPipe } from '../../pipes';
 
 /** Компонент календаря */
@@ -22,15 +15,12 @@ import { DayRangeFormatPipe } from '../../pipes';
   selector: 'dcp-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],
-  imports: [NgIf, NgForOf, DayRangeFormatPipe, CalendarMonthsTrackComponent],
+  imports: [NgIf, NgForOf, DayRangeFormatPipe, CalendarMonthsTrackComponent, PopoverClose],
   standalone: true,
   providers: [InternalizationService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalendarComponent implements OnInit {
-  /** Эмиттер события закрытия */
-  @Output() private readonly closed: EventEmitter<void> = new EventEmitter<void>();
-
   /** Года */
   public years: IYear[] = [];
 
@@ -139,15 +129,9 @@ export class CalendarComponent implements OnInit {
     }
   }
 
-  /** Закрытие */
-  public close(): void {
-    this.closed.emit();
-  }
-
   /** Выбор одной даты или диапазона */
   public select(): void {
     this.calendarService.change(<IRange | IRangeItem>this.dateInfo);
-    this.close();
   }
 
   /**

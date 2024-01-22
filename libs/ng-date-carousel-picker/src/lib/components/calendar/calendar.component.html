@@ -38,12 +38,12 @@
     ></dcp-calendar-months-track>
   </div>
 
-  <button *ngIf="!!dateInfo; else close_button" class="select-button" type="button" (click)="select()">
+  <button *ngIf="!!dateInfo; else close_button" ngx-popover-close class="select-button" type="button" (click)="select()">
     {{ dateInfo | dcpDayRangeFormat }}
   </button>
 
   <ng-template #close_button>
-    <button class="close-button" type="button" expand="block" color="medium" (click)="close()">
+    <button ngx-popover-close class="close-button" type="button" expand="block" color="medium">
       <img src="icons/close-outline.svg" alt="close-outline">
     </button>
   </ng-template>

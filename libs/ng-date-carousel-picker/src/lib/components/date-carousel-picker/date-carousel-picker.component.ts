@@ -1,13 +1,35 @@
-import { ChangeDetectionStrategy, Component, OnInit, inject, ViewChild, Output, EventEmitter } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  inject,
+  ViewChild,
+  Output,
+  EventEmitter,
+  Provider,
+} from '@angular/core';
+import { NgIf } from '@angular/common';
+import { NGX_POPOVER_CONFIG, NgxPopoverConfig, PopoverComponent, PopoverTemplate } from '@ngx-popovers/popover';
+import { flip, offset, shift } from '@ngx-popovers/core';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { CalendarService, PickerService } from '../../services';
 import { IConfig, IMonth, IRange, IRangeItem } from '../../models/interfaces';
 import { MonthNamesTrackComponent } from '../month-names-track/month-names-track.component';
 import { DaysTrackComponent } from '../days-track/days-track.component';
 import { CalendarComponent } from '../calendar/calendar.component';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { PICKER_CONFIG } from '../../models/constants';
 import { RightControl } from '../../models/types';
-import { NgIf } from '@angular/common';
+
+export const PopoverConfigProvider: Provider = {
+  provide: NGX_POPOVER_CONFIG,
+  useValue: new NgxPopoverConfig({
+    placement: 'bottom-end',
+    autoUpdate: true,
+    arrow: false,
+    closeOnClickedOutside: true,
+    middleware: [flip(), shift(), offset(5)],
+  }),
+};
 
 /** Компонент дата пикера */
 @UntilDestroy()
@@ -15,11 +37,10 @@ import { NgIf } from '@angular/common';
   selector: 'ng-date-carousel-picker',
   templateUrl: './date-carousel-picker.component.html',
   styleUrls: ['./date-carousel-picker.component.scss'],
-  imports: [NgIf, MonthNamesTrackComponent, DaysTrackComponent, CalendarComponent],
-  providers: [PickerService, CalendarService],
+  imports: [NgIf, MonthNamesTrackComponent, DaysTrackComponent, CalendarComponent, PopoverComponent, PopoverTemplate],
+  providers: [PickerService, CalendarService, PopoverConfigProvider],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  // encapsulation: ViewEncapsulation.None,
 })
 export class DateCarouselPickerComponent implements OnInit {
   /** Расстояние, которое скроллиться */
