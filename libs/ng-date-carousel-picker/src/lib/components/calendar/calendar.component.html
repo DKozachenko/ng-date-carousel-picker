@@ -29,7 +29,7 @@
       <div 
         *ngFor="let weekday of weekdays; let i = index; trackBy:trackByIndex" 
         class="weekday" 
-        [class.weekend]="i === 5 || i === 6"
+        [class.weekend]="isWeekend(i)"
       >{{ weekday }}</div>
     </div>
 

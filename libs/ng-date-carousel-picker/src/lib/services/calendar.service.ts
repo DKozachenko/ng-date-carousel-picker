@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IDateIndexes, IDay, IDayDate, IMonth, IRange, IRangeDayIds, IRangeItem, IYear } from '../models/interfaces';
-import { DayOrder, MonthOrder, WeekdayOrder, YearLimit } from '../models/types';
+import { DayOrder, MonthOrder, WeekdayOrder } from '../models/types';
 import { generateRandomString } from '../utils';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { DateService } from './date.service';
@@ -8,6 +8,8 @@ import { DateService } from './date.service';
 /** Сервис для календаря */
 @Injectable()
 export class CalendarService extends DateService {
+  private readonly yearLimit: number = 2;
+
   /** Годы */
   private readonly years: IYear[] = [];
 
@@ -30,12 +32,14 @@ export class CalendarService extends DateService {
    * Заполнение годов
    * @param yearLimit ограничение по количеству годов (на сколько годов вперед нужно получить месяцы)
    */
-  public init<YearLimit>(yearLimit: YearLimit): void {
+  public init(): void {
     const now: Date = new Date();
     const nowCounter: Date = new Date(new Date().setDate(1));
     const nowNYears: Date = new Date(
       new Date(
-        new Date(new Date(new Date().setFullYear(now.getFullYear() + <number>(<number>yearLimit + 1))).setMonth(0)),
+        new Date(
+          new Date(new Date().setFullYear(now.getFullYear() + <number>(<number>this.yearLimit + 1))).setMonth(0),
+        ),
       ).setDate(1),
     );
 
@@ -188,12 +192,12 @@ export class CalendarService extends DateService {
    * @param yearLimit ограничение по количеству годов в календаре (на сколько годов вперед нужно получить месяцы)
    * @returns
    */
-  public getYears(yearLimit: YearLimit = 2): IYear[] {
+  public getYears(): IYear[] {
     if (this.years.length) {
       return this.years;
     }
 
-    this.init(yearLimit);
+    this.init();
     return this.years;
   }
 }

@@ -7,7 +7,11 @@ const config: StorybookConfig = {
     name: '@storybook/angular',
     options: {},
   },
-  staticDirs: ['../src/lib/assets']
+  docs: {
+    autodocs: true,
+    defaultName: 'Docs',
+  },
+  staticDirs: ['../src/lib/assets'],
 };
 
 export default config;

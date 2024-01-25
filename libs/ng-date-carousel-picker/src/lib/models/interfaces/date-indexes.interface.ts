@@ -1,9 +1,9 @@
-import { MonthOrder, YearLimit } from '../types';
+import { MonthOrder } from '../types';
 
 /** Индексы дат для календаря */
 export interface IDateIndexes {
   /** Индекс месяца */
   monthIndex: MonthOrder;
   /** Индекс года */
-  yearIndex: YearLimit | 4;
+  yearIndex: number;
 }

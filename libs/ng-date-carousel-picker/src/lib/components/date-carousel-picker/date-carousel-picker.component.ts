@@ -7,18 +7,19 @@ import {
   Output,
   EventEmitter,
   Provider,
+  Input,
 } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { NGX_POPOVER_CONFIG, NgxPopoverConfig, PopoverComponent, PopoverTemplate } from '@ngx-popovers/popover';
 import { flip, offset, shift } from '@ngx-popovers/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { CalendarService, PickerService } from '../../services';
-import { IConfig, IMonth, IRange, IRangeItem } from '../../models/interfaces';
+import { CalendarService, OptionsService, PickerService } from '../../services';
+import { IMonth, IPickerOptions, IRange, IRangeItem } from '../../models/interfaces';
 import { MonthNamesTrackComponent } from '../month-names-track/month-names-track.component';
 import { DaysTrackComponent } from '../days-track/days-track.component';
 import { CalendarComponent } from '../calendar/calendar.component';
-import { PICKER_CONFIG } from '../../models/constants';
-import { RightControl } from '../../models/types';
+import { DEFAULT_OPTIONS } from '../../models/constants';
+import { FirstDayOfWeek, IntRange, RightControl, WeekdayOrder } from '../../models/types';
 
 export const PopoverConfigProvider: Provider = {
   provide: NGX_POPOVER_CONFIG,
@@ -38,13 +39,19 @@ export const PopoverConfigProvider: Provider = {
   templateUrl: './date-carousel-picker.component.html',
   styleUrls: ['./date-carousel-picker.component.scss'],
   imports: [NgIf, MonthNamesTrackComponent, DaysTrackComponent, CalendarComponent, PopoverComponent, PopoverTemplate],
-  providers: [PickerService, CalendarService, PopoverConfigProvider],
+  providers: [PickerService, CalendarService, OptionsService, PopoverConfigProvider],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DateCarouselPickerComponent implements OnInit {
-  /** Расстояние, которое скроллиться */
-  private scrollShift: number = 100;
+export class DateCarouselPickerComponent implements OnInit, IPickerOptions {
+  @Input({ required: false }) public readonly scrollShift: IntRange<42, 300> = DEFAULT_OPTIONS['scrollShift'];
+  @Input({ required: false }) public readonly startDate: Date = DEFAULT_OPTIONS['startDate'];
+  @Input({ required: false }) public readonly endDate: Date = DEFAULT_OPTIONS['endDate'];
+  @Input({ required: false }) public readonly showCalendar: boolean = DEFAULT_OPTIONS['showCalendar'];
+  @Input({ required: false }) public readonly firstDayOfWeekIndex: FirstDayOfWeek =
+    DEFAULT_OPTIONS['firstDayOfWeekIndex'];
+  @Input({ required: false }) public readonly weekendIndexes: [WeekdayOrder, WeekdayOrder] =
+    DEFAULT_OPTIONS['weekendIndexes'];
 
   /** Компонент трека названий месяцев */
   @ViewChild(MonthNamesTrackComponent) private readonly monthNamesTrackComponent!: MonthNamesTrackComponent;
@@ -66,16 +73,25 @@ export class DateCarouselPickerComponent implements OnInit {
   /** Тип правого контрола */
   public rightControlType: RightControl = 'scroll-button';
 
-  /** Показывать ли календарь */
-  public isShowCalendar: boolean = false;
-
   private readonly pickerService: PickerService = inject(PickerService);
   private readonly calendarService: CalendarService = inject(CalendarService);
-  // private readonly config: IConfig = inject(PICKER_CONFIG);
+  private readonly optionsService: OptionsService = inject(OptionsService);
 
   public ngOnInit(): void {
-    this.scrollShift = 340;
-    this.months = this.pickerService.getMonths(3);
+    if (this.startDate >= this.endDate) {
+      throw new Error(`'startDate' (${this.startDate}) can't be more or equal than 'endDate' (${this.endDate})`);
+    }
+
+    this.optionsService.setOptions({
+      scrollShift: this.scrollShift,
+      startDate: this.startDate,
+      endDate: this.endDate,
+      showCalendar: this.showCalendar,
+      firstDayOfWeekIndex: this.firstDayOfWeekIndex,
+      weekendIndexes: this.weekendIndexes,
+    });
+
+    this.months = this.pickerService.getMonths(this.startDate, this.endDate);
 
     this.pickerService.changedObs$
       .pipe(untilDestroyed(this))
@@ -158,10 +174,5 @@ export class DateCarouselPickerComponent implements OnInit {
 
       this.monthNamesTrackComponent.scrollRight(newLeftValue);
     }
-  }
-
-  /** Показать календарь */
-  public showCalendar(): void {
-    this.isShowCalendar = true;
   }
 }

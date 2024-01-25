@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, HostBinding, Input, OnInit, inject } from '@angular/core';
 import { IDay } from '../../models/interfaces';
-import { InternalizationService, PickerService } from '../../services';
+import { InternalizationService, OptionsService, PickerService } from '../../services';
 
 /** Компонент дня */
 @Component({
@@ -20,6 +20,7 @@ export class DayComponent implements OnInit {
   /** Сервис для дат */
   private readonly pickerService: PickerService = inject(PickerService);
   private readonly internalizationService: InternalizationService = inject(InternalizationService);
+  private readonly optionsService: OptionsService = inject(OptionsService);
 
   public ngOnInit(): void {
     this.weekday = this.internalizationService.capitalizedWeekdays[this.day.weekdayOrder];
@@ -29,8 +30,12 @@ export class DayComponent implements OnInit {
   @HostBinding('class.selected') public selected: boolean = false;
 
   /** Выбор дня */
-  select(): void {
+  public select(): void {
     this.selected = !this.selected;
     this.pickerService.selectDate(this.day);
+  }
+
+  public isWeekend(): boolean {
+    return this.optionsService.getOptions().weekendIndexes.includes(this.day.weekdayOrder);
   }
 }

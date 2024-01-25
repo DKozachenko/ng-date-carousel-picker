@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { IDay, IDayDate, IRange, IRangeDayIds, IRangeItem } from '../models/interfaces';
 import { Observable, Subject } from 'rxjs';
+import { IDay, IDayDate, IRange, IRangeDayIds, IRangeItem } from '../models/interfaces';
 import { MonthOrder } from '../models/types';
 
 /** Базовый сервис для дат */
@@ -30,7 +30,7 @@ export abstract class DateService {
   /** Подписка на изменение выбранных дней (публичная) */
   public readonly dayIdsChangedObs$: Observable<IRangeDayIds | string> = this.dayIdsChanged$.asObservable();
 
-  protected abstract init<T>(limit: T): void;
+  // protected abstract init(limit: any): void;
   protected abstract selectDay(day: IDay): void;
   protected abstract selectRange(secondDay: IDay): void;
   public abstract selectDate(day: IDay): void;

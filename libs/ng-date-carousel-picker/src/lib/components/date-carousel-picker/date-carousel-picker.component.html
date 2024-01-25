@@ -19,7 +19,7 @@
     ></dcp-days-track>
 
     <button
-      *ngIf="rightControlType === 'scroll-button'; else calendar_button"
+      *ngIf="!showCalendar; else calendar_template"
       class="control"
       type="button"
       (click)="scrollRight()"
@@ -27,19 +27,30 @@
       <img src="icons/chevron-forward-outline.svg" alt="chevron-forward-outline">
     </button>
 
-    <ng-template #calendar_button>
-      <ngx-popover>
-        <button
-          class="control"
-          type="button"
-        > 
-          <img src="icons/calendar-outline.svg" alt="calendar-outline">
-        </button>
+    <ng-template #calendar_template>
+      <button
+        *ngIf="rightControlType === 'scroll-button'; else calendar_button"
+        class="control"
+        type="button"
+        (click)="scrollRight()"
+      >
+        <img src="icons/chevron-forward-outline.svg" alt="chevron-forward-outline">
+      </button>
 
-        <ng-template ngx-popover-template>
-          <dcp-calendar></dcp-calendar>
-        </ng-template>
-      </ngx-popover>
+      <ng-template #calendar_button>
+        <ngx-popover>
+          <button
+            class="control"
+            type="button"
+          > 
+            <img src="icons/calendar-outline.svg" alt="calendar-outline">
+          </button>
+
+          <ng-template ngx-popover-template>
+            <dcp-calendar></dcp-calendar>
+          </ng-template>
+        </ngx-popover>
+      </ng-template>
     </ng-template>
   </div>
 </div>

@@ -1,4 +1,4 @@
 <div class="day" (click)="select()">
   <p class="day__order">{{ day.order }}</p>
-  <span class="day__weekday" [class.weekend]="day.weekdayOrder === 5 || day.weekdayOrder === 6">{{ weekday }}</span>
+  <span class="day__weekday" [class.weekend]="isWeekend()">{{ weekday }}</span>
 </div>

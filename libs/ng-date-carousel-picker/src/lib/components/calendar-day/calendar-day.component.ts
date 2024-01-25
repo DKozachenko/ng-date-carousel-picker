@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { IDay } from '../../models/interfaces';
 import { WeekdayOrder } from '../../models/types';
-import { CalendarService } from '../../services';
+import { CalendarService, OptionsService } from '../../services';
 
 /** Компонент дня календаря */
 @Component({
@@ -45,14 +45,20 @@ export class CalendarDayComponent implements OnInit {
   /** Находится ли в конце диапазона */
   @HostBinding('class.in_range_end') public inRangeEnd: boolean = false;
 
+  private readonly calendarService: CalendarService = inject(CalendarService);
+  private readonly optionsService: OptionsService = inject(OptionsService);
   private readonly elementRef: ElementRef<Element> = inject(ElementRef);
   private readonly renderer: Renderer2 = inject(Renderer2);
-  private readonly calendarService: CalendarService = inject(CalendarService);
 
   public ngOnInit(): void {
-    // 1 - понедельник, 0 - воскреснье, особенности Date.getDay()
-    this.inWeekStart = this.day.weekdayOrder === 1;
-    this.inWeekEnd = this.day.weekdayOrder === 0;
+    if (this.optionsService.getOptions().firstDayOfWeekIndex === 6) {
+      // 1 - понедельник, 0 - воскреснье, особенности Date.getDay()
+      this.inWeekStart = this.day.weekdayOrder === 1;
+      this.inWeekEnd = this.day.weekdayOrder === 0;
+    } else {
+      this.inWeekStart = this.day.weekdayOrder === 0;
+      this.inWeekEnd = this.day.weekdayOrder === 6;
+    }
 
     const nowDay: Date = new Date(new Date().setHours(0, 0, 0, 0));
     const date: Date = this.calendarService.getDateByDayId(this.day.id);
@@ -64,8 +70,11 @@ export class CalendarDayComponent implements OnInit {
    * @returns день недели
    */
   private getGridColumnStart(): WeekdayOrder | 7 {
-    // 0 - воскреснье, особенности Date.getDay()
-    return this.day.weekdayOrder === 0 ? 7 : this.day.weekdayOrder;
+    if (this.optionsService.getOptions().firstDayOfWeekIndex === 6) {
+      // 0 - воскреснье, особенности Date.getDay()
+      return this.day.weekdayOrder === 0 ? 7 : this.day.weekdayOrder;
+    }
+    return this.day.weekdayOrder === 6 ? 0 : <WeekdayOrder | 7>(this.day.weekdayOrder + 1);
   }
 
   /** Установка свойства `grid-column-start` в зависимости от дня недели */

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IDayDate, IDay, IMonth, IRangeDayIds, IRangeItem } from '../models/interfaces';
-import { DayOrder, MonthLimit, MonthOrder, WeekdayOrder } from '../models/types';
+import { DayOrder, MonthOrder, WeekdayOrder } from '../models/types';
 import { generateRandomString } from '../utils';
 import { DateService } from './date.service';
 
@@ -14,25 +14,21 @@ export class PickerService extends DateService {
    * Заполнение месяцев
    * @param monthLimit ограничение по количеству месяцев (на сколько месяцев вперед нужно получить дни)
    */
-  protected init<MonthLimit>(monthLimit: MonthLimit): void {
-    const now: Date = new Date();
-    const nowCounter: Date = new Date();
-    const nowNMonth: Date = new Date(
-      new Date(new Date().setMonth(now.getMonth() + <number>(<number>monthLimit + 1))).setDate(1),
-    );
+  protected init(startDate: Date, endDate: Date): void {
+    const startDateCounter: Date = startDate;
 
-    while (+nowCounter < +nowNMonth) {
+    while (+startDateCounter < +endDate) {
       const day: IDay = {
         id: generateRandomString(),
-        order: <DayOrder>nowCounter.getDate(),
-        weekdayOrder: <WeekdayOrder>nowCounter.getDay(),
+        order: <DayOrder>startDateCounter.getDate(),
+        weekdayOrder: <WeekdayOrder>startDateCounter.getDay(),
       };
       this.dayDates.push({
         dayId: day.id,
-        date: new Date(new Date(nowCounter).setHours(0, 0, 0, 0)),
+        date: new Date(new Date(startDateCounter).setHours(0, 0, 0, 0)),
       });
 
-      const currentMonthOrder: MonthOrder = <MonthOrder>nowCounter.getMonth();
+      const currentMonthOrder: MonthOrder = <MonthOrder>startDateCounter.getMonth();
       const existedMonth: IMonth | undefined = this.months.find((month: IMonth) => month.order === currentMonthOrder);
 
       if (!existedMonth) {
@@ -45,7 +41,7 @@ export class PickerService extends DateService {
         existedMonth.days.push(day);
       }
 
-      nowCounter.setDate(nowCounter.getDate() + 1);
+      startDateCounter.setDate(startDateCounter.getDate() + 1);
     }
   }
   /**
@@ -140,16 +136,12 @@ export class PickerService extends DateService {
     }
   }
 
-  /**
-   * Получение месяцев
-   * @param monthLimit ограничение по количеству месяцев (на сколько месяцев вперед нужно получить дни)
-   */
-  public getMonths(monthLimit: MonthLimit = 11): IMonth[] {
+  public getMonths(startDate: Date, endDate: Date): IMonth[] {
     if (this.months.length) {
       return this.months;
     }
 
-    this.init(monthLimit);
+    this.init(startDate, endDate);
     return this.months;
   }
 }

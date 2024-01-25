@@ -12,10 +12,12 @@ import {
   ViewChildren,
   inject,
 } from '@angular/core';
-import { IConfig, IMonth } from '../../models/interfaces';
+import { IMonth } from '../../models/interfaces';
 import { MonthNameComponent } from '../month-name/month-name.component';
-import { PICKER_CONFIG, dayWidth, daysGap, monthsGap } from '../../models/constants';
+import { DEFAULT_OPTIONS, dayWidth, daysGap, monthsGap } from '../../models/constants';
 import { NgFor, NgForOf } from '@angular/common';
+import { IntRange } from '../../models/types';
+import { OptionsService } from '../../services';
 
 /** Компонент трека с названиями месяцев */
 @Component({
@@ -28,7 +30,7 @@ import { NgFor, NgForOf } from '@angular/common';
 })
 export class MonthNamesTrackComponent implements OnInit, AfterViewInit {
   /** Расстояние, которое скроллиться */
-  private scrollShift: number = 100;
+  private scrollShift: IntRange<42, 300> = DEFAULT_OPTIONS['scrollShift'];
 
   /** Расстояние между названиями месяцев */
   private readonly distanceBeetweenNames: number = monthsGap;
@@ -48,12 +50,12 @@ export class MonthNamesTrackComponent implements OnInit, AfterViewInit {
   /** Месяцы */
   @Input({ required: true }) public months: IMonth[] = [];
 
+  private readonly optionsService: OptionsService = inject(OptionsService);
   private readonly renderer: Renderer2 = inject(Renderer2);
   private readonly cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
-  // private readonly config: IConfig = inject(PICKER_CONFIG);
 
   public ngOnInit(): void {
-    this.scrollShift = 340;
+    this.scrollShift = this.optionsService.getOptions().scrollShift;
   }
 
   public ngAfterViewInit(): void {

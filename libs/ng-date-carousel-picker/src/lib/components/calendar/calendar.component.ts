@@ -2,10 +2,9 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, inject }
 import { NgForOf, NgIf } from '@angular/common';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { PopoverClose } from '@ngx-popovers/popover';
-import { CalendarService, InternalizationService } from '../../services';
-import { IConfig, IDateIndexes, IMonth, IRange, IRangeItem, IYear } from '../../models/interfaces';
-import { MonthOrder, YearLimit } from '../../models/types';
-import { PICKER_CONFIG } from '../../models/constants';
+import { CalendarService, InternalizationService, OptionsService } from '../../services';
+import { IDateIndexes, IMonth, IRange, IRangeItem, IYear } from '../../models/interfaces';
+import { MonthOrder, WeekdayOrder } from '../../models/types';
 import { CalendarMonthsTrackComponent } from '../calendar-months-track/calendar-months-track.component';
 import { DayRangeFormatPipe } from '../../pipes';
 
@@ -36,7 +35,7 @@ export class CalendarComponent implements OnInit {
   public currentMonthName: string = '';
 
   /** Текущий индекс года */
-  public currentYearIndex: YearLimit | 4 = 0;
+  public currentYearIndex: number = 0;
 
   /** Текущий номер года */
   public currentYearNum: number = 0;
@@ -51,12 +50,12 @@ export class CalendarComponent implements OnInit {
   public isRightControlDisabled: boolean = false;
 
   private readonly calendarService: CalendarService = inject(CalendarService);
+  private readonly optionsService: OptionsService = inject(OptionsService);
   private readonly internalizationService: InternalizationService = inject(InternalizationService);
-  // private readonly config: IConfig = inject(PICKER_CONFIG);
   private readonly cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
 
   public ngOnInit(): void {
-    this.years = this.calendarService.getYears(1);
+    this.years = this.calendarService.getYears();
     this.initWeekdays();
 
     this.calendarService.dateIndexesObs$.pipe(untilDestroyed(this)).subscribe((indexes: IDateIndexes) => {
@@ -83,9 +82,13 @@ export class CalendarComponent implements OnInit {
       const weekday: string = this.internalizationService.capitalizedWeekdays[i];
       this.weekdays.push(weekday);
     }
-
     const firstWeekday: string = this.internalizationService.capitalizedWeekdays[0];
-    this.weekdays.push(firstWeekday);
+
+    if (this.optionsService.getOptions().firstDayOfWeekIndex === 6) {
+      this.weekdays.push(firstWeekday);
+    } else {
+      this.weekdays.unshift(firstWeekday);
+    }
   }
 
   /** Установка текущего месяца, его названия и номера года */
@@ -103,7 +106,7 @@ export class CalendarComponent implements OnInit {
     if (this.currentMonth.order === 11) {
       this.calendarService.changeDateIndexes({
         monthIndex: 0,
-        yearIndex: <YearLimit | 4>(this.currentYearIndex + 1),
+        yearIndex: <1 | 2 | 3 | 4>(this.currentYearIndex + 1),
       });
     } else {
       this.calendarService.changeDateIndexes({
@@ -119,7 +122,7 @@ export class CalendarComponent implements OnInit {
       const newMonthIndex: MonthOrder = <MonthOrder>(this.years[this.currentYearIndex - 1].months.length - 1);
       this.calendarService.changeDateIndexes({
         monthIndex: newMonthIndex,
-        yearIndex: <YearLimit | 4>(this.currentYearIndex - 1),
+        yearIndex: <1 | 2 | 3 | 4>(this.currentYearIndex - 1),
       });
     } else {
       this.calendarService.changeDateIndexes({
@@ -141,5 +144,16 @@ export class CalendarComponent implements OnInit {
    */
   public trackByIndex(index: number): number {
     return index;
+  }
+
+  public isWeekend(index: WeekdayOrder): boolean {
+    if (this.optionsService.getOptions().firstDayOfWeekIndex === 6) {
+      const weekday: string = <string>this.weekdays.find((_, ind) => ind === index);
+      const lastWeekday = this.weekdays[this.weekdays.length - 1];
+      const rearrangedWeekdays: string[] = [lastWeekday].concat(this.weekdays.slice(0, this.weekdays.length - 1));
+      const factIndex: WeekdayOrder = <WeekdayOrder>rearrangedWeekdays.findIndex((item: string) => item === weekday);
+      return this.optionsService.getOptions().weekendIndexes.includes(factIndex);
+    }
+    return this.optionsService.getOptions().weekendIndexes.includes(index);
   }
 }

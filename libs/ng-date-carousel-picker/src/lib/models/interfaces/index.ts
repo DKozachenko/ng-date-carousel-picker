@@ -4,6 +4,6 @@ export { IRangeItem } from './range-item.interface';
 export { IRange } from './range.interface';
 export { IRangeDayIds } from './range-day-ids.interface';
 export { IDayDate } from './day-date.interface';
-export { IConfig } from './config.interface';
 export { IYear } from './year.interface';
 export { IDateIndexes } from './date-indexes.interface';
+export { IPickerOptions } from './picker-options.interface';
