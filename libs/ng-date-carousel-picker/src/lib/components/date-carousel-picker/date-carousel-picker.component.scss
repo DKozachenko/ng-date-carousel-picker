@@ -1,41 +1,36 @@
 @import '../../styles/index';
+@import '../../styles/theme';
 
 .range-date-picker {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  user-select: none;
 
-  position: relative;
+  user-select: none;
 
   .picker {
     display: flex;
     align-items: center;
 
     .control {
-      background-color: transparent;
-      padding: 0 15px;
+      background-color: var(--dcp-control-button-background-color, transparent);
+      padding-inline: 15px;
       cursor: pointer;
 
-      img {
-        width: 32px;
-        height: 32px;
-        color: black;
+      svg {
+        width: $control-button-svg-size;
+        height: $control-button-svg-size;
+        color: var(--dcp-control-button-svg-color, $color-dark);
+        transition-property: color;
+        transition-duration: var(--dcp-transition-color-duration, $transition-color-duration);
+        transition-timing-function: var(--dcp-transition-timing-function, $transition-timing-function);
       }
 
       &.control_disabled {
-        img {
-          color: var(--ion-text-medium);
+        svg {
+          color: var(--dcp-control-button-disabled-svg-color, $color-medium);
         }
       }
     }
-  }
-
-  dcp-calendar {
-    position: absolute;
-    // ширина кнопки / 2
-    right: calc($control-button-width / 2);
-    top: 0;
-    z-index: 15;
   }
 }

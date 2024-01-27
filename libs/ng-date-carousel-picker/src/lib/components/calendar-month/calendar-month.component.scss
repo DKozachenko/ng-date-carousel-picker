@@ -6,5 +6,5 @@
     repeat(5, $calendar-day-with-substrates-width) 
     $calendar-cell-size + $calendar-day-substrates-padding;
   grid-template-rows: repeat(6, $calendar-cell-size);
-  grid-row-gap: 8px;
+  grid-row-gap: $calendar-month-row-gap;
 }

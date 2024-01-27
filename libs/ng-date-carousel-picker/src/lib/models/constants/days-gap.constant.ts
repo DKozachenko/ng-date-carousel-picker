@@ -1,2 +1,2 @@
 /** Расстояние между днями */
-export const daysGap: number = 10;
+export const DAYS_GAP: number = 10;

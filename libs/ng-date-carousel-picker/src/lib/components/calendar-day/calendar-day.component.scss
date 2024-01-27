@@ -5,21 +5,21 @@
   &.disabled {
     .day {
       pointer-events: none;
-      color: $dcp-color-medium;
+      color: var(--dcp-calendar-day-disabled-color, $color-medium);
     }
   }
 
   // Состояние выбран / не выбран
   &.selected {
     .day {
-      background-color: $dcp-color-medium;
+      background-color: var(--dcp-calendar-day-selected-background-color, $color-medium);
     }
   }
 
   &.in_week_start,
   &.in_week_end {
     .substrates {
-      width: 36px;
+      width: $calendar-cell-size + $calendar-day-substrates-padding;
     }
   }
 
@@ -40,7 +40,7 @@
   // Нахождение в начале диапазона
   &.in_range_start {
     .substrates__right {
-      background-color:  $dcp-color-step-150;
+      background-color: var(--dcp-calendar-day-in-range, $color-medium-shade);
     }
   }
 
@@ -48,14 +48,14 @@
   &.in_range_middle {
     .substrates__left,
     .substrates__right {
-      background-color: $dcp-color-step-150;
+      background-color: var(--dcp-calendar-day-in-range, $color-medium-shade);
     }
   }
 
   // Нахождение в конце диапазона
   &.in_range_end {
     .substrates__left {
-      background-color: $dcp-color-step-150;
+      background-color: var(--dcp-calendar-day-in-range, $color-medium-shade);
     }
   }
 }
@@ -66,7 +66,6 @@
   height: 100%;
   width: $calendar-day-with-substrates-width;
   padding: 0 $calendar-day-substrates-padding;
-
   position: relative;
 
   &__left,
@@ -77,7 +76,9 @@
     z-index: 5;
     background-color: transparent;
     width: 50%;
-    transition: background-color $color-transition ease-in-out;
+    transition-property: background-color;
+    transition-duration: var(--dcp-transition-color-duration, $transition-color-duration);
+    transition-timing-function: var(--dcp-transition-timing-function, $transition-timing-function);
   }
 
   &__left {
@@ -95,12 +96,14 @@
   align-items: center;
   height: 100%;
   border-radius: 5px;
-  @include font(16px, $dcp-color-dark, 700);
+  @include font(16px, var(--dcp-calendar-day-color, $color-dark), 700);
 
   position: relative;
   z-index: 10;
   width: 100%;
   cursor: pointer;
 
-  transition: background-color $color-transition ease-in-out;
+  transition-property: background-color;
+  transition-duration: var(--dcp-transition-color-duration, $transition-color-duration);
+  transition-timing-function: var(--dcp-transition-timing-function, $transition-timing-function);
 }

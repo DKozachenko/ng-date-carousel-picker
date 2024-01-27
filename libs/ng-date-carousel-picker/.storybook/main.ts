@@ -10,8 +10,7 @@ const config: StorybookConfig = {
   docs: {
     autodocs: true,
     defaultName: 'Docs',
-  },
-  staticDirs: ['../src/lib/assets'],
+  }
 };
 
 export default config;

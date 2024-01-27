@@ -3,9 +3,9 @@
 .calendar {
   padding: 10px;
   display: inline-block;
-  border-radius: 15px;
-  border: 1px solid white;
-  background-color: $dcp-color-light;
+  border-radius: var(--dcp-calendar-border-radius, 15px);
+  border: 1px solid var(--dcp-calendar-border-color, transparent);
+  background-color: var(--dcp-calendar-background-color, $color-light);
   user-select: none;
 
   &__header {
@@ -15,18 +15,29 @@
     margin-bottom: 10px;
 
     .control {
-      background-color: transparent;
+      background-color: var(--dcp-control-button-background-color, transparent);
+      cursor: pointer;
 
-      img {
-        width: $calendar-control-size;
-        height: $calendar-control-size;
+      svg {
+        width: $calendar-control-button-svg-size;
+        height: $calendar-control-button-svg-size;
+        color: var(--dcp-control-button-svg-color, $color-dark);
+        transition-property: color;
+        transition-duration: var(--dcp-transition-color-duration, $transition-color-duration);
+        transition-timing-function: var(--dcp-transition-timing-function, $transition-timing-function);
+      }
+
+      &.control_disabled {
+        svg {
+          color: var(--dcp-control-button-disabled-svg-color, $color-medium);
+        }
       }
     }
 
     .calendar__date {
       display: flex;
       gap: 5px;
-      @include font(20px, $dcp-color-dark, 700);
+      @include font(20px, var(--dcp-calendar-date-color, $color-dark), 700);
     }
   }
 
@@ -43,10 +54,10 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        @include font(16px, $dcp-color-dark);
+        @include font(16px, var(--dcp-weekday-color, $color-dark-tint));
 
         &.weekend {
-          color: $dcp-color-danger;
+          color: var(--dcp-weekday-weekend-color, $color-danger);
         }
       }
     }
@@ -54,29 +65,25 @@
 
   .close-button,
   .select-button {
-    // 4 - отступы кнопки
-    // max-width: calc($calendar-month-width - 4px);
-    width: 100%;
-    background-color: transparent;
     display: flex;
     justify-content: center;
-    border: 1px solid black;
-    border-radius: 15px;
+    background-color: var(--dcp-calendar-buttons-background-color, transparent);
+    width: 100%;
+    border: 1px solid var(--dcp-calendar-buttons-border-color, $color-dark);
+    border-radius: var(--dcp-calendar-buttons-border-radius, 15px);
     cursor: pointer;
   }
 
   .select-button {
-    padding: 8px 0;
-    @include font(16px, $dcp-color-dark);
+    padding-block: 8px;
+    @include font(16px, var(--dcp-calendar-select-button-color, $color-dark));
   }
 
   .close-button {
-    img {
-      width: 32px;
-      height: 32px;
-      color: black;
+    svg {
+      width: $control-button-svg-size;
+      height: $control-button-svg-size;
+      color: var(--dcp-control-button-svg-color, $color-dark);
     }
   }
-
-
 }

@@ -6,12 +6,11 @@ import {
   ViewChild,
   Output,
   EventEmitter,
-  Provider,
   Input,
+  ViewEncapsulation,
 } from '@angular/core';
 import { NgIf } from '@angular/common';
-import { NGX_POPOVER_CONFIG, NgxPopoverConfig, PopoverComponent, PopoverTemplate } from '@ngx-popovers/popover';
-import { flip, offset, shift } from '@ngx-popovers/core';
+import { PopoverComponent, PopoverTemplate } from '@ngx-popovers/popover';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { CalendarService, OptionsService, PickerService } from '../../services';
 import { IMonth, IPickerOptions, IRange, IRangeItem } from '../../models/interfaces';
@@ -20,17 +19,8 @@ import { DaysTrackComponent } from '../days-track/days-track.component';
 import { CalendarComponent } from '../calendar/calendar.component';
 import { DEFAULT_OPTIONS } from '../../models/constants';
 import { FirstDayOfWeek, IntRange, RightControl, WeekdayOrder } from '../../models/types';
+import { PopoverConfigProvider } from './providers';
 
-export const PopoverConfigProvider: Provider = {
-  provide: NGX_POPOVER_CONFIG,
-  useValue: new NgxPopoverConfig({
-    placement: 'bottom-end',
-    autoUpdate: true,
-    arrow: false,
-    closeOnClickedOutside: true,
-    middleware: [flip(), shift(), offset(5)],
-  }),
-};
 
 /** Компонент дата пикера */
 @UntilDestroy()
@@ -42,6 +32,8 @@ export const PopoverConfigProvider: Provider = {
   providers: [PickerService, CalendarService, OptionsService, PopoverConfigProvider],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  // For vars
+  encapsulation: ViewEncapsulation.None,
 })
 export class DateCarouselPickerComponent implements OnInit, IPickerOptions {
   @Input({ required: false }) public readonly scrollShift: IntRange<42, 300> = DEFAULT_OPTIONS['scrollShift'];

@@ -9,7 +9,7 @@
     }"
   >
     <div #scroller class="scroller">
-      <dcp-month 
+      <dcp-month
         *ngFor="let month of months; let i = index; trackBy:trackByMonthId" 
         [month]="month"
       ></dcp-month>

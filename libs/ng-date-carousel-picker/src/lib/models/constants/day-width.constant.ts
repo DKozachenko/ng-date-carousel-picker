@@ -1,2 +1,2 @@
 /** Ширина дня */
-export const dayWidth: number = 42;
+export const DAY_WIDTH: number = 42;

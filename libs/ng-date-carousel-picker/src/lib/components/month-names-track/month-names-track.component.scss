@@ -6,7 +6,7 @@
 }
 
 .month-names-track {
-  padding: 0 5px;
+  padding-inline: 5px;
 
   .viewport {
     height: $month-name-height;
@@ -19,7 +19,9 @@
       top: 0;
       bottom: 0;
       z-index: 5;
-      transition: left $scroll-transition ease-in-out;
+      transition-property: left;
+      transition-duration: var(--dcp-transition-scroll-duration, $transition-scroll-duration);
+      transition-timing-function: var(--dcp-transition-timing-function, $transition-timing-function);
 
       width: 100%;
       display: flex;

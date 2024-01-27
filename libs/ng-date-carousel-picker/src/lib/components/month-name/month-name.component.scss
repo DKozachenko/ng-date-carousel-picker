@@ -9,7 +9,7 @@
 }
 
 .month-name {
-  @include font(14px, $dcp-color-dark);
+  @include font(14px, var(--dcp-month-name-color, $color-dark));
 
   position: absolute;
   top: 0;
@@ -17,5 +17,6 @@
   z-index: 10;
   margin: 0;
   opacity: 0.5;
-  transition: left $scroll-transition ease-in-out, opacity $color-transition ease-in-out;
+  transition: left var(--dcp-transition-scroll-duration, $transition-scroll-duration) var(--dcp-transition-timing-function, $transition-timing-function),
+    opacity var(--dcp-transition-color-duration, $transition-color-duration) var(--dcp-transition-timing-function, $transition-timing-function);
 }

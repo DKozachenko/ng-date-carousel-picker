@@ -82,6 +82,7 @@ export const Primary: Story = {
     }),
   ],
   render: (args) => ({
+    styles: ['ng-date-carousel-picker { --test-var: purple; }'],
     props: {
       ...args,
       changeLog: (data: IRange | IRangeItem | null) => {

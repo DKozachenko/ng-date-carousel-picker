@@ -1,2 +1,2 @@
 /** Расстояние между месяцами */
-export const monthsGap: number = 30;
+export const MONTHS_GAP: number = 30;

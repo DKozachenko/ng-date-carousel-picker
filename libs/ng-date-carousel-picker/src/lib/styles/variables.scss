@@ -1,26 +1,33 @@
 // Numeric variables
+// Some of them are used for readability, some of them - for reusability
+$control-button-svg-size: 32px;
 $control-button-width: 62px;
 
 $month-name-height: 20px;
-$day-width: 42px;
-$day-height: 62px;
-$days-gap: 10px;
+// Can't be configurable, `DAYS_GAP` constant depends on it
+$month-days-gap: 10px;
+// Can't be configurable, `MONTHS_GAP` constant depends on it
 $months-gap: 30px;
 
-$scroll-transition: 500ms;
-$color-transition: 300ms;
+// Can't be configurable, `DAY_WIDTH` constant depends on it
+$day-width: 42px;
+$day-height: 62px;
 
-$calendar-control-size: 25px;
-$calendar-month-width: 272px;
+$calendar-control-button-svg-size: 25px;
+$calendar-month-row-gap: 8px;
 $calendar-day-substrates-padding: 4px;
 $calendar-cell-size: 32px;
 $calendar-day-with-substrates-width: $calendar-cell-size + 2 * $calendar-day-substrates-padding;
 
+$transition-color-duration: 300ms;
+$transition-scroll-duration: 500ms;
+$transition-timing-function: ease-in-out;
+
 // Color variables
-// https://ionicframework.com/docs/theming/colors
-$dcp-color-light: #f4f5f8;
-$dcp-color-dark: #222428;
-$dcp-color-dark-tint: #383a3e;
-$dcp-color-medium: #92949c;
-$dcp-color-danger: #eb445a;
-$dcp-color-step-150: #818181;
+// All of them are taken from https://ionicframework.com/docs/theming/colors
+$color-dark: #222428;
+$color-dark-tint: #383a3e;
+$color-medium: #92949c;
+$color-medium-shade: #808289;
+$color-light: #f4f5f8;
+$color-danger: #eb445a;

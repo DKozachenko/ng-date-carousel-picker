@@ -14,7 +14,7 @@ import {
 } from '@angular/core';
 import { IMonth } from '../../models/interfaces';
 import { MonthNameComponent } from '../month-name/month-name.component';
-import { DEFAULT_OPTIONS, dayWidth, daysGap, monthsGap } from '../../models/constants';
+import { DEFAULT_OPTIONS, DAY_WIDTH, DAYS_GAP, MONTHS_GAP } from '../../models/constants';
 import { NgFor, NgForOf } from '@angular/common';
 import { IntRange } from '../../models/types';
 import { OptionsService } from '../../services';
@@ -33,7 +33,7 @@ export class MonthNamesTrackComponent implements OnInit, AfterViewInit {
   private scrollShift: IntRange<42, 300> = DEFAULT_OPTIONS['scrollShift'];
 
   /** Расстояние между названиями месяцев */
-  private readonly distanceBeetweenNames: number = monthsGap;
+  private readonly distanceBeetweenNames: number = MONTHS_GAP;
 
   /** Отступ слева у названий месяцев (=ширина кнопки - внутренний отступ с одной стороны = 62 - 5) */
   private readonly namesOffsetLeft: number = 57;
@@ -63,7 +63,7 @@ export class MonthNamesTrackComponent implements OnInit, AfterViewInit {
   }
 
   private getMonthComponentWidth(dayNumber: number): number {
-    return dayWidth * dayNumber + daysGap * (dayNumber - 1);
+    return DAY_WIDTH * dayNumber + DAYS_GAP * (dayNumber - 1);
   }
 
   /** Установка начального свойства `left` для компонентов названий месяцев */

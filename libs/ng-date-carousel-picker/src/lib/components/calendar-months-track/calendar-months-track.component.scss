@@ -2,8 +2,7 @@
 
 .month-track {
   .viewport {
-    // 8 - расстояние между строками
-    height: calc(6 * $calendar-cell-size + 5 * 8px);
+    height: calc(6 * $calendar-cell-size + 5 * $calendar-month-row-gap);
     overflow: hidden;
     position: relative;
 
@@ -13,7 +12,9 @@
       top: 0;
       bottom: 0;
       z-index: 5;
-      transition: left $scroll-transition ease-in-out;
+      transition-property: left;
+      transition-duration: var(--dcp-transition-scroll-duration, $transition-scroll-duration);
+      transition-timing-function: var(--dcp-transition-timing-function, $transition-timing-function);
 
       width: 100%;
       display: flex;

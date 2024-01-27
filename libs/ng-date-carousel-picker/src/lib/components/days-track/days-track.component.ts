@@ -16,7 +16,7 @@ import { PickerService } from '../../services';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { DayComponent } from '../day/day.component';
 import { SelectionComponent } from '../selection/selection.component';
-import { dayWidth, daysGap, monthsGap } from '../../models/constants';
+import { DAY_WIDTH, DAYS_GAP, MONTHS_GAP } from '../../models/constants';
 import { NgClass, NgForOf } from '@angular/common';
 
 /** Компонент трека дней */
@@ -86,15 +86,15 @@ export class DaysTrackComponent implements OnInit {
            * Необходимо добавить еще "половинку" дня, чтобы диапазон был не с
            * самого начала первого дня, а с его середины
            */
-          return offset + dayWidth / 2;
+          return offset + DAY_WIDTH / 2;
         }
 
         // Для непоследних дней добавляем еще расстояние между днями
-        offset += p === monthComponent.dayComponents.length - 1 ? dayWidth : dayWidth + daysGap;
+        offset += p === monthComponent.dayComponents.length - 1 ? DAY_WIDTH : DAY_WIDTH + DAYS_GAP;
       }
 
       // Для непоследних дней добавляем расстояние между месяцами
-      offset += i === this.monthComponents.length - 1 ? 0 : monthsGap;
+      offset += i === this.monthComponents.length - 1 ? 0 : MONTHS_GAP;
     }
 
     /**
@@ -124,20 +124,20 @@ export class DaysTrackComponent implements OnInit {
         }
 
         if (dayComponent.day.id === endDayId) {
-          width += dayWidth;
+          width += DAY_WIDTH;
           inRange = false;
           continue;
         }
 
         if (inRange) {
           // Для непоследних дней добавляем еще расстояние между днями
-          width += p === monthComponent.dayComponents.length - 1 ? dayWidth : dayWidth + daysGap;
+          width += p === monthComponent.dayComponents.length - 1 ? DAY_WIDTH : DAY_WIDTH + DAYS_GAP;
         }
       }
 
       if (inRange) {
         // Для непоследних месяцев добавляем расстояние между месяцами
-        width += i === this.monthComponents.length - 1 ? 0 : monthsGap;
+        width += i === this.monthComponents.length - 1 ? 0 : MONTHS_GAP;
       }
     }
 
@@ -145,7 +145,7 @@ export class DaysTrackComponent implements OnInit {
      * Необходимо отнять еще по "половинке" дня с каждой стороны,
      * чтобы диапазон в начале и в конце был с середины дня
      */
-    return width - dayWidth;
+    return width - DAY_WIDTH;
   }
 
   /**

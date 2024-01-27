@@ -4,7 +4,7 @@
   // Состояние выбран / не выбран
   &.selected {
     .day {
-      background-color: $dcp-color-light;
+      background-color: var(--dcp-day-selected-background-color, $color-light);
     }
   }
 }
@@ -14,33 +14,29 @@
   flex-direction: column;
   align-items: center;
   padding: 10px;
+  width: $day-width;
   position: relative;
   z-index: 10;
-  width: $day-width;
+  cursor: pointer;
   
-  border-radius: 25px;
+  border-radius: var(--dcp-day-border-radius, 25px);
+  background-color: var(--dcp-day-background-color, transparent);
 
-  background-color: transparent;
-
-  transition: background-color $color-transition ease-in-out,
-    border-radius $color-transition ease-in-out;
-
-  &:hover {
-    cursor: pointer;
-  }
+  transition-property: background-color, border-radius;
+  transition-duration: var(--dcp-transition-color-duration, $transition-color-duration);
+  transition-timing-function: var(--dcp-transition-timing-function, $transition-timing-function);
 
   &__order {
     margin: 0;
-    @include font(24px, $dcp-color-dark, 700);
-
+    @include font(24px, var(--dcp-day-order-color, $color-dark), 700);
     margin-bottom: 6px;
   }
 
   &__weekday {
-    @include font(12px, $dcp-color-dark-tint);
+    @include font(12px, var(--dcp-weekday-color, $color-dark-tint));
 
     &.weekend {
-      color: $dcp-color-danger;
+      color: var(--dcp-weekday-weekend-color, $color-danger);
     }
   }
 }

@@ -1,4 +1,4 @@
-export { dayWidth } from './day-width.constant';
-export { daysGap } from './days-gap.constant';
-export { monthsGap } from './months-gap.constant';
+export { DAY_WIDTH } from './day-width.constant';
+export { DAYS_GAP } from './days-gap.constant';
+export { MONTHS_GAP } from './months-gap.constant';
 export { DEFAULT_OPTIONS } from './default-options.constant';
