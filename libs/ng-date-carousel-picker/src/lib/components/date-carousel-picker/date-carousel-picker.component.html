@@ -12,17 +12,18 @@
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="48" d="M328 112L184 256l144 144"/></svg>
     </button>
 
-    <!-- TODO другой показатель конца такто -->
     <dcp-days-track
       [months]="months"
       [inStart]="isLeftControlDisabled"
-      [inEnd]="rightControlType === 'calendar-button'"
+      [inEnd]="showCalendar ? rightControlType === 'calendar-button' : isRightControlDisabled"
     ></dcp-days-track>
 
     <button
       *ngIf="!showCalendar; else calendar_template"
       class="control"
       type="button"
+      [disabled]="isRightControlDisabled"
+      [class.control_disabled]="isRightControlDisabled"
       (click)="scrollRight()"
     >
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="48" d="M184 112l144 144-144 144"/></svg>

@@ -26,6 +26,15 @@
   transition-duration: var(--dcp-transition-color-duration, $transition-color-duration);
   transition-timing-function: var(--dcp-transition-timing-function, $transition-timing-function);
 
+  &:hover {
+    background-color: var(--dcp-day-hover-background-color, $color-light-tint);
+  }
+
+  &:focus {
+    background-color: var(--dcp-day-focus-background-color, $color-light-shade);
+    outline: none;
+  }
+
   &__order {
     margin: 0;
     @include font(24px, var(--dcp-day-order-color, $color-dark), 700);

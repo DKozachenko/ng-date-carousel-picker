@@ -60,7 +60,7 @@ const meta: Meta<DateCarouselPickerComponent> = {
       control: {
         type: 'radio',
       },
-      options: [0, 6],
+      options: [0, 1],
     },
     weekendIndexes: {
       name: 'weekendIndexes',

@@ -1,4 +1,4 @@
-<div class="day" (click)="select()">
+<button type="button" class="day" (click)="select()">
   <p class="day__order">{{ day.order }}</p>
   <span class="day__weekday" [class.weekend]="isWeekend()">{{ weekday }}</span>
-</div>
+</button>

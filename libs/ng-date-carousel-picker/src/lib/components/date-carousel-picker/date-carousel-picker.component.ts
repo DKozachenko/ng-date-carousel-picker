@@ -21,7 +21,6 @@ import { DEFAULT_OPTIONS } from '../../models/constants';
 import { FirstDayOfWeek, IntRange, RightControl, WeekdayOrder } from '../../models/types';
 import { PopoverConfigProvider } from './providers';
 
-
 /** Компонент дата пикера */
 @UntilDestroy()
 @Component({
@@ -61,6 +60,7 @@ export class DateCarouselPickerComponent implements OnInit, IPickerOptions {
 
   /** Недоступен ли левый контрол */
   public isLeftControlDisabled: boolean = true;
+  public isRightControlDisabled: boolean = false;
 
   /** Тип правого контрола */
   public rightControlType: RightControl = 'scroll-button';
@@ -140,6 +140,7 @@ export class DateCarouselPickerComponent implements OnInit, IPickerOptions {
       const newLeftValue: number = currentDaysScrollerLeft + this.scrollShift;
       this.daysTrackComponent.setScrollerLeft(newLeftValue);
       this.rightControlType = 'scroll-button';
+      this.isRightControlDisabled = false;
 
       this.monthNamesTrackComponent.scrollLeft(newLeftValue);
     }
@@ -156,6 +157,8 @@ export class DateCarouselPickerComponent implements OnInit, IPickerOptions {
       const newLeftValue: number = daysScrollerScrollWidth - daysViewportWidth;
       this.daysTrackComponent.setScrollerLeft(-newLeftValue);
       this.monthNamesTrackComponent.setScrollerLeft(-newLeftValue);
+
+      this.isRightControlDisabled = true;
       this.rightControlType = 'calendar-button';
 
       this.monthNamesTrackComponent.setNameComponentEndLeft(newLeftValue);

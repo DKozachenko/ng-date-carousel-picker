@@ -7,6 +7,6 @@ export const DEFAULT_OPTIONS: IPickerOptions = {
   startDate: now,
   endDate: new Date(new Date().setMonth(now.getMonth() + 3)),
   showCalendar: true,
-  firstDayOfWeekIndex: 6,
+  firstDayOfWeekIndex: 1,
   weekendIndexes: [0, 6],
 };

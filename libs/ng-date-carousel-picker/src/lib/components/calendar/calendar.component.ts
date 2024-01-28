@@ -25,6 +25,7 @@ export class CalendarComponent implements OnInit {
 
   /** Дни недели (русские названия) */
   public weekdays: string[] = [];
+  private weekdaysInActualOrder: string[] = [];
 
   /** Текущий месяц */
   public currentMonth!: IMonth;
@@ -81,10 +82,11 @@ export class CalendarComponent implements OnInit {
     for (let i = 1; i < 7; ++i) {
       const weekday: string = this.internalizationService.capitalizedWeekdays[i];
       this.weekdays.push(weekday);
+      this.weekdaysInActualOrder.push(weekday);
     }
     const firstWeekday: string = this.internalizationService.capitalizedWeekdays[0];
 
-    if (this.optionsService.getOptions().firstDayOfWeekIndex === 6) {
+    if (this.optionsService.getOptions().firstDayOfWeekIndex === 1) {
       this.weekdays.push(firstWeekday);
     } else {
       this.weekdays.unshift(firstWeekday);
@@ -106,7 +108,7 @@ export class CalendarComponent implements OnInit {
     if (this.currentMonth.order === 11) {
       this.calendarService.changeDateIndexes({
         monthIndex: 0,
-        yearIndex: <1 | 2 | 3 | 4>(this.currentYearIndex + 1),
+        yearIndex: this.currentYearIndex + 1,
       });
     } else {
       this.calendarService.changeDateIndexes({
@@ -122,7 +124,7 @@ export class CalendarComponent implements OnInit {
       const newMonthIndex: MonthOrder = <MonthOrder>(this.years[this.currentYearIndex - 1].months.length - 1);
       this.calendarService.changeDateIndexes({
         monthIndex: newMonthIndex,
-        yearIndex: <1 | 2 | 3 | 4>(this.currentYearIndex - 1),
+        yearIndex: this.currentYearIndex - 1,
       });
     } else {
       this.calendarService.changeDateIndexes({
@@ -147,11 +149,12 @@ export class CalendarComponent implements OnInit {
   }
 
   public isWeekend(index: WeekdayOrder): boolean {
-    if (this.optionsService.getOptions().firstDayOfWeekIndex === 6) {
+    if (this.optionsService.getOptions().firstDayOfWeekIndex === 1) {
       const weekday: string = <string>this.weekdays.find((_, ind) => ind === index);
-      const lastWeekday = this.weekdays[this.weekdays.length - 1];
-      const rearrangedWeekdays: string[] = [lastWeekday].concat(this.weekdays.slice(0, this.weekdays.length - 1));
-      const factIndex: WeekdayOrder = <WeekdayOrder>rearrangedWeekdays.findIndex((item: string) => item === weekday);
+      // factIndex is not index in this.weekends
+      const factIndex: WeekdayOrder = <WeekdayOrder>(
+        this.internalizationService.capitalizedWeekdays.findIndex((item: string) => item === weekday)
+      );
       return this.optionsService.getOptions().weekendIndexes.includes(factIndex);
     }
     return this.optionsService.getOptions().weekendIndexes.includes(index);

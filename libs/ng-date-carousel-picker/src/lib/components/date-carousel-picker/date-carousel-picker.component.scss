@@ -17,6 +17,15 @@
       padding-inline: 15px;
       cursor: pointer;
 
+      &:hover,
+      &:focus {
+        outline: none;
+
+        svg {
+          color: var(--dcp-control-button-focus-svg-color, $color-medium-shade);
+        }
+      }
+
       svg {
         width: $control-button-svg-size;
         height: $control-button-svg-size;

@@ -9,9 +9,12 @@
   --dcp-color-medium: #92949c;
   --dcp-color-medium-shade: #808289;
   --dcp-color-light: #f4f5f8;
+  --dcp-color-light-shade: #d7d8da;
+  --dcp-color-light-tint: #f5f6f9;
   --dcp-color-danger: #eb445a;
 
   --dcp-control-button-svg-color: var(--dcp-color-dark);
+  --dcp-control-button-focus-svg-color: var(--dcp-color-medium-shade);
   --dcp-control-button-disabled-svg-color: var(--dcp-color-medium);
   --dcp-control-button-background-color: transparent;
 
@@ -21,6 +24,8 @@
   --dcp-month-name-color: var(--dcp-color-dark);
 
   --dcp-day-background-color: transparent;
+  --dcp-day-hover-background-color: var(--dcp-color-light-tint);
+  --dcp-day-focus-background-color: var(--dcp-color-light-shade);
   --dcp-day-selected-background-color: var(--dcp-color-light);
   --dcp-day-border-radius: 25px;
   --dcp-day-order-color: var(--dcp-color-dark);
@@ -32,10 +37,12 @@
   --dcp-calendar-border-color: transparent;
   --dcp-calendar-date-color: var(--dcp-color-dark);
   --dcp-calendar-buttons-background-color: transparent;
+  --dcp-calendar-buttons-hover-background-color: var(--dcp-color-medium);
   --dcp-calendar-buttons-border-color: var(--dcp-color-dark);
   --dcp-calendar-buttons-border-radius: 15px;
   --dcp-calendar-select-button-color: var(--dcp-color-dark);
 
+  --dcp-calendar-day-hover-color: var(--dcp-color-medium);
   --dcp-calendar-day-disabled-color: var(--dcp-color-medium);
   --dcp-calendar-day-selected-background-color: var(--dcp-color-medium);
   --dcp-calendar-day-in-range: var(--dcp-color-medium-shade);

@@ -15,7 +15,7 @@ export class PickerService extends DateService {
    * @param monthLimit ограничение по количеству месяцев (на сколько месяцев вперед нужно получить дни)
    */
   protected init(startDate: Date, endDate: Date): void {
-    const startDateCounter: Date = startDate;
+    const startDateCounter: Date = new Date(startDate.getTime());
 
     while (+startDateCounter < +endDate) {
       const day: IDay = {

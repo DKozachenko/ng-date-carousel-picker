@@ -51,7 +51,7 @@ export class CalendarDayComponent implements OnInit {
   private readonly renderer: Renderer2 = inject(Renderer2);
 
   public ngOnInit(): void {
-    if (this.optionsService.getOptions().firstDayOfWeekIndex === 6) {
+    if (this.optionsService.getOptions().firstDayOfWeekIndex === 1) {
       // 1 - понедельник, 0 - воскреснье, особенности Date.getDay()
       this.inWeekStart = this.day.weekdayOrder === 1;
       this.inWeekEnd = this.day.weekdayOrder === 0;
@@ -70,7 +70,7 @@ export class CalendarDayComponent implements OnInit {
    * @returns день недели
    */
   private getGridColumnStart(): WeekdayOrder | 7 {
-    if (this.optionsService.getOptions().firstDayOfWeekIndex === 6) {
+    if (this.optionsService.getOptions().firstDayOfWeekIndex === 1) {
       // 0 - воскреснье, особенности Date.getDay()
       return this.day.weekdayOrder === 0 ? 7 : this.day.weekdayOrder;
     }

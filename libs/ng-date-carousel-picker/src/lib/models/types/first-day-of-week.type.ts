@@ -1,2 +1,2 @@
-// 0 - Sunday, 6 - Monday
-export type FirstDayOfWeek = 0 | 6;
+// 0 - Sunday, 1 - Monday
+export type FirstDayOfWeek = 0 | 1;
