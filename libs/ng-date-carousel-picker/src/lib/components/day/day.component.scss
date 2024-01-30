@@ -3,7 +3,7 @@
 :host {
   .day {
     &:hover,
-    &:focus {
+    &:focus-visible {
       background-color: var(--dcp-color-secondary);
       outline: none;
     }
@@ -24,7 +24,7 @@
   &.in_range {
     .day {
       &:hover,
-      &:focus {
+      &:focus-visible {
         background-color: var(--dcp-color-primary);
         outline: none;
 
@@ -50,15 +50,11 @@
   border-radius: var(--dcp-day-border-radius, 25px);
   background-color: var(--dcp-day-background-color, transparent);
 
-  transition-property: background-color, border-radius;
-  transition-duration: var(--dcp-transition-color-duration, $transition-color-duration);
-  transition-timing-function: var(--dcp-transition-timing-function, $transition-timing-function);
+  @include color-transition(background-color, border-radius);
 
   &__order,
   &__weekday {
-    transition-property: color;
-    transition-duration: var(--dcp-transition-color-duration, $transition-color-duration);
-    transition-timing-function: var(--dcp-transition-timing-function, $transition-timing-function);
+    @include color-transition(color);
   }
 
   &__order {

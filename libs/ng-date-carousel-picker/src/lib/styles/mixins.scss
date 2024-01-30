@@ -5,3 +5,55 @@
   font-weight: $fw;
   line-height: $lh;
 }
+
+@mixin color-transition($args...) {
+  transition-property: $args;
+  transition-duration: var(--dcp-transition-color-duration, $transition-color-duration);
+  transition-timing-function: var(--dcp-transition-timing-function, $transition-timing-function);
+}
+
+@mixin scroll-transition($args...) {
+  transition-property: $args;
+  transition-duration: var(--dcp-transition-scroll-duration, $transition-scroll-duration);
+  transition-timing-function: var(--dcp-transition-timing-function, $transition-timing-function);
+}
+
+@mixin control-button-svg($size) {
+  width: $size;
+  height: $size;
+  color: var(--dcp-control-button-svg-color, $color-dark);
+  @include color-transition(color);
+}
+
+@mixin control-button($svg-size) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--dcp-control-button-background-color, transparent);
+  border: 1px solid transparent;
+  cursor: pointer;
+
+  @include color-transition(border-color);
+
+  &:hover,
+  &:focus-visible {
+    border-color: var(--dcp-color-primary);
+    outline: none;
+
+    svg {
+      color: var(--dcp-color-primary);
+    }
+  }
+
+  svg {
+    @include control-button-svg($svg-size);
+  }
+
+  &.control_disabled {
+    pointer-events: none;
+    
+    svg {
+      color: var(--dcp-control-button-disabled-svg-color, $color-medium);
+    }
+  }
+}

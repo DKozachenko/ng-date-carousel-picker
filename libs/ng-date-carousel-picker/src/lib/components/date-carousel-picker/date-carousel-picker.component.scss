@@ -11,37 +11,18 @@
   .picker {
     display: flex;
     align-items: center;
+    justify-content: center;
+    gap: 10px;
 
     .control {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      
-      background-color: var(--dcp-control-button-background-color, transparent);
-      padding-inline: 15px;
-      cursor: pointer;
+      border-radius: 50%;
+      padding: 9px;
+      @include control-button($control-button-svg-size);
 
-      &:hover,
-      &:focus {
-        outline: none;
-
-        svg {
-          color: var(--dcp-control-button-focus-svg-color, $color-medium-shade);
-        }
-      }
-
-      svg {
-        width: $control-button-svg-size;
-        height: $control-button-svg-size;
-        color: var(--dcp-control-button-svg-color, $color-dark);
-        transition-property: color;
-        transition-duration: var(--dcp-transition-color-duration, $transition-color-duration);
-        transition-timing-function: var(--dcp-transition-timing-function, $transition-timing-function);
-      }
-
-      &.control_disabled {
-        svg {
-          color: var(--dcp-control-button-disabled-svg-color, $color-medium);
+      &.control-calendar {
+        &:hover,
+        &:focus-visible {
+          border-color: transparent;
         }
       }
     }

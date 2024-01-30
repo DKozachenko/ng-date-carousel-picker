@@ -1,4 +1,4 @@
-@import '../../styles/variables';
+@import '../../styles/index';
 
 :host {
   // Ограничение по ширине для обрезания с правой стороны
@@ -19,9 +19,7 @@
       top: 0;
       bottom: 0;
       z-index: 5;
-      transition-property: left;
-      transition-duration: var(--dcp-transition-scroll-duration, $transition-scroll-duration);
-      transition-timing-function: var(--dcp-transition-timing-function, $transition-timing-function);
+      @include scroll-transition(left);
 
       width: 100%;
       display: flex;

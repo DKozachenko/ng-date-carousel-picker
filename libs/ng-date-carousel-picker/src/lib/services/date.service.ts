@@ -30,7 +30,6 @@ export abstract class DateService {
   /** Подписка на изменение выбранных дней (публичная) */
   public readonly dayIdsChangedObs$: Observable<IRangeDayIds | string> = this.dayIdsChanged$.asObservable();
 
-  // protected abstract init(limit: any): void;
   protected abstract selectDay(day: IDay): void;
   protected abstract selectRange(secondDay: IDay): void;
   public abstract selectDate(day: IDay): void;

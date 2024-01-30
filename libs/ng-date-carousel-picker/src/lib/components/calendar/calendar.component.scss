@@ -4,8 +4,8 @@
   padding: 10px;
   display: inline-block;
   border-radius: var(--dcp-calendar-border-radius, 15px);
-  border: 1px solid var(--dcp-calendar-border-color, transparent);
-  background-color: var(--dcp-calendar-background-color, $color-light);
+  border: 1px solid $color-dark;
+  background-color: white;
   user-select: none;
 
   &__header {
@@ -15,32 +15,9 @@
     margin-bottom: 10px;
 
     .control {
-      background-color: var(--dcp-control-button-background-color, transparent);
-      cursor: pointer;
-
-      &:hover,
-      &:focus {
-        outline: none;
-
-        svg {
-          color: var(--dcp-control-button-focus-svg-color, $color-medium-shade);
-        }
-      }
-
-      svg {
-        width: $calendar-control-button-svg-size;
-        height: $calendar-control-button-svg-size;
-        color: var(--dcp-control-button-svg-color, $color-dark);
-        transition-property: color;
-        transition-duration: var(--dcp-transition-color-duration, $transition-color-duration);
-        transition-timing-function: var(--dcp-transition-timing-function, $transition-timing-function);
-      }
-
-      &.control_disabled {
-        svg {
-          color: var(--dcp-control-button-disabled-svg-color, $color-medium);
-        }
-      }
+      border-radius: 10px;
+      padding: 2px;
+      @include control-button($calendar-control-button-svg-size);
     }
 
     .calendar__date {
@@ -82,26 +59,36 @@
     border-radius: var(--dcp-calendar-buttons-border-radius, 15px);
     cursor: pointer;
 
-    transition-property: background-color;
-    transition-duration: var(--dcp-transition-color-duration, $transition-color-duration);
-    transition-timing-function: var(--dcp-transition-timing-function, $transition-timing-function);
-
     &:hover,
-    &:focus {
-      background-color: var(--dcp-calendar-buttons-hover-background-color, $color-medium);
+    &:focus-visible {
+      border-color: var(--dcp-color-primary);
+      outline: none;
     }
   }
 
   .select-button {
     padding-block: 8px;
+    @include color-transition(border-color, color);
     @include font(16px, var(--dcp-calendar-select-button-color, $color-dark));
+
+    &:hover,
+    &:focus-visible {
+      color: var(--dcp-color-primary);
+    }
   }
 
   .close-button {
+    @include color-transition(border-color);
+
+    &:hover,
+    &:focus-visible {
+      svg {
+        color: var(--dcp-color-primary);
+      }
+    }
+
     svg {
-      width: $control-button-svg-size;
-      height: $control-button-svg-size;
-      color: var(--dcp-control-button-svg-color, $color-dark);
+      @include control-button-svg($control-button-svg-size);
     }
   }
 }

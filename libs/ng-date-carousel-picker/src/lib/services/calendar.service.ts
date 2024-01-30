@@ -32,7 +32,7 @@ export class CalendarService extends DateService {
    * Заполнение годов
    * @param yearLimit ограничение по количеству годов (на сколько годов вперед нужно получить месяцы)
    */
-  public init(): void {
+  private init(): void {
     const now: Date = new Date();
     const nowCounter: Date = new Date(new Date().setDate(1));
     const nowNYears: Date = new Date(

@@ -1,18 +1,27 @@
 @import '../../styles/index';
 
 :host {
+  .day {
+    &:hover,
+    &:focus-visible {
+      background-color: var(--dcp-color-secondary);
+      outline: none;
+    }
+  }
+
   // Состояние недоступности
   &.disabled {
     .day {
       pointer-events: none;
-      color: var(--dcp-calendar-day-disabled-color, $color-medium);
+      color: $color-medium;
     }
   }
 
   // Состояние выбран / не выбран
   &.selected {
     .day {
-      background-color: var(--dcp-calendar-day-selected-background-color, $color-medium);
+      background-color: var(--dcp-color-primary);
+      color: white;
     }
   }
 
@@ -40,7 +49,7 @@
   // Нахождение в начале диапазона
   &.in_range_start {
     .substrates__right {
-      background-color: var(--dcp-calendar-day-in-range, $color-medium-shade);
+      background-color: var(--dcp-color-secondary);
     }
   }
 
@@ -48,14 +57,23 @@
   &.in_range_middle {
     .substrates__left,
     .substrates__right {
-      background-color: var(--dcp-calendar-day-in-range, $color-medium-shade);
+      background-color: var(--dcp-color-secondary);
+    }
+
+    .day {
+      &:hover,
+      &:focus-visible {
+        background-color: var(--dcp-color-primary);
+        outline: none;
+        color: white;
+      }
     }
   }
 
   // Нахождение в конце диапазона
   &.in_range_end {
     .substrates__left {
-      background-color: var(--dcp-calendar-day-in-range, $color-medium-shade);
+      background-color: var(--dcp-color-secondary);
     }
   }
 }
@@ -76,9 +94,7 @@
     z-index: 5;
     background-color: transparent;
     width: 50%;
-    transition-property: background-color;
-    transition-duration: var(--dcp-transition-color-duration, $transition-color-duration);
-    transition-timing-function: var(--dcp-transition-timing-function, $transition-timing-function);
+    @include color-transition(background-color);
   }
 
   &__left {
@@ -104,16 +120,5 @@
   width: 100%;
   cursor: pointer;
 
-  transition-property: background-color;
-  transition-duration: var(--dcp-transition-color-duration, $transition-color-duration);
-  transition-timing-function: var(--dcp-transition-timing-function, $transition-timing-function);
-
-  &:hover {
-    background-color: var(--dcp-calendar-day-hover-color, $color-medium);
-  }
-
-  &:focus {
-    background-color: var(--dcp-day-focus-background-color, $color-light-shade);
-    outline: none;
-  }
+  @include color-transition(background-color, color);
 }
