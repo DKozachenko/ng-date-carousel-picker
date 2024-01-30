@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { DateCarouselPickerComponent } from './date-carousel-picker.component';
+import { NgDateCarouselPickerComponent } from './date-carousel-picker.component';
 
 describe('RangeDatePickerComponent', () => {
-  let component: DateCarouselPickerComponent;
-  let fixture: ComponentFixture<DateCarouselPickerComponent>;
+  let component: NgDateCarouselPickerComponent;
+  let fixture: ComponentFixture<NgDateCarouselPickerComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DateCarouselPickerComponent],
+      declarations: [NgDateCarouselPickerComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(DateCarouselPickerComponent);
+    fixture = TestBed.createComponent(NgDateCarouselPickerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

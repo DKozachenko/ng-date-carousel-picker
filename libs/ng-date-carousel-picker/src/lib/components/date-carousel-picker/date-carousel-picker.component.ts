@@ -34,7 +34,7 @@ import { PopoverConfigProvider } from './providers';
   // For vars
   encapsulation: ViewEncapsulation.None,
 })
-export class DateCarouselPickerComponent implements OnInit, IPickerOptions {
+export class NgDateCarouselPickerComponent implements OnInit, IPickerOptions {
   @Input({ required: false }) public readonly scrollShift: IntRange<42, 300> = DEFAULT_OPTIONS['scrollShift'];
   @Input({ required: false }) public readonly startDate: Date = DEFAULT_OPTIONS['startDate'];
   @Input({ required: false }) public readonly endDate: Date = DEFAULT_OPTIONS['endDate'];

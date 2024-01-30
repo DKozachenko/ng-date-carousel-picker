@@ -28,6 +28,7 @@ export class DayComponent implements OnInit {
 
   /** Выбран ли день */
   @HostBinding('class.selected') public selected: boolean = false;
+  @HostBinding('class.in_range') public inRange: boolean = false;
 
   /** Выбор дня */
   public select(): void {

@@ -8,9 +8,9 @@ import {
   ViewChildren,
   inject,
 } from '@angular/core';
-import { IDay, IMonth } from '../../models/interfaces';
+import { IDay, IMonth, IRangeDayIds } from '../../models/interfaces';
 import { DayComponent } from '../day/day.component';
-import { NgFor, NgForOf } from '@angular/common';
+import { NgForOf } from '@angular/common';
 
 /** Компонент месяца */
 @Component({
@@ -39,6 +39,14 @@ export class MonthComponent {
   updateDaySelection(selectedDayId: string): void {
     for (const dayComponent of this.dayComponents) {
       dayComponent.selected = dayComponent.day.id === selectedDayId;
+      dayComponent.inRange = false;
+      this.cdr.detectChanges();
+    }
+  }
+
+  updateDayRangeSelection(data: IRangeDayIds): void {
+    for (const dayComponent of this.dayComponents) {
+      dayComponent.inRange = data.inRangeIds.includes(dayComponent.day.id);
       this.cdr.detectChanges();
     }
   }

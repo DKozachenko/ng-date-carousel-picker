@@ -57,9 +57,12 @@ export class DaysTrackComponent implements OnInit {
   public ngOnInit(): void {
     this.pickerService.dayIdsChangedObs$.pipe(untilDestroyed(this)).subscribe((data: IRangeDayIds | string) => {
       if (typeof data === 'string') {
+        console.warn(data, 3);
         this.monthComponents.forEach((item: MonthComponent) => item.updateDaySelection(data));
         this.selectionComponent.unselect();
       } else {
+        console.warn(data, 45);
+        this.monthComponents.forEach((item: MonthComponent) => item.updateDayRangeSelection(data));
         const selectionLeft: number = this.getSelectionLeft(data.startId);
         const selectionWidth: number = this.getSelectionWidth(data.startId, data.endId);
         this.selectionComponent.setSelectionLeft(selectionLeft);

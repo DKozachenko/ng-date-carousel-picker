@@ -13,15 +13,19 @@
   .right__half {
     display: block;
     position: absolute;
-    z-index: 6;
+    z-index: 11;
     width: 100%;
     max-width: 0;
     height: $day-height;
+
     transition-property: opacity, max-width;
     transition-duration: calc(var(--dcp-transition-color-duration, $transition-color-duration) / 2);
     transition-timing-function: var(--dcp-transition-timing-function, $transition-timing-function);
     transition-delay: var(--dcp-transition-delay, $transition-color-duration);
-    background-color: var(--dcp-selection-background-color, $color-medium);
+
+    background-color: var(--dcp-color-secondary);
+    border-bottom: 1px solid var(--dcp-color-primary);
+    border-top: 1px solid var(--dcp-color-primary);
     opacity: 0;
   }
 

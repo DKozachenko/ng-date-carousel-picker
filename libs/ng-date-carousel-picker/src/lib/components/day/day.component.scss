@@ -1,10 +1,38 @@
 @import '../../styles/index';
 
 :host {
+  .day {
+    &:hover,
+    &:focus {
+      background-color: var(--dcp-color-secondary);
+      outline: none;
+    }
+  }
+
   // Состояние выбран / не выбран
   &.selected {
     .day {
-      background-color: var(--dcp-day-selected-background-color, $color-light);
+      background-color: var(--dcp-color-primary);
+
+      &__order,
+      &__weekday {
+        color: white;
+      }
+    }
+  }
+
+  &.in_range {
+    .day {
+      &:hover,
+      &:focus {
+        background-color: var(--dcp-color-primary);
+        outline: none;
+
+        .day__order,
+        .day__weekday {
+          color: white;
+        }
+      }
     }
   }
 }
@@ -26,13 +54,11 @@
   transition-duration: var(--dcp-transition-color-duration, $transition-color-duration);
   transition-timing-function: var(--dcp-transition-timing-function, $transition-timing-function);
 
-  &:hover {
-    background-color: var(--dcp-day-hover-background-color, $color-light-tint);
-  }
-
-  &:focus {
-    background-color: var(--dcp-day-focus-background-color, $color-light-shade);
-    outline: none;
+  &__order,
+  &__weekday {
+    transition-property: color;
+    transition-duration: var(--dcp-transition-color-duration, $transition-color-duration);
+    transition-timing-function: var(--dcp-transition-timing-function, $transition-timing-function);
   }
 
   &__order {
@@ -45,7 +71,7 @@
     @include font(12px, var(--dcp-weekday-color, $color-dark-tint));
 
     &.weekend {
-      color: var(--dcp-weekday-weekend-color, $color-danger);
+      color: var(--dcp-color-red);
     }
   }
 }

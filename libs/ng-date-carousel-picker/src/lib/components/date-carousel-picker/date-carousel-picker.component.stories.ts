@@ -1,14 +1,14 @@
 import { type Meta, type StoryObj, applicationConfig } from '@storybook/angular';
 import { HandlerFunction, action } from '@storybook/addon-actions';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { DateCarouselPickerComponent } from './date-carousel-picker.component';
+import { NgDateCarouselPickerComponent } from './date-carousel-picker.component';
 import { DCP_DATE_LOCALE } from '../../tokens';
 import { DEFAULT_OPTIONS } from '../../models/constants';
 import { IRange, IRangeItem } from '../../models/interfaces';
 
-const meta: Meta<DateCarouselPickerComponent> = {
-  component: DateCarouselPickerComponent,
-  title: 'DateCarouselPickerComponent',
+const meta: Meta<NgDateCarouselPickerComponent> = {
+  component: NgDateCarouselPickerComponent,
+  title: 'NgDateCarouselPickerComponent',
   args: {
     scrollShift: DEFAULT_OPTIONS['scrollShift'],
     startDate: DEFAULT_OPTIONS['startDate'],
@@ -73,7 +73,7 @@ const meta: Meta<DateCarouselPickerComponent> = {
   },
 };
 export default meta;
-type Story = StoryObj<DateCarouselPickerComponent>;
+type Story = StoryObj<NgDateCarouselPickerComponent>;
 
 export const Primary: Story = {
   decorators: [

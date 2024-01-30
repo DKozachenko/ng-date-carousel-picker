@@ -7,7 +7,7 @@
 // Неважно, какой цвет будет в свойстве mask-image в color-stop
 .days-track {
   .viewport {
-    height: $day-height;
+    height: calc($day-height);
     overflow: hidden;
     position: relative;
 
