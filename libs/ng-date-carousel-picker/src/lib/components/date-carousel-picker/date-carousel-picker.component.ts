@@ -24,6 +24,7 @@ import { PopoverConfigProvider } from './providers';
 /** Компонент дата пикера */
 @UntilDestroy()
 @Component({
+  /* eslint-disable-next-line @angular-eslint/component-selector */
   selector: 'ng-date-carousel-picker',
   templateUrl: './date-carousel-picker.component.html',
   styleUrls: ['./date-carousel-picker.component.scss'],

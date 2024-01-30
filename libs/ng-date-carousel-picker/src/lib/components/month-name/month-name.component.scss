@@ -3,20 +3,31 @@
 :host {
   &.active {
     .month-name {
-      opacity: 1;
+      background-color: var(--dcp-color-primary);
+      border-color: var(--dcp-color-primary);
+      color: white;
     }
   }
 }
 
 .month-name {
-  @include font(14px, var(--dcp-month-name-color, $color-dark));
+  // -2px из-за border
+  @include font(14px, var(--dcp-month-name-color, $color-dark), 400, calc($month-name-height - 2px));
 
   position: absolute;
   top: 0;
   bottom: 0;
   z-index: 10;
   margin: 0;
-  opacity: 0.5;
+  cursor: pointer;
+
+  padding-inline: 10px;
+  background-color: white;
+  color: var(--dcp-color-primary);
+  border: 1px solid var(--dcp-color-primary);
+  border-radius: 10px;
+
   transition: left var(--dcp-transition-scroll-duration, $transition-scroll-duration) var(--dcp-transition-timing-function, $transition-timing-function),
-    opacity var(--dcp-transition-color-duration, $transition-color-duration) var(--dcp-transition-timing-function, $transition-timing-function);
+    background-color var(--dcp-transition-color-duration, $transition-color-duration) var(--dcp-transition-timing-function, $transition-timing-function),
+    color var(--dcp-transition-color-duration, $transition-color-duration) var(--dcp-transition-timing-function, $transition-timing-function);
 }
