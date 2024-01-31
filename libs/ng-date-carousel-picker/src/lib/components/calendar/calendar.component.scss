@@ -4,8 +4,8 @@
   padding: 10px;
   display: inline-block;
   border-radius: var(--dcp-calendar-border-radius, 15px);
-  border: 1px solid $color-dark;
-  background-color: white;
+  border: 1px solid var(--dcp-calendar-border-color, $color-dark);
+  background-color: var(--dcp-calendar-background-color, $color-white);
   user-select: none;
 
   &__header {
@@ -61,7 +61,7 @@
 
     &:hover,
     &:focus-visible {
-      border-color: var(--dcp-color-primary);
+      border-color: var(--dcp-control-button-hover-focus-color, $color-primary);
       outline: none;
     }
   }
@@ -73,7 +73,7 @@
 
     &:hover,
     &:focus-visible {
-      color: var(--dcp-color-primary);
+      color: var(--dcp-control-button-hover-focus-color, $color-primary);
     }
   }
 
@@ -83,7 +83,7 @@
     &:hover,
     &:focus-visible {
       svg {
-        color: var(--dcp-color-primary);
+        color: var(--dcp-control-button-hover-focus-color, $color-primary);
       }
     }
 

@@ -4,7 +4,7 @@
   .day {
     &:hover,
     &:focus-visible {
-      background-color: var(--dcp-color-secondary);
+      background-color: var(--dcp-day-hover-focus-background-color, $color-secondary);
       outline: none;
     }
   }
@@ -13,15 +13,15 @@
   &.disabled {
     .day {
       pointer-events: none;
-      color: $color-medium;
+      color: var(--dcp-calendar-day-disabled-color, $color-medium);
     }
   }
 
   // Состояние выбран / не выбран
   &.selected {
     .day {
-      background-color: var(--dcp-color-primary);
-      color: white;
+      background-color: var(--dcp-day-selected-background-color, $color-primary);
+      color: var(--dcp-day-selected-color, $color-white);
     }
   }
 
@@ -49,7 +49,7 @@
   // Нахождение в начале диапазона
   &.in_range_start {
     .substrates__right {
-      background-color: var(--dcp-color-secondary);
+      background-color: var(--dcp-calendar-day-in-range-background-color, $color-secondary);
     }
   }
 
@@ -57,15 +57,15 @@
   &.in_range_middle {
     .substrates__left,
     .substrates__right {
-      background-color: var(--dcp-color-secondary);
+      background-color: var(--dcp-calendar-day-in-range-background-color, $color-secondary);
     }
 
     .day {
       &:hover,
       &:focus-visible {
-        background-color: var(--dcp-color-primary);
+        background-color: var(--dcp-day-in-range-hover-focus-background-color, $color-primary);
+        color: var(--dcp-day-in-range-hover-focus-color, $color-white);
         outline: none;
-        color: white;
       }
     }
   }
@@ -73,7 +73,7 @@
   // Нахождение в конце диапазона
   &.in_range_end {
     .substrates__left {
-      background-color: var(--dcp-color-secondary);
+      background-color: var(--dcp-calendar-day-in-range-background-color, $color-secondary);;
     }
   }
 }

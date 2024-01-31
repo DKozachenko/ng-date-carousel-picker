@@ -4,7 +4,7 @@
   .day {
     &:hover,
     &:focus-visible {
-      background-color: var(--dcp-color-secondary);
+      background-color: var(--dcp-day-hover-focus-background-color, $color-secondary);
       outline: none;
     }
   }
@@ -12,11 +12,11 @@
   // Состояние выбран / не выбран
   &.selected {
     .day {
-      background-color: var(--dcp-color-primary);
+      background-color: var(--dcp-day-selected-background-color, $color-primary);
 
       &__order,
       &__weekday {
-        color: white;
+        color: var(--dcp-day-selected-color, $color-white);
       }
     }
   }
@@ -25,12 +25,12 @@
     .day {
       &:hover,
       &:focus-visible {
-        background-color: var(--dcp-color-primary);
+        background-color: var(--dcp-day-in-range-hover-focus-background-color, $color-primary);
         outline: none;
 
         .day__order,
         .day__weekday {
-          color: white;
+          color: var(--dcp-day-in-range-hover-focus-color, $color-white);
         }
       }
     }
@@ -67,7 +67,7 @@
     @include font(12px, var(--dcp-weekday-color, $color-dark-tint));
 
     &.weekend {
-      color: var(--dcp-color-red);
+      color: var(--dcp-weekday-weekend-color, $color-danger);
     }
   }
 }
