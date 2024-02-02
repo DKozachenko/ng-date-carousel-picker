@@ -4,6 +4,7 @@
   "peerDependencies": {
     "@angular/common": "^17.0.0",
     "@angular/core": "^17.0.0",
+    "@angular/platform-browser": "~17.0.0",
     "@ngneat/until-destroy": "^10.0.0",
     "rxjs": "~7.8.0",
     "@ngx-popovers/core": "^0.1.0",

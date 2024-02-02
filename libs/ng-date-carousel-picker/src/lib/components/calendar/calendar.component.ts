@@ -148,7 +148,7 @@ export class CalendarComponent implements OnInit {
     return index;
   }
 
-  public isWeekend(index: WeekdayOrder): boolean {
+  public isWeekend(index: number): boolean {
     if (this.optionsService.getOptions().firstDayOfWeekIndex === 1) {
       const weekday: string = <string>this.weekdays.find((_, ind) => ind === index);
       // factIndex is not index in this.weekends
@@ -157,6 +157,6 @@ export class CalendarComponent implements OnInit {
       );
       return this.optionsService.getOptions().weekendIndexes.includes(factIndex);
     }
-    return this.optionsService.getOptions().weekendIndexes.includes(index);
+    return this.optionsService.getOptions().weekendIndexes.includes(<WeekdayOrder>index);
   }
 }

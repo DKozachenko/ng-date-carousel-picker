@@ -24,7 +24,7 @@ export class MonthNameComponent implements OnInit {
   private readonly internalizationService: InternalizationService = inject(InternalizationService);
 
   /** Месяц */
-  @Input({ required: true }) public readonly month!: IMonth;
+  @Input({ required: true }) public month!: IMonth;
 
   /** Является ли активным */
   @Input({ required: true })

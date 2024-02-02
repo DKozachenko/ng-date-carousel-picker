@@ -26,7 +26,7 @@ export class MonthComponent {
   @ViewChildren(DayComponent) public readonly dayComponents!: QueryList<DayComponent>;
 
   /** Месяц */
-  @Input({ required: true }) public readonly month!: IMonth;
+  @Input({ required: true }) public month!: IMonth;
 
   // Для обновления состояний дней используется именно родительский ChangeDetectorRef
   // из-за специфики работы HostBinding, описанной тут https://github.com/angular/angular/issues/22560

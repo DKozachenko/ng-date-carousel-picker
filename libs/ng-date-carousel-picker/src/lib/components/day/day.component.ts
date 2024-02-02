@@ -13,7 +13,7 @@ import { InternalizationService, OptionsService, PickerService } from '../../ser
 })
 export class DayComponent implements OnInit {
   /** День */
-  @Input({ required: true }) public readonly day!: IDay;
+  @Input({ required: true }) public day!: IDay;
 
   public weekday: string = '';
 

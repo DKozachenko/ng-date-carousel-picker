@@ -59,7 +59,7 @@
         "@nx/dependency-checks": [
           "error",
           {
-            "ignoredDependencies": ["@storybook/addon-actions"]
+            "ignoredDependencies": ["@storybook/addon-actions", "@storybook/angular"]
           }
         ]
       }

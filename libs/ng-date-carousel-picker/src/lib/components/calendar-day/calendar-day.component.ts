@@ -22,7 +22,7 @@ import { CalendarService, OptionsService } from '../../services';
 })
 export class CalendarDayComponent implements OnInit {
   /** День */
-  @Input({ required: true }) public readonly day!: IDay;
+  @Input({ required: true }) public day!: IDay;
 
   /** Недоступен ли день */
   @HostBinding('class.disabled') public disabled: boolean = false;
