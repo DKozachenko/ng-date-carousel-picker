@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NgDateCarouselPickerComponent } from './date-carousel-picker.component';
+import { NgDateCarouselPickerComponent } from './ng-date-carousel-picker.component';
 
 describe('RangeDatePickerComponent', () => {
   let component: NgDateCarouselPickerComponent;

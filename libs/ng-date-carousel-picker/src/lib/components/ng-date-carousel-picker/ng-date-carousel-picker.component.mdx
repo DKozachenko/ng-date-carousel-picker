@@ -1,0 +1,165 @@
+import { Meta, Controls, Primary, Title, Subtitle, Description, Canvas, ColorPalette, ColorItem } from '@storybook/blocks';
+import * as PickerStories from './ng-date-carousel-picker.component.stories';
+
+<Meta of={PickerStories} />
+<Title>NgDateCarouselPickerComponent</Title>
+
+<Subtitle>An Angular component that allows the user to select a date or a date range.</Subtitle>
+
+<Description>
+{`
+  Modern implementation of \`datepicker\` or \`date-range-picker\`.
+`}
+</Description>
+
+### Primary
+
+Describes component with all input and output properties. Can be controlled with controls below.
+
+<Primary />
+<Controls of={PickerStories.Primary} />
+
+### Used components
+
+Each component has its own story.
+
+* [CalendarDayComponent](/docs/calendardaycomponent--docs)
+* [CalendarMonthComponent](/docs/calendarmonthcomponent--docs)
+* [CalendarMonthsTrackComponent](/docs/calendarmonthstrackcomponent--docs)
+* [CalendarComponent](/docs/calendarcomponent--docs)
+* [DayComponent](/docs/daycomponent--docs)
+* [DaysTrackComponent](/docs/daystrackcomponent--docs)
+* [MonthComponent](/docs/monthnamecomponent--docs)
+* [MonthNameComponent](/docs/monthnamestrackcomponent--docs)
+* [MonthNamesTrackComponent](/docs/monthnamestrackcomponent--docs)
+* [SelectionComponent](/docs/selectioncomponent--docs)
+
+### Customization
+
+You can customize a lot of colors, few border radiuses and transition properties. CSS variables are shown below:
+
+Color palette:
+
+<ColorPalette>
+  <ColorItem 
+    title="Primary" 
+    subtitle="CSS variable '--dcp-color-primary'" 
+    colors={{ Primary: 'hsl(213, 100%, 58%)' }} 
+  />
+  <ColorItem 
+    title="Secondary" 
+    subtitle="CSS variable '--dcp-color-secondary'" 
+    colors={{ Secondary: 'hsla(209, 100%, 50%, 0.09)' }} 
+  />
+  <ColorItem 
+    title="Dark" 
+    subtitle="CSS variable '--dcp-color-dark'" 
+    colors={{ Dark: 'hsl(220, 8%, 15%)' }} 
+  />
+  <ColorItem 
+    title="Dark Tint" 
+    subtitle="CSS variable '--dcp-color-dark-tint'" 
+    colors={{ DarkTint: 'hsl(220, 5%, 23%)' }} 
+  />
+  <ColorItem 
+    title="Medium" 
+    subtitle="CSS variable '--dcp-color-medium'" 
+    colors={{ Medium: 'hsl(228, 5%, 59%)' }} 
+  />
+  <ColorItem 
+    title="Danger" 
+    subtitle="CSS variable '--dcp-color-danger'" 
+    colors={{ Danger: 'hsl(359, 100%, 46%)' }} 
+  />
+  <ColorItem 
+    title="White" 
+    subtitle="CSS variable '--dcp-color-white'" 
+    colors={{ White: 'hsl(0, 0%, 100%)' }} 
+  />
+</ColorPalette>
+
+Common:
+
+* `--dcp-transition-color-duration`
+* `--dcp-transition-scroll-duration`
+* `--dcp-transition-timing-function`
+* `--dcp-transition-delay`
+
+Specific:
+
+* `--dcp-control-button-svg-color`
+* `--dcp-control-button-hover-focus-color`
+* `--dcp-control-button-disabled-svg-color`
+* `--dcp-control-button-background-color`
+* `--dcp-weekday-color`
+* `--dcp-weekday-weekend-color`
+
+* `--dcp-month-name-color`
+* `--dcp-month-name-background-color`
+* `--dcp-month-name-border-color`
+* `--dcp-month-name-border-radius`
+* `--dcp-month-name-active-background-color`
+* `--dcp-month-name-active-color`
+
+* `--dcp-day-background-color`
+* `--dcp-day-hover-focus-background-color`
+* `--dcp-day-selected-background-color`
+* `--dcp-day-selected-color`
+* `--dcp-day-in-range-hover-focus-background-color`
+* `--dcp-day-in-range-hover-focus-color`
+* `--dcp-day-border-radius`
+* `--dcp-day-order-color`
+
+* `--dcp-selection-background-color`
+* `--dcp-selection-border-color`
+
+* `--dcp-calendar-border-radius`
+* `--dcp-calendar-border-color`
+* `--dcp-calendar-background-color`
+* `--dcp-calendar-date-color`
+* `--dcp-calendar-buttons-background-color`
+* `--dcp-calendar-buttons-hover-background-color`
+* `--dcp-calendar-buttons-border-color`
+* `--dcp-calendar-buttons-border-radius`
+* `--dcp-calendar-select-button-color`
+
+* `--dcp-calendar-day-hover-color`
+* `--dcp-calendar-day-disabled-color`
+* `--dcp-calendar-day-selected-background-color`
+* `--dcp-calendar-day-in-range-background-color`
+* `--dcp-calendar-day-color`
+  
+**Mostly** name of variables matches with component name. For example, variable `--dcp-selection-background-color` 
+is used only in [SelectionComponent](/docs/selectioncomponent--docs).
+
+---
+
+<Canvas of={PickerStories.Customization} />
+
+Styles for story;
+
+```css
+ng-date-carousel-picker { 
+  --dcp-control-button-svg-color: purple;
+  --dcp-weekday-color: blue;
+  --dcp-month-name-border-color: orange;
+  --dcp-month-name-active-background-color: orange;
+}
+```
+
+//TODO: check it  
+You can also use `:root` selector instead of `ng-date-carousel-picker`.
+
+### Localization
+
+You can localize the month names and weekday names. To do that, use the token `DCP_DATE_LOCALE`.
+You should use "Unicode locale identifier" as a value ([what Angular uses](https://angular.io/guide/i18n-common-locale-id)).
+Default value is `en-US`.
+
+<Canvas of={PickerStories.Localization} />
+
+Provides in story:
+
+```ts
+providers: [{ provide: DCP_DATE_LOCALE, useValue: 'es-ES' }],
+```

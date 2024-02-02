@@ -1,4 +1,4 @@
-export { NgDateCarouselPickerComponent } from './date-carousel-picker/date-carousel-picker.component';
+export { NgDateCarouselPickerComponent } from './ng-date-carousel-picker/ng-date-carousel-picker.component';
 export { DayComponent } from './day/day.component';
 export { MonthComponent } from './month/month.component';
 export { MonthNameComponent } from './month-name/month-name.component';

@@ -1,11 +1,9 @@
-import { type Meta, type StoryObj, applicationConfig } from '@storybook/angular';
-import { HandlerFunction, action } from '@storybook/addon-actions';
-import { provideAnimations } from '@angular/platform-browser/animations';
-import { NgDateCarouselPickerComponent } from './date-carousel-picker.component';
-import { DCP_DATE_LOCALE } from '../../tokens';
+import { type Meta, type StoryObj } from '@storybook/angular';
+import { NgDateCarouselPickerComponent } from './ng-date-carousel-picker.component';
 import { DEFAULT_OPTIONS } from '../../models/constants';
-import { IRange, IRangeItem } from '../../models/interfaces';
+import { CustomizationStory, LocalizationStory, PrimaryStory } from './stories';
 
+//TODO: description
 const meta: Meta<NgDateCarouselPickerComponent> = {
   component: NgDateCarouselPickerComponent,
   title: 'NgDateCarouselPickerComponent',
@@ -75,31 +73,6 @@ const meta: Meta<NgDateCarouselPickerComponent> = {
 export default meta;
 type Story = StoryObj<NgDateCarouselPickerComponent>;
 
-export const Primary: Story = {
-  decorators: [
-    applicationConfig({
-      providers: [provideAnimations(), { provide: DCP_DATE_LOCALE, useValue: 'ru' }],
-    }),
-  ],
-  render: (args) => ({
-    styles: ['ng-date-carousel-picker { --test-var: purple; }'],
-    props: {
-      ...args,
-      changeLog: (data: IRange | IRangeItem | null) => {
-        const createAction: HandlerFunction = action('change');
-        createAction(data);
-      },
-    },
-    template: `
-      <ng-date-carousel-picker 
-        [scrollShift]="scrollShift"
-        [startDate]="startDate"
-        [endDate]="endDate"
-        [showCalendar]="showCalendar"
-        [firstDayOfWeekIndex]="firstDayOfWeekIndex"
-        [weekendIndexes]="weekendIndexes"
-        (changed)="changeLog($event)"
-      ></ng-date-carousel-picker>
-    `,
-  }),
-};
+export const Primary: Story = PrimaryStory;
+export const Customization: Story = CustomizationStory;
+export const Localization: Story = LocalizationStory;

@@ -26,8 +26,8 @@ import { PopoverConfigProvider } from './providers';
 @Component({
   /* eslint-disable-next-line @angular-eslint/component-selector */
   selector: 'ng-date-carousel-picker',
-  templateUrl: './date-carousel-picker.component.html',
-  styleUrls: ['./date-carousel-picker.component.scss'],
+  templateUrl: './ng-date-carousel-picker.component.html',
+  styleUrls: ['./ng-date-carousel-picker.component.scss'],
   imports: [NgIf, MonthNamesTrackComponent, DaysTrackComponent, CalendarComponent, PopoverComponent, PopoverTemplate],
   providers: [PickerService, CalendarService, OptionsService, PopoverConfigProvider],
   standalone: true,
@@ -75,6 +75,12 @@ export class NgDateCarouselPickerComponent implements OnInit, IPickerOptions {
       throw new Error(`'startDate' (${this.startDate}) can't be more or equal than 'endDate' (${this.endDate})`);
     }
 
+    if (this.monthDiff(this.startDate, this.endDate) < 1) {
+      throw new Error(
+        `Between 'startDate' (${this.startDate}) and 'endDate' (${this.endDate}) must be at least one month`,
+      );
+    }
+
     this.optionsService.setOptions({
       scrollShift: this.scrollShift,
       startDate: this.startDate,
@@ -93,6 +99,14 @@ export class NgDateCarouselPickerComponent implements OnInit, IPickerOptions {
     this.calendarService.changedObs$
       .pipe(untilDestroyed(this))
       .subscribe((data: IRange | IRangeItem | null) => this.changed.emit(data));
+  }
+
+  private monthDiff(date1: Date, date2: Date): number {
+    // https://stackoverflow.com/questions/2536379/difference-in-months-between-two-dates-in-javascript
+    let monthsNumber = (date2.getFullYear() - date1.getFullYear()) * 12;
+    monthsNumber -= date1.getMonth();
+    monthsNumber += date2.getMonth();
+    return monthsNumber <= 0 ? 0 : monthsNumber;
   }
 
   /**
