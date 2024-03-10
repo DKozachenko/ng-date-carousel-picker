@@ -12,7 +12,6 @@ import { IDay } from '../../models/interfaces';
 import { WeekdayOrder } from '../../models/types';
 import { CalendarService, OptionsService } from '../../services';
 
-/** Компонент дня календаря */
 @Component({
   selector: 'dcp-calendar-day',
   templateUrl: './calendar-day.component.html',
@@ -21,28 +20,25 @@ import { CalendarService, OptionsService } from '../../services';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalendarDayComponent implements OnInit {
-  /** День */
   @Input({ required: true }) public day!: IDay;
 
-  /** Недоступен ли день */
   @HostBinding('class.disabled') public disabled: boolean = false;
 
-  /** Находится ли в начале недели */
+  /** Is it at the beginning of the week */
   @HostBinding('class.in_week_start') public inWeekStart: boolean = false;
 
-  /** Находится ли в конце недели */
+  /** Is it at the end of the week */
   @HostBinding('class.in_week_end') public inWeekEnd: boolean = false;
 
-  /** Выбран ли день */
   @HostBinding('class.selected') public selected: boolean = false;
 
-  /** Находится ли в начале диапазона */
+  /** Is it at the beginning of the range */
   @HostBinding('class.in_range_middle') public inRangeMiddle: boolean = false;
 
-  /** Находится ли в середине диапазона */
+  /** Is it in the middle of the range */
   @HostBinding('class.in_range_start') public inRangeStart: boolean = false;
 
-  /** Находится ли в конце диапазона */
+  /** Is at the end of the range */
   @HostBinding('class.in_range_end') public inRangeEnd: boolean = false;
 
   private readonly calendarService: CalendarService = inject(CalendarService);
@@ -52,7 +48,7 @@ export class CalendarDayComponent implements OnInit {
 
   public ngOnInit(): void {
     if (this.optionsService.getOptions().firstDayOfWeekIndex === 1) {
-      // 1 - понедельник, 0 - воскреснье, особенности Date.getDay()
+      // 0 is for Sunday, 1 is for Monday
       this.inWeekStart = this.day.weekdayOrder === 1;
       this.inWeekEnd = this.day.weekdayOrder === 0;
     } else {
@@ -65,25 +61,22 @@ export class CalendarDayComponent implements OnInit {
     this.disabled = +date < +nowDay;
   }
 
-  /**
-   * Получение свойства `grid-column-start` в зависимости от дня недели
-   * @returns день недели
-   */
+  /** Getting the `grid-column-start` property depending on the day of the week */
   private getGridColumnStart(): WeekdayOrder | 7 {
     if (this.optionsService.getOptions().firstDayOfWeekIndex === 1) {
-      // 0 - воскреснье, особенности Date.getDay()
+      // 0 is for Sunday
       return this.day.weekdayOrder === 0 ? 7 : this.day.weekdayOrder;
     }
     return this.day.weekdayOrder === 6 ? 0 : <WeekdayOrder | 7>(this.day.weekdayOrder + 1);
   }
 
-  /** Установка свойства `grid-column-start` в зависимости от дня недели */
+  /** Setting the `grid-column-start` property depending on the day of the week */
   public setGridColumnStart(): void {
     const columnStart: number = this.getGridColumnStart();
     this.renderer.setStyle(this.elementRef.nativeElement, 'grid-column-start', columnStart);
   }
 
-  /** Выбор дня */
+  /** Select a day */
   public select(): void {
     this.selected = !this.selected;
     this.calendarService.selectDate(this.day);

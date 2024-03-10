@@ -9,7 +9,7 @@
     }
   }
 
-  // Состояние недоступности
+  // Disabled state
   &.disabled {
     .day {
       pointer-events: none;
@@ -17,7 +17,7 @@
     }
   }
 
-  // Состояние выбран / не выбран
+  // Selected / not selected state
   &.selected {
     .day {
       background-color: var(--dcp-day-selected-background-color, $color-primary);
@@ -32,28 +32,28 @@
     }
   }
 
-  // Нахождение в начале недели
+  // Being at the beginning of the week
   &.in_week_start {
     .substrates {
       padding: 0 $calendar-day-substrates-padding 0 0;
     }
   }
 
-  // Нахождение в конце недели
+  // Being at the end of the week
   &.in_week_end {
     .substrates {
       padding: 0 0 0 $calendar-day-substrates-padding;
     }
   }
 
-  // Нахождение в начале диапазона
+  // Being the beginning of the range
   &.in_range_start {
     .substrates__right {
       background-color: var(--dcp-calendar-day-in-range-background-color, $color-secondary);
     }
   }
 
-  // Нахождение в середине диапазона
+  // Being in the middle of the range
   &.in_range_middle {
     .substrates__left,
     .substrates__right {
@@ -70,7 +70,7 @@
     }
   }
 
-  // Нахождение в конце диапазона
+  // Being at the end of the range
   &.in_range_end {
     .substrates__left {
       background-color: var(--dcp-calendar-day-in-range-background-color, $color-secondary);;

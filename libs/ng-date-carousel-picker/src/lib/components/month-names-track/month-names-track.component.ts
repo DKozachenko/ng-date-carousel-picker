@@ -14,12 +14,11 @@ import {
 } from '@angular/core';
 import { IMonth } from '../../models/interfaces';
 import { MonthNameComponent } from '../month-name/month-name.component';
-import { DEFAULT_OPTIONS, DAY_WIDTH, DAYS_GAP, MONTHS_GAP } from '../../models/constants';
 import { NgFor, NgForOf } from '@angular/common';
+import { DEFAULT_OPTIONS, DAY_WIDTH, DAYS_GAP, MONTHS_GAP } from '../../models/constants';
 import { IntRange } from '../../models/types';
 import { OptionsService } from '../../services';
 
-/** Компонент трека с названиями месяцев */
 @Component({
   selector: 'dcp-month-names-track',
   templateUrl: './month-names-track.component.html',
@@ -29,25 +28,25 @@ import { OptionsService } from '../../services';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MonthNamesTrackComponent implements OnInit, AfterViewInit {
-  /** Расстояние, которое скроллиться */
   private scrollShift: IntRange<42, 300> = DEFAULT_OPTIONS['scrollShift'];
 
-  /** Расстояние между названиями месяцев */
+  /** Distance between month names */
   private readonly distanceBeetweenNames: number = MONTHS_GAP;
 
-  /** Отступ слева у названий месяцев (=ширина кнопки - внутренний отступ с одной стороны = 62 - 5) */
+  /**
+   * The left indentation for month names is equal to the width of the control button (for this there is, for example,
+   * sass variable `$control-button-width`) minus padding on one side
+   * (which the `month-names-track` class has), i.e. = 62 -5
+   */
   private readonly namesOffsetLeft: number = 57;
 
-  /** Ссылка на элемент скроллера */
-  @ViewChild('scroller') private readonly scroller!: ElementRef<HTMLDivElement>;
+  @ViewChild('scroller') private readonly scrollerRef!: ElementRef<HTMLDivElement>;
 
-  /** Компоненты названий месяцев */
   @ViewChildren(MonthNameComponent) private readonly namesComponents!: QueryList<MonthNameComponent>;
 
-  /** Индекс активного названия месяца */
+  /** Active month name index */
   public activeNameIndex: number = 0;
 
-  /** Месяцы */
   @Input({ required: true }) public months: IMonth[] = [];
 
   private readonly optionsService: OptionsService = inject(OptionsService);
@@ -66,13 +65,13 @@ export class MonthNamesTrackComponent implements OnInit, AfterViewInit {
     return DAY_WIDTH * dayNumber + DAYS_GAP * (dayNumber - 1);
   }
 
-  /** Установка начального свойства `left` для компонентов названий месяцев */
+  /** Setting the initial `left` property for month name components */
   private setNamesOffset(): void {
-    // Для первого устанавливается изначальное значение `namesOffsetLeft`
+    // The first one is set to the initial value `namesOffsetLeft`
     let leftOffset: number = this.namesOffsetLeft;
     this.setNameComponentLeft(this.activeNameIndex, leftOffset);
 
-    // Для последующих высчитывается ширина всех предыдущих месяцев и добавляется расстояние между названиями
+    // For subsequent months, the width of all previous months is calculated and the distance between the names is added
     for (let i = 1; i < this.months.length; ++i) {
       const month: IMonth = this.months[i - 1];
       const monthWidth: number = this.getMonthComponentWidth(month.days.length);
@@ -81,14 +80,11 @@ export class MonthNamesTrackComponent implements OnInit, AfterViewInit {
     }
   }
 
-  /**
-   * Получение расстояния между текущим компонентом названия месяца и предыдущим
-   * @returns расстояние
-   */
+  /** Getting the distance between the current month name component and the previous one */
   private getDistanceBeetweenActiveAndPreviousName(): number {
     const activeMonthComponent: MonthNameComponent = <MonthNameComponent>this.namesComponents.get(this.activeNameIndex);
 
-    const activeNameElem: HTMLParagraphElement = activeMonthComponent.ref.nativeElement;
+    const activeNameElem: HTMLParagraphElement = activeMonthComponent.nameRef.nativeElement;
     const prevNameElem: HTMLParagraphElement = this.getPreviousNameElement();
 
     const activeNameElemRect: DOMRect = activeNameElem.getBoundingClientRect();
@@ -97,18 +93,15 @@ export class MonthNamesTrackComponent implements OnInit, AfterViewInit {
     return activeNameElemRect.left - (prevNameElemRect.left + prevNameElem.clientWidth);
   }
 
-  /**
-   * Получение расстояния между текущим компонентом названия месяца и следующим
-   * @returns расстояние
-   */
+  /** Getting the distance between the current month name component and the next one */
   private getDistanceBeetweenActiveAndNextName(): number {
     const activeMonthComponent: MonthNameComponent = <MonthNameComponent>this.namesComponents.get(this.activeNameIndex);
     const nextMonthComponent: MonthNameComponent = <MonthNameComponent>(
       this.namesComponents.get(this.activeNameIndex + 1)
     );
 
-    const activeNameElem: HTMLParagraphElement = activeMonthComponent.ref.nativeElement;
-    const nextNameElem: HTMLParagraphElement = nextMonthComponent.ref.nativeElement;
+    const activeNameElem: HTMLParagraphElement = activeMonthComponent.nameRef.nativeElement;
+    const nextNameElem: HTMLParagraphElement = nextMonthComponent.nameRef.nativeElement;
 
     const activeNameElemRect: DOMRect = activeNameElem.getBoundingClientRect();
     const nextNameElemRect: DOMRect = nextNameElem.getBoundingClientRect();
@@ -116,32 +109,22 @@ export class MonthNamesTrackComponent implements OnInit, AfterViewInit {
     return nextNameElemRect.left - (activeNameElemRect.left + activeNameElem.clientWidth);
   }
 
-  /**
-   * Получение ширины активного названия месяца
-   * @returns ширина
-   */
+  /** Getting the width of the active month name */
   private getActiveNameComponentWidth(): number {
     const activeMonthComponent: MonthNameComponent = <MonthNameComponent>this.namesComponents.get(this.activeNameIndex);
-    return activeMonthComponent.ref.nativeElement.clientWidth;
+    return activeMonthComponent.nameRef.nativeElement.clientWidth;
   }
 
-  /**
-   * Получение предыдущего (относительно активного) элемента названия месяца
-   * @returns элемент
-   */
+  /** Getting the previous (relatively active) month name element */
   private getPreviousNameElement(): HTMLParagraphElement {
     const prevMonthComponent: MonthNameComponent = <MonthNameComponent>(
       this.namesComponents.get(this.activeNameIndex - 1)
     );
-    const prevNameElem: HTMLParagraphElement = prevMonthComponent.ref.nativeElement;
+    const prevNameElem: HTMLParagraphElement = prevMonthComponent.nameRef.nativeElement;
     return prevNameElem;
   }
 
-  /**
-   * Получение отступа у компонента месяца от левого края первого месяца
-   * @param index индекс компонента месяца
-   * @returns отступ
-   */
+  /** Getting the month component's indentation from the left edge of the first month */
   private getMonthComponentLeftOffset(index: number): number {
     let offset: number = 0;
     for (let i = 0; i <= index; ++i) {
@@ -152,27 +135,23 @@ export class MonthNamesTrackComponent implements OnInit, AfterViewInit {
     return offset;
   }
 
-  /**
-   * Установка свойства `left` для компонента названия месяца
-   * @param index индекс компонента названия месяца
-   * @param value значение
-   */
+  /** Setting the `left` property for the month name component */
   public setNameComponentLeft(index: number, value: number): void {
     const nameComponent: MonthNameComponent = <MonthNameComponent>this.namesComponents.get(index);
-    this.renderer.setStyle(nameComponent.ref.nativeElement, 'left', `${value}px`);
+    this.renderer.setStyle(nameComponent.nameRef.nativeElement, 'left', `${value}px`);
   }
 
-  /** Установка изначального свойства `left` для активного компонента названия месяца */
+  /** Setting the initial `left` property for the active month name component */
   public setNameComponentStartLeft(): void {
     /**
-     * При установке у активного названия месяца начальное значение может оказаться, что
-     * активный элемент сейчас не первый (такое бывает, когда у первого месяца мало дней и скролл превосходит
-     * всю ширину месяца), тогда нужно от активного месяца до первого (не включительно) названия "закрепить"
-     * в начале.
-     * Теоретически в этом случае `activeNameIndex` <= 1.
-     * Также, возможно, стоит делать такую же проверку при скролле вправо, но с учетом ограничения на `scrollShift`
-     * в конфиге, вариант, в котором скролл больше ширины последнего месяца (который заполняется полностью), почти
-     * невозможен
+     * When setting the active month name to an initial value, it may turn out that
+     * the active element is now not the first (this happens when the first month has few days and the scroll exceeds
+     * the entire width of the month), then you need to "fix" from the active month to the first (not inclusive) name
+     * at first.
+     * Theoretically, in this case `activeNameIndex` <= 1.
+     * It might also be worth doing the same check when scrolling to the right, but taking into account the limitation on `scrollShift`
+     * in the config, the option in which the scroll is larger than the width of the last month (which is filled completely) is almost
+     * impossible
      */
     /* eslint-disable for-direction */
     for (let i = this.activeNameIndex; i > 0; --i) {
@@ -183,62 +162,51 @@ export class MonthNamesTrackComponent implements OnInit, AfterViewInit {
     this.setNameComponentLeft(this.activeNameIndex, this.namesOffsetLeft);
   }
 
-  /**
-   * Установка изначального свойства `left` для активного компонента названия месяца
-   * @param endShift конечный сдвиг скроллера
-   */
+  /** Setting the initial `left` property for the active month name component */
   public setNameComponentEndLeft(endShift: number): void {
     this.setNameComponentLeft(this.activeNameIndex, endShift + this.namesOffsetLeft);
   }
 
-  /**
-   * Установка свойства `left` для активного компонента названия месяца
-   * @param value значение
-   */
+  /** Setting the `left` property for the active month name component */
   public setActiveNameComponentLeft(value: number): void {
     this.setNameComponentLeft(this.activeNameIndex, value);
   }
 
-  /**
-   * Установка свойства `left` для скроллера
-   * @param value значение
-   */
+  /** Setting the `left` property for the scroller */
   public setScrollerLeft(value: number): void {
-    this.renderer.setStyle(this.scroller.nativeElement, 'left', `${value}px`);
+    this.renderer.setStyle(this.scrollerRef.nativeElement, 'left', `${value}px`);
   }
 
-  /** Является ли первое название активным */
   private isFirstNameActive(): boolean {
     return this.activeNameIndex === 0;
   }
 
-  /** Является ли последнее название активным */
   private isLastNameActive(): boolean {
     return this.activeNameIndex === this.months.length - 1;
   }
 
-  /** Достаточно ли расстояния между названиями месяцев для скролла */
+  /** Is there enough space between month names for scrolling */
   private isDistanceBeetweenNamesEnough(distanceBetweenMonthNames: number): boolean {
-    /** От фактического расстояния еще необходимо отнять расстояние между названиями */
+    /** It is still necessary to subtract the distance between the names from the actual distance */
     return distanceBetweenMonthNames - this.distanceBeetweenNames > this.scrollShift;
   }
 
-  /** "Закрепление" активного названия в начале его месяца */
+  /** "Pinning" the active name at the beginning of its month */
   private attachActiveNameAtStart(): void {
     /**
-     * Чтобы "закрепить" активное название в начале его месяца,
-     * необходимо получить отступ от левого края предыдущего месяца
+     * To "pin" an active name at the beginning of its month,
+     * you need to get the indentation from the left edge of the previous month
      */
     const monthComponentOffset: number = this.getMonthComponentLeftOffset(this.activeNameIndex - 1);
     this.setActiveNameComponentLeft(this.namesOffsetLeft + monthComponentOffset);
   }
 
-  /** "Закрепление" активного названия в конце его месяца */
+  /** "Pinning" the active name at the end of its month*/
   private attachActiveNameAtEnd(): void {
     /**
-     * Чтобы "закрепить" активное название в начале его месяца,
-     * необходимо получить отступ от левого края предыдущего месяца, отнять
-     * `distanceBeetweenNames` и отнять ширину активного названия месяца
+     * To "pin" an active name at the beginning of its month,
+     * you need to get the indent from the left edge of the previous month, subtract
+     * `distanceBeetweenNames` and subtract the width of the active month name
      */
     const monthOffset: number = this.getMonthComponentLeftOffset(this.activeNameIndex);
     const activeNameComponentWidth: number = this.getActiveNameComponentWidth();
@@ -248,47 +216,37 @@ export class MonthNamesTrackComponent implements OnInit, AfterViewInit {
     );
   }
 
-  /**
-   * Происходит ли переход на предыдущий месяц
-   * @param newLeftValue новое значение `left` у скроллера
-   */
+  /** Is there a transition to the previous month */
   private isGoingMovingToPreviousName(newLeftValue: number): boolean {
     const monthComponentOffset: number = this.getMonthComponentLeftOffset(this.activeNameIndex - 1);
     const prevNameElem: HTMLParagraphElement = this.getPreviousNameElement();
 
     /**
-     * Если новое значение скролла (newLeftValue всегда отрицательно, поэтому по факту, то сколько
-     * проскроллили равно `-newLeftValue`) меньше, чем отступ предыдущего месяца, от которого
-     * отняли `distanceBeetweenNames` (это будет фактический отступ от месяца) и
-     * ширину предыдущего названия месяца, значит произошел переход на предыдущий месяц
+     * If the new scroll value (newLeftValue) is always negative, so in fact, how much
+     * scrolled equal to `-newLeftValue`) less than the indent of the previous month from which
+     * took away `distanceBeetweenNames` (this will be the actual distance from the month) and
+     * the width of the previous month name, which means there has been a transition to the previous month
      */
     return -newLeftValue <= monthComponentOffset - this.distanceBeetweenNames - prevNameElem.clientWidth;
   }
 
-  /**
-   * Происходит ли переход на следующий месяц
-   * @param newLeftValue новое значение `left` у скроллера
-   */
+  /** Is there a transition to the next month */
   private isGoingMovingToNextName(newLeftValue: number): boolean {
     const monthComponentOffset: number = this.getMonthComponentLeftOffset(this.activeNameIndex);
 
     /**
-     * Если новое значение скролла (newLeftValue всегда отрицательно, поэтому по факту, то сколько
-     * проскроллили равно `-newLeftValue`) больше, чем отступ предыдущего месяца
-     * значит произошел переход на следующий месяц
+     * If the new scroll value (newLeftValue) is always negative, so in fact, how much
+     * scrolled equal to `-newLeftValue`) greater than the previous month's indent
+     * it means there has been a transition to the next month
      */
     return -newLeftValue >= monthComponentOffset;
   }
 
-  /**
-   * Скролл влево
-   * @param newLeftValue сдвиг / значение скролла
-   */
   public scrollLeft(newLeftValue: number): void {
     this.setScrollerLeft(newLeftValue);
 
     if (this.isFirstNameActive()) {
-      /** Первый элемент не нужно никак проверять, тк у него слева нет других названий месяцев */
+      /** The first element does not need to be checked in any way, as it has no other month names on the left */
       this.setActiveNameComponentLeft(-newLeftValue + this.namesOffsetLeft);
       this.cdr.detectChanges();
       return;
@@ -297,20 +255,20 @@ export class MonthNamesTrackComponent implements OnInit, AfterViewInit {
     const distanceBetweenMonthNames: number = this.getDistanceBeetweenActiveAndPreviousName();
 
     if (this.isDistanceBeetweenNamesEnough(distanceBetweenMonthNames)) {
-      /** Если расстояние между названиями месяцев больше, чем необходимо проскроллить, то просто скроллим */
+      /** If the distance between the month names is greater than what needs to be scrolled, then just scroll */
       this.setActiveNameComponentLeft(-newLeftValue + this.namesOffsetLeft);
       this.cdr.detectChanges();
       return;
     }
 
     /**
-     * Если расстояние между названиями месяцев меньше, чем необходимо проскроллить, то
-     * необходимо "закрепить" активное название в начале его месяца
+     * If the distance between the month names is less than what needs to be scrolled, then
+     * it is necessary to "pin" the active name at the beginning of its month
      */
     this.attachActiveNameAtStart();
 
     if (this.isGoingMovingToPreviousName(newLeftValue)) {
-      /** Если произошел переход на предыдущий месяц, нужно изменить индекс активного названия и проскроллить его */
+      /** If there is a transition to the previous month, you need to change the index of the active title and scroll through it */
       --this.activeNameIndex;
       this.setActiveNameComponentLeft(-newLeftValue + this.namesOffsetLeft);
     }
@@ -318,15 +276,11 @@ export class MonthNamesTrackComponent implements OnInit, AfterViewInit {
     this.cdr.detectChanges();
   }
 
-  /**
-   * Скролл вправо
-   * @param newLeftValue сдвиг / значение скролла
-   */
   public scrollRight(newLeftValue: number): void {
     this.setScrollerLeft(newLeftValue);
 
     if (this.isLastNameActive()) {
-      /** Первый элемент не нужно никак проверять, тк у него справа нет других названий месяцев */
+      /** The first element does not need to be checked in any way, as it has no other month names on the right */
       this.setActiveNameComponentLeft(-newLeftValue + this.namesOffsetLeft);
       this.cdr.detectChanges();
       return;
@@ -335,20 +289,20 @@ export class MonthNamesTrackComponent implements OnInit, AfterViewInit {
     const distanceBetweenMonthNames: number = this.getDistanceBeetweenActiveAndNextName();
 
     if (this.isDistanceBeetweenNamesEnough(distanceBetweenMonthNames)) {
-      /** Если расстояние между названиями месяцев больше, чем необходимо проскроллить, то просто скроллим */
+      /** If the distance between the month names is greater than what needs to be scrolled, then just scroll */
       this.setActiveNameComponentLeft(-newLeftValue + this.namesOffsetLeft);
       this.cdr.detectChanges();
       return;
     }
 
     /**
-     * Если расстояние между названиями месяцев меньше, чем необходимо проскроллить, то
-     * необходимо "закрепить" активное название в конце его месяца
+     * If the distance between the month names is less than what needs to be scrolled, then
+     * it is necessary to "pin" the active name at the end of its month
      */
     this.attachActiveNameAtEnd();
 
     if (this.isGoingMovingToNextName(newLeftValue)) {
-      /** Если произошел переход на следующий месяц, нужно изменить индекс активного названия и проскроллить его */
+      /** If there is a transition to the next month, you need to change the index of the active title and scroll through it */
       ++this.activeNameIndex;
       this.setActiveNameComponentLeft(-newLeftValue + this.namesOffsetLeft);
     }
@@ -356,12 +310,6 @@ export class MonthNamesTrackComponent implements OnInit, AfterViewInit {
     this.cdr.detectChanges();
   }
 
-  /**
-   * Функция trackBy для списка месяцев
-   * @param index индекс
-   * @param month месяц
-   * @returns идентификатор месяца
-   */
   public trackByMonthId(index: number, month: IMonth): string {
     return month.id;
   }

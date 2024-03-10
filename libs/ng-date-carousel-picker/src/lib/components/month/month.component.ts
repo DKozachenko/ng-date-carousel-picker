@@ -8,11 +8,10 @@ import {
   ViewChildren,
   inject,
 } from '@angular/core';
+import { NgForOf } from '@angular/common';
 import { IDay, IMonth, IRangeDayIds } from '../../models/interfaces';
 import { DayComponent } from '../day/day.component';
-import { NgForOf } from '@angular/common';
 
-/** Компонент месяца */
 @Component({
   selector: 'dcp-month',
   templateUrl: './month.component.html',
@@ -22,20 +21,17 @@ import { NgForOf } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MonthComponent {
-  /** Компоненты дней */
   @ViewChildren(DayComponent) public readonly dayComponents!: QueryList<DayComponent>;
 
-  /** Месяц */
   @Input({ required: true }) public month!: IMonth;
 
-  // Для обновления состояний дней используется именно родительский ChangeDetectorRef
-  // из-за специфики работы HostBinding, описанной тут https://github.com/angular/angular/issues/22560
+  /**
+   * To update the states of days, it is the parent ChangeDetectorRef that is used
+   * due to the specifics of HostBinding, described here https://github.com/angular/angular/issues/22560
+   */
   @SkipSelf() private readonly cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
 
-  /**
-   * Обновление состояния выбора у одного дня
-   * @param selectedDayId идентификатор выбранного дня
-   */
+  /** Update selection status for one day */
   updateDaySelection(selectedDayId: string): void {
     for (const dayComponent of this.dayComponents) {
       dayComponent.selected = dayComponent.day.id === selectedDayId;
@@ -44,6 +40,7 @@ export class MonthComponent {
     }
   }
 
+  /** Update in range status for all days */
   updateDayRangeSelection(data: IRangeDayIds): void {
     for (const dayComponent of this.dayComponents) {
       dayComponent.inRange = data.inRangeIds.includes(dayComponent.day.id);
@@ -51,12 +48,6 @@ export class MonthComponent {
     }
   }
 
-  /**
-   * Функция trackBy для списка дней
-   * @param index индекс
-   * @param day день
-   * @returns идентификатор дня
-   */
   public trackByDayId(index: number, day: IDay): string {
     return day.id;
   }

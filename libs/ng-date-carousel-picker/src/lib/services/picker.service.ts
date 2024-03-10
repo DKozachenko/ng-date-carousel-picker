@@ -4,16 +4,12 @@ import { DayOrder, MonthOrder, WeekdayOrder } from '../models/types';
 import { generateRandomString } from '../utils';
 import { DateService } from './date.service';
 
-/** Сервис для пикера */
 @Injectable()
 export class PickerService extends DateService {
-  /** Месяцы (вложенная структура, каждый месяц содержит свои дни) */
+  /** Months (nested structure, each month contains its own days)*/
   private readonly months: IMonth[] = [];
 
-  /**
-   * Заполнение месяцев
-   * @param monthLimit ограничение по количеству месяцев (на сколько месяцев вперед нужно получить дни)
-   */
+  /** Filling months */
   private init(startDate: Date, endDate: Date): void {
     const startDateCounter: Date = new Date(startDate.getTime());
 
@@ -44,22 +40,8 @@ export class PickerService extends DateService {
       startDateCounter.setDate(startDateCounter.getDate() + 1);
     }
   }
-  /**
-   * Получение месяца по идентификатору дня, который есть в этом месяце
-   * @param dayId
-   * @returns
-   */
-  private getMonthByDayId(dayId: string): IMonth {
-    const month: IMonth = <IMonth>(
-      this.months.find((month: IMonth) => !!month.days.find((day: IDay) => day.id === dayId))
-    );
-    return month;
-  }
 
-  /**
-   * Выбор одного дня
-   * @param day день
-   */
+  /** Select one day */
   protected selectDay(day: IDay): void {
     this.selectedDay = day;
     this.dayIdsChanged$.next(this.selectedDay.id);
@@ -69,10 +51,7 @@ export class PickerService extends DateService {
     this.changed$.next(item);
   }
 
-  /**
-   * Выбор диапазона
-   * @param secondDay второй день в диапазоне
-   */
+  /** Range selection */
   protected selectRange(secondDay: IDay): void {
     let startItem!: IRangeItem;
     let endItem!: IRangeItem;
@@ -84,7 +63,7 @@ export class PickerService extends DateService {
     );
     const secondDayDate: IDayDate = <IDayDate>this.dayDates.find((item: IDayDate) => item.dayId === secondDay.id);
 
-    // Если второй выбранный день позже, чем первый
+    // If the second selected day is later than the first
     if (+secondDayDate.date > +firstDayDate.date) {
       startItem = this.getRangeItem(<IDay>this.selectedDay);
       endItem = this.getRangeItem(secondDay);
@@ -118,10 +97,6 @@ export class PickerService extends DateService {
     this.selectedDay = null;
   }
 
-  /**
-   * Выбор даты
-   * @param day день
-   */
   public selectDate(day: IDay): void {
     if (this.selectedDay?.id === day.id) {
       this.selectedDay = null;

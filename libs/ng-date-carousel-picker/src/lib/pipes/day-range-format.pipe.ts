@@ -3,7 +3,7 @@ import { IRange, IRangeItem } from '../models/interfaces';
 import { isRange } from '../utils';
 import { InternalizationService } from '../services';
 
-/** Пайп для форматирования одной даты или диапазона дат */
+/** Pipe for formatting one date or range of dates */
 @Pipe({
   name: 'dcpDayRangeFormat',
   standalone: true,

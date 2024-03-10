@@ -9,11 +9,10 @@ import {
   ViewChildren,
   inject,
 } from '@angular/core';
+import { NgForOf } from '@angular/common';
 import { IDay, IMonth, IRangeDayIds } from '../../models/interfaces';
 import { CalendarDayComponent } from '../calendar-day/calendar-day.component';
-import { NgForOf } from '@angular/common';
 
-/** Компонент месяца календаря */
 @Component({
   selector: 'dcp-calendar-month',
   templateUrl: './calendar-month.component.html',
@@ -23,30 +22,27 @@ import { NgForOf } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalendarMonthComponent implements AfterViewInit {
-  /** Компоненты дней */
   @ViewChildren(CalendarDayComponent) private readonly dayComponents!: QueryList<CalendarDayComponent>;
 
-  /** Месяц */
   @Input({ required: true }) public month!: IMonth;
 
-  // Для обновления состояний дней используется именно родительский ChangeDetectorRef
-  // из-за специфики работы HostBinding, описанной тут https://github.com/angular/angular/issues/22560
+  /**
+   * To update the states of days, it is the parent ChangeDetectorRef that is used
+   * due to the specifics of HostBinding, described here https://github.com/angular/angular/issues/22560
+   */
   @SkipSelf() private readonly cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
 
   public ngAfterViewInit(): void {
     this.setFirstDayGridColumnStart();
   }
 
-  /** Установка значения `grid-column-start` для первого дня месяца */
+  /** Setting the value of `grid-column-start` for the first day of the month */
   private setFirstDayGridColumnStart(): void {
     const firstMonthDay: CalendarDayComponent = <CalendarDayComponent>this.dayComponents.get(0);
     firstMonthDay.setGridColumnStart();
   }
 
-  /**
-   * Обновление состояний нахождения в диапазоне у дней
-   * @param rangeIds идентификаторы дней диапазона
-   */
+  /** Updating states of being in a range of days */
   public updateDaysRangeState(rangeIds: IRangeDayIds): void {
     for (const calendarDay of this.dayComponents) {
       calendarDay.inRangeStart = calendarDay.day.id === rangeIds.startId;
@@ -56,10 +52,7 @@ export class CalendarMonthComponent implements AfterViewInit {
     }
   }
 
-  /**
-   * Обновление состояния выбора у одного дня
-   * @param selectedDayId идентификатор выбранного дня
-   */
+  /** Update selection status for one day */
   public updateDaySelection(selectedDayId: string): void {
     for (const calendarDay of this.dayComponents) {
       calendarDay.selected = calendarDay.day.id === selectedDayId;
@@ -70,12 +63,6 @@ export class CalendarMonthComponent implements AfterViewInit {
     }
   }
 
-  /**
-   * Функция trackBy для списка дней
-   * @param index индекс
-   * @param day день
-   * @returns идентификатор дня
-   */
   public trackByDayId(index: number, day: IDay): string {
     return day.id;
   }

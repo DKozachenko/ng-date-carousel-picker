@@ -4,14 +4,14 @@
   flex-grow: 1;
 }
 
-// Неважно, какой цвет будет в свойстве mask-image в color-stop
+// It doesn't matter what color is in the `mask-image` property in color-stop
 .days-track {
   .viewport {
     height: calc($day-height);
     overflow: hidden;
     position: relative;
 
-    // Отображение маски только слева
+    // Display mask only on the left
     &.viewport_left {
       --webkit-mask-image: -webkit-gradient(
         linear,
@@ -30,7 +30,7 @@
       );
     }
 
-    // Отображение маски слева и справа
+    // Mask display on left and right
     &.viewport_middle {
       --webkit-mask-image: -webkit-gradient(
         linear,
@@ -53,7 +53,7 @@
       );
     }
 
-    // Отображение маски справа
+    // Display mask only on the right
     &.viewport_right {
       --webkit-mask-image: -webkit-gradient(
         linear,

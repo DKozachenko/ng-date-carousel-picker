@@ -1,11 +1,8 @@
 import { DayOrder, WeekdayOrder } from '../types';
 
-/** День */
 export interface IDay {
-  /** Идентификатор */
   id: string;
-  /** Номер */
+  /** Number */
   order: DayOrder;
-  /** Номер дня недели */
   weekdayOrder: WeekdayOrder;
 }

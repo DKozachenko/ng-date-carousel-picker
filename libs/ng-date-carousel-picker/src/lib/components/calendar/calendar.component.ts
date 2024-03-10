@@ -8,7 +8,6 @@ import { MonthOrder, WeekdayOrder } from '../../models/types';
 import { CalendarMonthsTrackComponent } from '../calendar-months-track/calendar-months-track.component';
 import { DayRangeFormatPipe } from '../../pipes';
 
-/** Компонент календаря */
 @UntilDestroy()
 @Component({
   selector: 'dcp-calendar',
@@ -20,34 +19,24 @@ import { DayRangeFormatPipe } from '../../pipes';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalendarComponent implements OnInit {
-  /** Года */
   public years: IYear[] = [];
 
-  /** Дни недели (русские названия) */
   public weekdays: string[] = [];
-  private weekdaysInActualOrder: string[] = [];
 
-  /** Текущий месяц */
   public currentMonth!: IMonth;
-
-  /** Текущий индекс месяца */
   public currentMonthIndex: MonthOrder = 0;
-
   public currentMonthName: string = '';
 
-  /** Текущий индекс года */
+  /** Current year index */
   public currentYearIndex: number = 0;
 
-  /** Текущий номер года */
+  /** Current year number */
   public currentYearNum: number = 0;
 
-  /** Информация о выбранной дате или диапазоне дат */
+  /** Information about the selected date or date range */
   public dateInfo: IRange | IRangeItem | null = null;
 
-  /** Недоступен ли левый контрол */
   public isLeftControlDisabled: boolean = true;
-
-  /** Недоступен ли правый контрол */
   public isRightControlDisabled: boolean = false;
 
   private readonly calendarService: CalendarService = inject(CalendarService);
@@ -77,12 +66,10 @@ export class CalendarComponent implements OnInit {
     });
   }
 
-  /** Инициализация дней недели */
   private initWeekdays(): void {
     for (let i = 1; i < 7; ++i) {
       const weekday: string = this.internalizationService.capitalizedWeekdays[i];
       this.weekdays.push(weekday);
-      this.weekdaysInActualOrder.push(weekday);
     }
     const firstWeekday: string = this.internalizationService.capitalizedWeekdays[0];
 
@@ -93,7 +80,7 @@ export class CalendarComponent implements OnInit {
     }
   }
 
-  /** Установка текущего месяца, его названия и номера года */
+  /** Setting the current month, its name and year number */
   private setCurrentMonthYear(): void {
     this.currentMonth = this.years[this.currentYearIndex].months[this.currentMonthIndex];
 
@@ -103,7 +90,7 @@ export class CalendarComponent implements OnInit {
     this.currentYearNum = this.years[this.currentYearIndex].num;
   }
 
-  /** Установка следюущиего месяца */
+  /** Setting next month */
   public setNextMonth(): void {
     if (this.currentMonth.order === 11) {
       this.calendarService.changeDateIndexes({
@@ -118,7 +105,7 @@ export class CalendarComponent implements OnInit {
     }
   }
 
-  /** Устновка предыдущего месяца */
+  /** Setting previous month */
   public setPrevMonth(): void {
     if (this.currentMonth.order === 0) {
       const newMonthIndex: MonthOrder = <MonthOrder>(this.years[this.currentYearIndex - 1].months.length - 1);
@@ -134,16 +121,11 @@ export class CalendarComponent implements OnInit {
     }
   }
 
-  /** Выбор одной даты или диапазона */
+  /** Select one date or range */
   public select(): void {
     this.calendarService.change(<IRange | IRangeItem>this.dateInfo);
   }
 
-  /**
-   * Функция trackBy для отслеживания по индексу
-   * @param index index
-   * @returns индекс
-   */
   public trackByIndex(index: number): number {
     return index;
   }
@@ -151,7 +133,7 @@ export class CalendarComponent implements OnInit {
   public isWeekend(index: number): boolean {
     if (this.optionsService.getOptions().firstDayOfWeekIndex === 1) {
       const weekday: string = <string>this.weekdays.find((_, ind) => ind === index);
-      // factIndex is not index in this.weekends
+      // factIndex is not index in `weekends` property
       const factIndex: WeekdayOrder = <WeekdayOrder>(
         this.internalizationService.capitalizedWeekdays.findIndex((item: string) => item === weekday)
       );

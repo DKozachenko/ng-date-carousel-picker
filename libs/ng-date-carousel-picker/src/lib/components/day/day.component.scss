@@ -9,7 +9,7 @@
     }
   }
 
-  // Состояние выбран / не выбран
+  // Selected / not selected state
   &.selected {
     .day {
       background-color: var(--dcp-day-selected-background-color, $color-primary);
@@ -21,6 +21,7 @@
     }
   }
 
+  // Being in range
   &.in_range {
     .day {
       &:hover,

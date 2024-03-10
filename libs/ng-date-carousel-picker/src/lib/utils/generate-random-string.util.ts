@@ -1,8 +1,3 @@
-/**
- * Генерация случайной строки
- * @param length длина
- * @returns строка
- */
 export const generateRandomString = (length: number = 15): string => {
   const characters: string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   const charactersLength: number = characters.length;

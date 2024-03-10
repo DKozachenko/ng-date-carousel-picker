@@ -1,9 +1,7 @@
-/* eslint-disable */
-/** 
- * Номер дня  
- * Соответствует {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getDate | Date.getDate()}
+/**
+ * Corresponds to
+ * {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getDate | Date.getDate()}
  */
-/* eslint-enable */
 export type DayOrder =
   | 1
   | 2

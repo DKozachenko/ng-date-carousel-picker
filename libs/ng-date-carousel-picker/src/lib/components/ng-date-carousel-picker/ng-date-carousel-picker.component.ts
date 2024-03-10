@@ -21,7 +21,6 @@ import { DEFAULT_OPTIONS } from '../../models/constants';
 import { FirstDayOfWeek, IntRange, RightControl, WeekdayOrder } from '../../models/types';
 import { PopoverConfigProvider } from './providers';
 
-/** Компонент дата пикера */
 @UntilDestroy()
 @Component({
   /* eslint-disable-next-line @angular-eslint/component-selector */
@@ -32,38 +31,42 @@ import { PopoverConfigProvider } from './providers';
   providers: [PickerService, CalendarService, OptionsService, PopoverConfigProvider],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  // For vars
+  /** Used to allow styling via css variables */
   encapsulation: ViewEncapsulation.None,
 })
 export class NgDateCarouselPickerComponent implements OnInit, IPickerOptions {
+  /** Distance (in px) which scrolls with button click. By default is `150`. */
   @Input({ required: false }) public readonly scrollShift: IntRange<42, 300> = DEFAULT_OPTIONS['scrollShift'];
+
+  /** Date of period beginning. By default is current date. */
   @Input({ required: false }) public readonly startDate: Date = DEFAULT_OPTIONS['startDate'];
+
+  /** Date of period end. By default is exactly 3 months more than current date. */
   @Input({ required: false }) public readonly endDate: Date = DEFAULT_OPTIONS['endDate'];
+
+  /** Need to show calendar instead of scroll button in the end of period. By default is `true`. */
   @Input({ required: false }) public readonly showCalendar: boolean = DEFAULT_OPTIONS['showCalendar'];
+
+  /** Order (number) for first day of the week, `0` is for Sunday, `1` is for Monday. By default is `1`. */
   @Input({ required: false }) public readonly firstDayOfWeekIndex: FirstDayOfWeek =
     DEFAULT_OPTIONS['firstDayOfWeekIndex'];
+
+  /** Numbers for weekend days. By default `[0, 6]`. */
   @Input({ required: false }) public readonly weekendIndexes: [WeekdayOrder, WeekdayOrder] =
     DEFAULT_OPTIONS['weekendIndexes'];
 
-  /** Компонент трека названий месяцев */
   @ViewChild(MonthNamesTrackComponent) private readonly monthNamesTrackComponent!: MonthNamesTrackComponent;
-
-  /** Компонент трека дней */
   @ViewChild(DaysTrackComponent) private readonly daysTrackComponent!: DaysTrackComponent;
 
-  /** Эмиттер изменения выбора дат */
   @Output() private readonly changed: EventEmitter<IRange | IRangeItem | null> = new EventEmitter<
     IRange | IRangeItem | null
   >();
 
-  /** Месяцы */
   public months: IMonth[] = [];
 
-  /** Недоступен ли левый контрол */
   public isLeftControlDisabled: boolean = true;
   public isRightControlDisabled: boolean = false;
 
-  /** Тип правого контрола */
   public rightControlType: RightControl = 'scroll-button';
 
   private readonly pickerService: PickerService = inject(PickerService);
@@ -101,47 +104,43 @@ export class NgDateCarouselPickerComponent implements OnInit, IPickerOptions {
       .subscribe((data: IRange | IRangeItem | null) => this.changed.emit(data));
   }
 
+  /**
+   * Taken from
+   * https://stackoverflow.com/questions/2536379/difference-in-months-between-two-dates-in-javascript
+   */
   private monthDiff(date1: Date, date2: Date): number {
-    // https://stackoverflow.com/questions/2536379/difference-in-months-between-two-dates-in-javascript
     let monthsNumber = (date2.getFullYear() - date1.getFullYear()) * 12;
     monthsNumber -= date1.getMonth();
     monthsNumber += date2.getMonth();
     return monthsNumber <= 0 ? 0 : monthsNumber;
   }
 
-  /**
-   * Происходит ли выход за левую границу вьюпорта
-   * @param currentDaysScrollerLeft текущее значение `left` у скроллера
-   */
+  /** Does it go beyond the left border of the viewport */
   private isGoingBeyondViewportLeftBorder(currentDaysScrollerLeft: number): boolean {
     /**
-     * Скроллер располагается относительно левого края вьюпорта, его начальное значение `left`
-     * равно 0, при дальнейшем скролле вправо значение свойства уменьшается и становится отрицательным,
-     * соответственно если в какой-то момент времени значение будет больше 0, это говорит о
-     * о выходе за левую границу вьюпорта
+     * The scroller is positioned relative to the left edge of the viewport, its initial value is `left`
+     * is equal to 0, with further scrolling to the right the property value decreases and becomes negative,
+     * accordingly, if at some point in time the value is greater than 0, this indicates
+     * about going beyond the left border of the viewport
      */
     return currentDaysScrollerLeft + this.scrollShift >= 0;
   }
 
-  /**
-   * Происходит ли выход за правую границу вьюпорта
-   * @param currentDaysScrollerLeft текущее значение `left` у скроллера
-   */
+  /** Does it go beyond the right border of the viewport */
   private isGoingBeyondViewportRightBorder(currentDaysScrollerLeft: number): boolean {
     const daysViewportWidth: number = this.daysTrackComponent.getViewportWidth();
     const daysScrollerScrollWidth: number = this.daysTrackComponent.getScrollerScrollWidth();
 
     /**
-     * Скроллер располагается относительно левого края вьюпорта, его начальное значение `left`
-     * равно 0, при дальнейшем скролле вправо значение свойства уменьшается и становится отрицательным,
-     * поэтому по факту, сколько проскроллено равно `-currentDaysScrollerLeft`, если к этому прибавить ширину вьюпорта
-     * и значение скролла и оно будет превалировать над всей скроллируемой шириной скроллера, это говорит о
-     * выходе за правую границу вьюпорта
+     * The scroller is positioned relative to the left edge of the viewport, its initial value is `left`
+     * is equal to 0, with further scrolling to the right the property value decreases and becomes negative,
+     * therefore, in fact, how much scrolling is equal to `-currentDaysScrollerLeft`, if you add the width of the viewport to this
+     * and the scroll value and it will prevail over the entire scrollable width of the scroller, this indicates
+     * going beyond the right border of the viewport
      */
     return -currentDaysScrollerLeft + daysViewportWidth + this.scrollShift >= daysScrollerScrollWidth;
   }
 
-  /** Скролл влево */
   public scrollLeft(): void {
     const currentDaysScrollerLeft: number = this.daysTrackComponent.getScrollerLeft();
 
@@ -161,7 +160,6 @@ export class NgDateCarouselPickerComponent implements OnInit, IPickerOptions {
     }
   }
 
-  /** Скролл вправо */
   public scrollRight(): void {
     const currentDaysScrollerLeft: number = this.daysTrackComponent.getScrollerLeft();
 

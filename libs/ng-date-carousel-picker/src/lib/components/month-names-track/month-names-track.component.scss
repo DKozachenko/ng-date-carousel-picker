@@ -1,7 +1,7 @@
 @import '../../styles/index';
 
 :host {
-  // Ограничение по ширине для обрезания с правой стороны
+  // Width limit for cutting on the right side
   width: calc(100% - $control-button-width);
 }
 

@@ -10,16 +10,15 @@ import {
   ViewChildren,
   inject,
 } from '@angular/core';
-import { IMonth, IRangeDayIds } from '../../models/interfaces';
-import { MonthComponent } from '../month/month.component';
-import { PickerService } from '../../services';
+import { NgClass, NgForOf } from '@angular/common';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { IMonth, IRangeDayIds } from '../../models/interfaces';
+import { PickerService } from '../../services';
+import { MonthComponent } from '../month/month.component';
 import { DayComponent } from '../day/day.component';
 import { SelectionComponent } from '../selection/selection.component';
 import { DAY_WIDTH, DAYS_GAP, MONTHS_GAP } from '../../models/constants';
-import { NgClass, NgForOf } from '@angular/common';
 
-/** Компонент трека дней */
 @UntilDestroy()
 @Component({
   selector: 'dcp-days-track',
@@ -30,25 +29,18 @@ import { NgClass, NgForOf } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DaysTrackComponent implements OnInit {
-  /** Ссылка на скроллер */
-  @ViewChild('scroller') private readonly scroller!: ElementRef<HTMLDivElement>;
+  @ViewChild('scroller') private readonly scrollerRef!: ElementRef<HTMLDivElement>;
+  @ViewChild('viewport') private readonly viewportRef!: ElementRef<HTMLDivElement>;
 
-  /** Ссылка на вьюпорт */
-  @ViewChild('viewport') private readonly viewport!: ElementRef<HTMLDivElement>;
-
-  /** Компоненты месяцев */
   @ViewChildren(MonthComponent) private readonly monthComponents!: QueryList<MonthComponent>;
-
-  /** Компонент выделения диапазаона */
   @ViewChild(SelectionComponent) private readonly selectionComponent!: SelectionComponent;
 
-  /** Месяцы */
   @Input({ required: true }) public months: IMonth[] = [];
 
-  /** Находится ли трек в самом начале */
+  /** Is the track at the very beginning */
   @Input({ required: true }) public inStart: boolean = true;
 
-  /** Находится ли трек в самом конце */
+  /** Is the track at the very end */
   @Input({ required: true }) public inEnd: boolean = false;
 
   private readonly pickerService: PickerService = inject(PickerService);
@@ -69,11 +61,7 @@ export class DaysTrackComponent implements OnInit {
     });
   }
 
-  /**
-   * Получение отступа слева для компонента выделеления
-   * @param startDayId идентификатор для начала
-   * @returns значение `left`
-   */
+  /** Getting the left offset for a selection component */
   private getSelectionLeft(startDayId: string): number {
     let offset: number = 0;
     for (let i = 0; i < this.monthComponents.length; ++i) {
@@ -84,33 +72,28 @@ export class DaysTrackComponent implements OnInit {
 
         if (dayComponent.day.id === startDayId) {
           /**
-           * Необходимо добавить еще "половинку" дня, чтобы диапазон был не с
-           * самого начала первого дня, а с его середины
+           * It is necessary to add another "half" of the day so that the range is not with
+           * from the very beginning of the first day, and from its middle
            */
           return offset + DAY_WIDTH / 2;
         }
 
-        // Для непоследних дней добавляем еще расстояние между днями
+        // For non-last days, add another distance between days
         offset += p === monthComponent.dayComponents.length - 1 ? DAY_WIDTH : DAY_WIDTH + DAYS_GAP;
       }
 
-      // Для непоследних дней добавляем расстояние между месяцами
+      // For non-last days, add the distance between months
       offset += i === this.monthComponents.length - 1 ? 0 : MONTHS_GAP;
     }
 
     /**
-     * До сюда никогда теоретически нельзя дойти, потому что до этого в цикле
-     * обязательно найдем начальный день диапазона
+     * It's theoretically impossible to get to here, because it's in a loop
+     * we will definitely find the starting day of the range
      */
     return offset;
   }
 
-  /**
-   * Получение ширины компонента выделения диапазаона
-   * @param startDayId идентификатор для начала
-   * @param endDayId идентификатор для конца
-   * @returns ширина
-   */
+  /** Getting the width of a range selection component */
   private getSelectionWidth(startDayId: string, endDayId: string): number {
     let width: number = 0;
     let inRange: boolean = false;
@@ -131,64 +114,45 @@ export class DaysTrackComponent implements OnInit {
         }
 
         if (inRange) {
-          // Для непоследних дней добавляем еще расстояние между днями
+          // For non-last days, add another distance between days
           width += p === monthComponent.dayComponents.length - 1 ? DAY_WIDTH : DAY_WIDTH + DAYS_GAP;
         }
       }
 
       if (inRange) {
-        // Для непоследних месяцев добавляем расстояние между месяцами
+        // For non-recent months, add the distance between months
         width += i === this.monthComponents.length - 1 ? 0 : MONTHS_GAP;
       }
     }
 
     /**
-     * Необходимо отнять еще по "половинке" дня с каждой стороны,
-     * чтобы диапазон в начале и в конце был с середины дня
+     * It is necessary to subtract another "half' of a day on each side,
+     * so that the range at the beginning and end is from the middle of the day
      */
     return width - DAY_WIDTH;
   }
 
-  /**
-   * Получение `scrollWidth` у скроллера
-   * @returns `scrollWidth`
-   */
+  /** Getting `scrollWidth` from the scroller */
   public getScrollerScrollWidth(): number {
-    const scrollerElem: HTMLDivElement = this.scroller.nativeElement;
+    const scrollerElem: HTMLDivElement = this.scrollerRef.nativeElement;
     return scrollerElem.scrollWidth;
   }
 
-  /**
-   * Получение ширины вьюпорта
-   * @returns ширина
-   */
   public getViewportWidth(): number {
-    const viewportElem: HTMLDivElement = this.viewport.nativeElement;
+    const viewportElem: HTMLDivElement = this.viewportRef.nativeElement;
     return viewportElem.clientWidth;
   }
 
-  /**
-   * Получение свойства `left` у скроллера
-   * @returns значение `left`
-   */
+  /** Getting the `left` property from the scroller */
   public getScrollerLeft(): number {
-    return parseInt(getComputedStyle(this.scroller.nativeElement).getPropertyValue('left'));
+    return parseInt(getComputedStyle(this.scrollerRef.nativeElement).getPropertyValue('left'));
   }
 
-  /**
-   * Установка свойства `left` для скроллера
-   * @param value значение
-   */
+  /** Setting the `left` property for the scroller */
   public setScrollerLeft(value: number): void {
-    this.renderer.setStyle(this.scroller.nativeElement, 'left', `${value}px`);
+    this.renderer.setStyle(this.scrollerRef.nativeElement, 'left', `${value}px`);
   }
 
-  /**
-   * Функция trackBy для списка месяцев
-   * @param index индекс
-   * @param month месяц
-   * @returns идентификатор месяца
-   */
   public trackByMonthId(index: number, month: IMonth): string {
     return month.id;
   }

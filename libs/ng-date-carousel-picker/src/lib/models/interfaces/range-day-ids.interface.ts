@@ -1,9 +1,9 @@
-/** Идентификаторы дней диапазона */
+/** Range Day Ids */
 export interface IRangeDayIds {
-  /** Идентификатор дня в начале */
+  /** Day Id at the beginning */
   startId: string;
-  /** Идентификаторы дней в середине */
+  /** Ids of days in the middle */
   inRangeIds: string[];
-  /** Идентификатор дня в конце */
+  /** Day Id at the end */
   endId: string;
 }

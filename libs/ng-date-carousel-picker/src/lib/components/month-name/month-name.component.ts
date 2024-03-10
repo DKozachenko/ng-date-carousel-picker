@@ -11,7 +11,6 @@ import {
 import { IMonth } from '../../models/interfaces';
 import { InternalizationService } from '../../services';
 
-/** Компонент названия месяца */
 @Component({
   selector: 'dcp-month-name',
   templateUrl: './month-name.component.html',
@@ -23,18 +22,15 @@ import { InternalizationService } from '../../services';
 export class MonthNameComponent implements OnInit {
   private readonly internalizationService: InternalizationService = inject(InternalizationService);
 
-  /** Месяц */
   @Input({ required: true }) public month!: IMonth;
 
-  /** Является ли активным */
   @Input({ required: true })
   @HostBinding('class.active')
   public isActive: boolean = false;
 
   public name: string = '';
 
-  /** Ccылка на элемент названия */
-  @ViewChild('name_ref') public readonly ref!: ElementRef<HTMLParagraphElement>;
+  @ViewChild('name_ref') public readonly nameRef!: ElementRef<HTMLParagraphElement>;
 
   public ngOnInit(): void {
     this.name = this.internalizationService.capitalizedMonthNames[this.month.order];

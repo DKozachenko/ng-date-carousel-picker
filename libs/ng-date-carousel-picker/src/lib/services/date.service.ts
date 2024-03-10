@@ -3,43 +3,37 @@ import { Observable, Subject } from 'rxjs';
 import { IDay, IDayDate, IRange, IRangeDayIds, IRangeItem } from '../models/interfaces';
 import { MonthOrder } from '../models/types';
 
-/** Базовый сервис для дат */
+/** Basic service for dates */
 @Injectable()
 export abstract class DateService {
-  /** Даты дней (линейная структура, каждому дню соответствует его объект Date) */
+  /** Dates of days (linear structure, each day has its own Date object) */
   protected readonly dayDates: IDayDate[] = [];
 
-  /** Выбранный день */
   protected selectedDay: IDay | null = null;
 
-  /** Подписка на изменение диапазона */
+  /** Range Change Subscription */
   protected readonly rangeChanged$: Subject<IRange | IRangeItem> = new Subject<IRange | IRangeItem>();
 
-  /** Подписка на изменение диапазона (публичная) */
+  /** Range Change Subscription (public) */
   public readonly rangeChangedObs$: Observable<IRange | IRangeItem> = this.rangeChanged$.asObservable();
 
-  /** Подписка на изменение */
+  /** Change Subscription */
   protected readonly changed$: Subject<IRange | IRangeItem | null> = new Subject<IRange | IRangeItem | null>();
 
-  /** Подписка на изменение */
+  /** Change Subscription (public) */
   public readonly changedObs$: Observable<IRange | IRangeItem | null> = this.changed$.asObservable();
 
-  /** Подписка на изменение выбранных дней */
+  /** Subscription to change selected days */
   protected readonly dayIdsChanged$: Subject<IRangeDayIds | string> = new Subject<IRangeDayIds | string>();
 
-  /** Подписка на изменение выбранных дней (публичная) */
+  /** Subscription to change selected days (public) */
   public readonly dayIdsChangedObs$: Observable<IRangeDayIds | string> = this.dayIdsChanged$.asObservable();
 
   protected abstract selectDay(day: IDay): void;
   protected abstract selectRange(secondDay: IDay): void;
   public abstract selectDate(day: IDay): void;
 
-  /**
-   * Получение идентификаторов дней в середине диапазона
-   * @param startDayId идентификатор дня в начале диапазоне
-   * @param endDayId идентификатор дня в конце диапазоне
-   * @returns массив идентификаторов
-   */
+  /** Getting Ids of days in the middle of a range */
   protected getInRangeDayIds(startDayId: string, endDayId: string): string[] {
     const result: string[] = [];
 
@@ -63,11 +57,6 @@ export abstract class DateService {
     return result;
   }
 
-  /**
-   * Получение элемента диапазона
-   * @param day день
-   * @returns элемент диапазона
-   */
   protected getRangeItem(day: IDay): IRangeItem {
     const dayDate: IDayDate = <IDayDate>this.dayDates.find((item: IDayDate) => item.dayId === day.id);
 

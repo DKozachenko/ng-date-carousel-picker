@@ -1,12 +1,9 @@
 import { MonthOrder } from '../types';
 import { IDay } from './day.interface';
 
-/** Месяц */
 export interface IMonth {
-  /** Идентификатор */
   id: string;
-  /** Номер */
+  /** Number */
   order: MonthOrder;
-  /** Дни */
   days: IDay[];
 }

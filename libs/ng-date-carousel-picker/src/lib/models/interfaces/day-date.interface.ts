@@ -1,7 +1,5 @@
-/** Дата дня */
+/** Date of day */
 export interface IDayDate {
-  /** Идентификатор дня */
   dayId: string;
-  /** Дата */
   date: Date;
 }

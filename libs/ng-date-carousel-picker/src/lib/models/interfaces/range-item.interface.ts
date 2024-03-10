@@ -1,15 +1,14 @@
 import { DayOrder, MonthOrder, WeekdayOrder } from '../types';
 
-/** Элемент диапазона */
+/** Range element */
 export interface IRangeItem {
-  /** Номер дня */
+  /** Day number */
   day: DayOrder;
-  /** Номер для недели */
+  /** Weekday number */
   weekday: WeekdayOrder;
-  /** Номер месяца */
+  /** Month number */
   month: MonthOrder;
-  /** Год */
   year: number;
-  /** Дата в timestamp */
+  /** Date in timestamp */
   timestamp: number;
 }

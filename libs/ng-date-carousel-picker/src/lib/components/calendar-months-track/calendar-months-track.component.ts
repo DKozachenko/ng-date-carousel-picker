@@ -11,14 +11,14 @@ import {
   ViewChildren,
   inject,
 } from '@angular/core';
+import { NgForOf } from '@angular/common';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { IDateIndexes, IMonth, IRangeDayIds, IYear } from '../../models/interfaces';
+import { MONTH_WIDTH } from '../../models/constants';
 import { MonthOrder } from '../../models/types';
 import { CalendarService } from '../../services';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { CalendarMonthComponent } from '../calendar-month/calendar-month.component';
-import { NgForOf } from '@angular/common';
 
-/** Компонент трека месяцев календаря */
 @UntilDestroy()
 @Component({
   selector: 'dcp-calendar-months-track',
@@ -29,22 +29,13 @@ import { NgForOf } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalendarMonthsTrackComponent implements OnInit, AfterViewInit {
-  /** Компоненты месяцев */
   @ViewChildren(CalendarMonthComponent) private readonly monthComponents!: QueryList<CalendarMonthComponent>;
 
-  /** Ссылка на скроллер */
-  @ViewChild('scroller') private readonly scroller!: ElementRef<HTMLDivElement>;
+  @ViewChild('scroller') private readonly scrollerRef!: ElementRef<HTMLDivElement>;
 
-  /** Текущий индекс года */
   private currentYearIndex: number = 0;
-
-  /** Текущий индекс месяца */
   private currentMonthIndex: MonthOrder = 0;
 
-  /** Ширина месяца */
-  private readonly monthWidth: number = 272;
-
-  /** Годы */
   @Input({ required: true }) public years: IYear[] = [];
 
   private readonly calendarService: CalendarService = inject(CalendarService);
@@ -66,15 +57,12 @@ export class CalendarMonthsTrackComponent implements OnInit, AfterViewInit {
       this.currentYearIndex = indexes.yearIndex;
 
       const scrolledMonthNumber: number = this.getScrolledMonthNumber();
-      const newLeftValue: number = -(this.monthWidth * scrolledMonthNumber);
+      const newLeftValue: number = -(MONTH_WIDTH * scrolledMonthNumber);
       this.setScrollerLeft(newLeftValue);
     });
   }
 
-  /**
-   * Получение количества проскролленых месяцев
-   * @returns количество проскроленных месяцев
-   */
+  /** Getting the number of scrolled months */
   private getScrolledMonthNumber(): number {
     let result: number = 0;
 
@@ -95,40 +83,25 @@ export class CalendarMonthsTrackComponent implements OnInit, AfterViewInit {
     return result;
   }
 
-  /**
-   * Обновление состояний нахождения в диапазоне у дней месяцов
-   * @param rangeIds идентификаторы дней диапазона
-   */
+  /** Updating the states of being in the range of days of months */
   private updateDaysRangeState(rangeIds: IRangeDayIds): void {
     for (const monthComponent of this.monthComponents) {
       monthComponent.updateDaysRangeState(rangeIds);
     }
   }
 
-  /**
-   * Обновление состояния выбора у одного дня
-   * @param selectedDayId идентификатор выбранного дня
-   */
+  /** Update selection status for one day */
   private updateDaySelection(selectedDayId: string): void {
     for (const monthComponent of this.monthComponents) {
       monthComponent.updateDaySelection(selectedDayId);
     }
   }
 
-  /**
-   * Установка свойства `left` для скроллера
-   * @param value значение
-   */
+  /** Setting the `left` property for the scroller */
   public setScrollerLeft(value: number): void {
-    this.renderer.setStyle(this.scroller.nativeElement, 'left', `${value}px`);
+    this.renderer.setStyle(this.scrollerRef.nativeElement, 'left', `${value}px`);
   }
 
-  /**
-   * Функция trackBy для отслеживания по идентификатору
-   * @param index index
-   * @param item месяц или год
-   * @returns индекс
-   */
   public trackById(index: number, item: IYear | IMonth): string {
     return item.id;
   }

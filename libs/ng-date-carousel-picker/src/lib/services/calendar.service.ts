@@ -5,33 +5,29 @@ import { generateRandomString } from '../utils';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { DateService } from './date.service';
 
-/** Сервис для календаря */
 @Injectable()
 export class CalendarService extends DateService {
+  /** Max year number (relatively current) */
   private readonly yearLimit: number = 2;
 
-  /** Годы */
   private readonly years: IYear[] = [];
 
-  /** Подписка на изменение (внутренняя) */
+  /** Change subscription (internal) */
   private readonly changedInner$: Subject<IRange | IRangeItem | null> = new Subject<IRange | IRangeItem | null>();
 
-  /** Подписка на изменение */
+  /** Change subscription */
   public readonly changedInnerObs$: Observable<IRange | IRangeItem | null> = this.changedInner$.asObservable();
 
-  /** Подписка на изменение индексов дат для календаря */
+  /** Subscription to change date indexes for a calendar */
   private readonly dateIndexes$: BehaviorSubject<IDateIndexes> = new BehaviorSubject<IDateIndexes>({
     monthIndex: 0,
     yearIndex: 0,
   });
 
-  /** Подписка на изменение индексов дат для календаря (публичная) */
+  /** Subscription to change date indexes for the calendar (public) */
   public readonly dateIndexesObs$: Observable<IDateIndexes> = this.dateIndexes$.asObservable();
 
-  /**
-   * Заполнение годов
-   * @param yearLimit ограничение по количеству годов (на сколько годов вперед нужно получить месяцы)
-   */
+  /** Filling in years */
   private init(): void {
     const now: Date = new Date();
     const nowCounter: Date = new Date(new Date().setDate(1));
@@ -90,10 +86,7 @@ export class CalendarService extends DateService {
     }
   }
 
-  /**
-   * Выбор одного дня
-   * @param day день
-   */
+  /** Select one day */
   protected selectDay(day: IDay): void {
     this.selectedDay = day;
     this.dayIdsChanged$.next(this.selectedDay.id);
@@ -102,10 +95,7 @@ export class CalendarService extends DateService {
     this.changedInner$.next(item);
   }
 
-  /**
-   * Выбор диапазона
-   * @param secondDay второй день в диапазоне
-   */
+  /** Range selection */
   protected selectRange(secondDay: IDay): void {
     let startItem!: IRangeItem;
     let endItem!: IRangeItem;
@@ -117,7 +107,7 @@ export class CalendarService extends DateService {
     );
     const secondDayDate: IDayDate = <IDayDate>this.dayDates.find((item: IDayDate) => item.dayId === secondDay.id);
 
-    // Если второй выбранный день позже, чем первый
+    // If the second selected day is later than the first
     if (+secondDayDate.date > +firstDayDate.date) {
       startItem = this.getRangeItem(<IDay>this.selectedDay);
       endItem = this.getRangeItem(secondDay);
@@ -147,20 +137,12 @@ export class CalendarService extends DateService {
     this.selectedDay = null;
   }
 
-  /**
-   * Получение объекта Date по идентификатору дня
-   * @param dayId идентификатор дня
-   * @returns Date
-   */
+  /** Getting a Date object by day Id */
   public getDateByDayId(dayId: string): Date {
     const dayDate: IDayDate = <IDayDate>this.dayDates.find((date: IDayDate) => date.dayId === dayId);
     return dayDate.date;
   }
 
-  /**
-   * Выбор даты
-   * @param day день
-   */
   public selectDate(day: IDay): void {
     if (this.selectedDay?.id === day.id) {
       this.selectedDay = null;
@@ -179,19 +161,11 @@ export class CalendarService extends DateService {
     this.dateIndexes$.next(indexes);
   }
 
-  /**
-   * Измение выбранной даты или диапазона дат
-   * @param value выбранная дата или диапазон дат
-   */
+  /** Change the selected date or date range */
   public change(value: IRange | IRangeItem): void {
     this.changed$.next(value);
   }
 
-  /**
-   * Получение годов
-   * @param yearLimit ограничение по количеству годов в календаре (на сколько годов вперед нужно получить месяцы)
-   * @returns
-   */
   public getYears(): IYear[] {
     if (this.years.length) {
       return this.years;

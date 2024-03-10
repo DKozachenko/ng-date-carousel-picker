@@ -10,7 +10,7 @@
 }
 
 .month-name {
-  // -2px из-за border
+  // -2px because of border
   @include font(14px, var(--dcp-month-name-color, $color-primary), 400, calc($month-name-height - 2px));
 
   position: absolute;
