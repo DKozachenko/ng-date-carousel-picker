@@ -1,0 +1,10 @@
+FROM node:alpine as builder
+WORKDIR /storybook-wrapper
+COPY package.json package-lock.json /storybook-wrapper/
+RUN npm ci
+COPY . /storybook-wrapper
+RUN npm run picker:build-storybook
+
+FROM nginx:alpine
+COPY libs/ng-date-carousel-picker/nginx.conf /etc/nginx/nginx.conf
+COPY --from=builder /storybook-wrapper/dist/storybook/ng-date-carousel-picker /usr/share/nginx/html

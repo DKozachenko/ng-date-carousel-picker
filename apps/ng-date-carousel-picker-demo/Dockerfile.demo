@@ -1,0 +1,10 @@
+FROM node:alpine as builder
+WORKDIR /demo-wrapper
+COPY package.json package-lock.json /demo-wrapper/
+RUN npm ci
+COPY . /demo-wrapper
+RUN npm run demo:build
+
+FROM nginx:alpine
+COPY apps/ng-date-carousel-picker-demo/nginx.conf /etc/nginx/nginx.conf
+COPY --from=builder /demo-wrapper/dist/apps/ng-date-carousel-picker-demo/browser /usr/share/nginx/html
