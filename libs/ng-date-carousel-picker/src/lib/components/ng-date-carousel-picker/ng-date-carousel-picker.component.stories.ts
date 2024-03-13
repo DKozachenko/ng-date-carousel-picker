@@ -3,7 +3,6 @@ import { NgDateCarouselPickerComponent } from './ng-date-carousel-picker.compone
 import { DEFAULT_OPTIONS } from '../../models/constants';
 import { CustomizationStory, LocalizationStory, PrimaryStory } from './stories';
 
-//TODO: description
 const meta: Meta<NgDateCarouselPickerComponent> = {
   component: NgDateCarouselPickerComponent,
   title: 'NgDateCarouselPickerComponent',
@@ -19,7 +18,7 @@ const meta: Meta<NgDateCarouselPickerComponent> = {
     scrollShift: {
       name: 'scrollShift',
       defaultValue: DEFAULT_OPTIONS['scrollShift'],
-      description: '',
+      description: 'Distance (in px) which scrolls with button click. By default is `150`.',
       control: {
         type: 'number',
         min: 42,
@@ -30,7 +29,7 @@ const meta: Meta<NgDateCarouselPickerComponent> = {
     startDate: {
       name: 'startDate',
       defaultValue: DEFAULT_OPTIONS['startDate'],
-      description: '',
+      description: 'Date of period beginning. By default is current date.',
       control: {
         type: 'date',
       },
@@ -38,7 +37,7 @@ const meta: Meta<NgDateCarouselPickerComponent> = {
     endDate: {
       name: 'endDate',
       defaultValue: DEFAULT_OPTIONS['endDate'],
-      description: '',
+      description: 'Date of period end. By default is exactly 3 months more than current date.',
       control: {
         type: 'date',
       },
@@ -46,7 +45,7 @@ const meta: Meta<NgDateCarouselPickerComponent> = {
     showCalendar: {
       name: 'showCalendar',
       defaultValue: DEFAULT_OPTIONS['showCalendar'],
-      description: '',
+      description: 'Need to show calendar instead of scroll button in the end of period. By default is `true`.',
       control: {
         type: 'boolean',
       },
@@ -54,7 +53,7 @@ const meta: Meta<NgDateCarouselPickerComponent> = {
     firstDayOfWeekIndex: {
       name: 'firstDayOfWeekIndex',
       defaultValue: DEFAULT_OPTIONS['firstDayOfWeekIndex'],
-      description: '',
+      description: 'Order (number) for first day of the week, `0` is for Sunday, `1` is for Monday. By default is `1`.',
       control: {
         type: 'radio',
       },
@@ -63,7 +62,7 @@ const meta: Meta<NgDateCarouselPickerComponent> = {
     weekendIndexes: {
       name: 'weekendIndexes',
       defaultValue: DEFAULT_OPTIONS['weekendIndexes'],
-      description: '',
+      description: 'Numbers for weekend days. By default `[0, 6]`.',
       control: {
         type: 'array',
       },

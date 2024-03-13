@@ -36,24 +36,22 @@ import { PopoverConfigProvider } from './providers';
 })
 export class NgDateCarouselPickerComponent implements OnInit, IPickerOptions {
   /** Distance (in px) which scrolls with button click. By default is `150`. */
-  @Input({ required: false }) public readonly scrollShift: IntRange<42, 300> = DEFAULT_OPTIONS['scrollShift'];
+  @Input({ required: false }) public scrollShift: IntRange<42, 300> = DEFAULT_OPTIONS['scrollShift'];
 
   /** Date of period beginning. By default is current date. */
-  @Input({ required: false }) public readonly startDate: Date = DEFAULT_OPTIONS['startDate'];
+  @Input({ required: false }) public startDate: Date = DEFAULT_OPTIONS['startDate'];
 
   /** Date of period end. By default is exactly 3 months more than current date. */
-  @Input({ required: false }) public readonly endDate: Date = DEFAULT_OPTIONS['endDate'];
+  @Input({ required: false }) public endDate: Date = DEFAULT_OPTIONS['endDate'];
 
   /** Need to show calendar instead of scroll button in the end of period. By default is `true`. */
-  @Input({ required: false }) public readonly showCalendar: boolean = DEFAULT_OPTIONS['showCalendar'];
+  @Input({ required: false }) public showCalendar: boolean = DEFAULT_OPTIONS['showCalendar'];
 
   /** Order (number) for first day of the week, `0` is for Sunday, `1` is for Monday. By default is `1`. */
-  @Input({ required: false }) public readonly firstDayOfWeekIndex: FirstDayOfWeek =
-    DEFAULT_OPTIONS['firstDayOfWeekIndex'];
+  @Input({ required: false }) public firstDayOfWeekIndex: FirstDayOfWeek = DEFAULT_OPTIONS['firstDayOfWeekIndex'];
 
   /** Numbers for weekend days. By default `[0, 6]`. */
-  @Input({ required: false }) public readonly weekendIndexes: [WeekdayOrder, WeekdayOrder] =
-    DEFAULT_OPTIONS['weekendIndexes'];
+  @Input({ required: false }) public weekendIndexes: [WeekdayOrder, WeekdayOrder] = DEFAULT_OPTIONS['weekendIndexes'];
 
   @ViewChild(MonthNamesTrackComponent) private readonly monthNamesTrackComponent!: MonthNamesTrackComponent;
   @ViewChild(DaysTrackComponent) private readonly daysTrackComponent!: DaysTrackComponent;

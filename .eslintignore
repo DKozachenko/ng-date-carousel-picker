@@ -1,1 +1,6 @@
+.angular
+.nx/cache
+.vscode
+!.storybook
 node_modules
+dist

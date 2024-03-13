@@ -1,6 +1,6 @@
 {
-  "name": "@ng-date-carousel-picker/ng-date-carousel-picker",
-  "version": "0.0.1",
+  "name": "ng-date-carousel-picker",
+  "version": "0.0.4",
   "peerDependencies": {
     "@angular/common": "^17.0.0",
     "@angular/core": "^17.0.0",

@@ -1,2 +1,32 @@
-<ng-date-carousel-picker-nx-welcome></ng-date-carousel-picker-nx-welcome>
-<router-outlet></router-outlet>
+<section>
+  <h1>NgDateCarouselPickerComponent</h1>
+
+  <p>An Angular component that allows the user to select a date or a date range.</p>
+
+  <div class="pickers">
+    <h5>Primary</h5>
+    <ng-date-carousel-picker
+      [scrollShift]="primaryOptions.scrollShift"
+      [startDate]="primaryOptions.startDate"
+      [endDate]="primaryOptions.endDate"
+      [showCalendar]="primaryOptions.showCalendar"
+      [firstDayOfWeekIndex]="primaryOptions.firstDayOfWeekIndex"
+      [weekendIndexes]="primaryOptions.weekendIndexes"
+      (changed)="primaryChanged($event)"
+    ></ng-date-carousel-picker>
+
+    <h5>Customized</h5>
+    <ng-date-carousel-picker
+      [scrollShift]="primaryOptions.scrollShift"
+      [startDate]="primaryOptions.startDate"
+      [endDate]="primaryOptions.endDate"
+      [showCalendar]="primaryOptions.showCalendar"
+      [firstDayOfWeekIndex]="primaryOptions.firstDayOfWeekIndex"
+      [weekendIndexes]="primaryOptions.weekendIndexes"
+      (changed)="customizedChanged($event)"
+    ></ng-date-carousel-picker>
+
+    <h5>Localized</h5>
+    <ng-date-carousel-picker-demo-localized></ng-date-carousel-picker-demo-localized>
+  </div>
+</section>

@@ -4,27 +4,10 @@
   "overrides": [
     {
       "files": ["*.ts"],
-      "extends": [
-        "plugin:@nx/angular",
-        "plugin:@angular-eslint/template/process-inline-templates"
-      ],
+      "extends": ["plugin:@nx/angular", "plugin:@angular-eslint/template/process-inline-templates"],
       "rules": {
-        "@angular-eslint/directive-selector": [
-          "error",
-          {
-            "type": "attribute",
-            "prefix": "ngDateCarouselPicker",
-            "style": "camelCase"
-          }
-        ],
-        "@angular-eslint/component-selector": [
-          "error",
-          {
-            "type": "element",
-            "prefix": "ng-date-carousel-picker",
-            "style": "kebab-case"
-          }
-        ]
+        "@angular-eslint/directive-selector": ["off"],
+        "@angular-eslint/component-selector": ["off"]
       }
     },
     {

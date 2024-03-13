@@ -139,8 +139,17 @@ ng-date-carousel-picker {
 }
 ```
 
-//TODO: check it  
-You can also use `:root` selector instead of `ng-date-carousel-picker`.
+You can also rewrite certain variables in whole application, using `:root` selector in your
+global `style.(s)css` file. Don't forget to add more importance to value with `!important` rule. For example,
+
+```css
+:root {
+  --dcp-control-button-svg-color: purple!important;
+  --dcp-weekday-color: blue!important;
+  --dcp-month-name-border-color: orange!important;
+  --dcp-month-name-active-background-color: orange!important;
+}
+```
 
 ### Localization
 

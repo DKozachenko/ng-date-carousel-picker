@@ -1,0 +1,37 @@
+:host {
+  font-family: 'Consolas', serif;
+}
+
+section {
+  padding: 30px;
+}
+
+h1 {
+  font-size: 30px;
+  margin-bottom: 15px;
+}
+
+p {
+  color: #606060;
+  margin-bottom: 20px;
+}
+
+.pickers {
+  h5 {
+    margin-bottom: 15px;
+    text-decoration: underline;
+  }
+
+  ng-date-carousel-picker {
+    display: block;
+    margin-bottom: 20px;
+
+    &:nth-of-type(2) {
+      --dcp-control-button-svg-color: purple;
+      --dcp-weekday-color: blue;
+      --dcp-month-name-border-color: orange;
+      --dcp-month-name-active-background-color: orange;
+    }
+
+  }
+}
