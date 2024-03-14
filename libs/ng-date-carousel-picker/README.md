@@ -2,6 +2,8 @@
 
 Angular library with custom date picker, which differs from other similar components in design, scroll and calendar in the end of period (if specific property set to `true`).
 
+![Demonstration](./demo.gif "Demonstration gif")
+
 ## Motivation
 
 Sometime ago I needed a datepicker in one of my pet project. I wanted to make it *BeAuTiFuL*. *BeAuTiFuL* means great, gorgeous, usable, user-friendly. *BeAuTiFuL* can also be described by this meme:
