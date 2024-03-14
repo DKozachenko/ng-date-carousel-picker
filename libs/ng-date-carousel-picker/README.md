@@ -2,7 +2,7 @@
 
 Angular library with custom date picker, which differs from other similar components in design, scroll and calendar in the end of period (if specific property set to `true`).
 
-![Demonstration](./demo.gif "Demonstration gif")
+![Demonstration](https://github.com/DKozachenko/ng-date-carousel-picker/blob/453ea51714d7375287f379f3369b8d7c1eccf640/libs/ng-date-carousel-picker/demo.gif?raw=true "Demonstration gif")
 
 ## Motivation
 

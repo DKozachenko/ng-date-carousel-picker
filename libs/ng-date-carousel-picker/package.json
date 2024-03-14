@@ -1,6 +1,31 @@
 {
   "name": "ng-date-carousel-picker",
-  "version": "0.0.4",
+  "version": "1.0.1",
+  "description": "Angular library with custom date picker, which differs from other similar components in design, scroll and calendar in the end of period (if specific property set to `true`)",
+  "keywords": [
+    "angular",
+    "library",
+    "datepicker",
+    "carousel",
+    "ng datepicker",
+    "custom datepicker",
+    "carousel picker",
+    "angular datepicker"
+  ],
+  "author": {
+    "name": "Diana Kozachenko",
+    "email": "kozachenkodiana03@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DKozachenko/ng-date-carousel-picker"
+  },
+  "bugs": {
+    "url": "https://github.com/DKozachenko/ng-date-carousel-picker/issues",
+    "email": "kozachenkodiana03@gmail.com"
+  },
+  "homepage": "https://github.com/DKozachenko/ng-date-carousel-picker/blob/develop/libs/ng-date-carousel-picker/README.md",
+  "license": "ISC",
   "peerDependencies": {
     "@angular/common": "^17.0.0",
     "@angular/core": "^17.0.0",
@@ -10,6 +35,5 @@
     "@ngx-popovers/core": "^0.1.0",
     "@ngx-popovers/popover": "^0.1.0"
   },
-  "dependencies": {},
   "sideEffects": false
 }
